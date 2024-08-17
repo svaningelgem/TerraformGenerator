@@ -6,7 +6,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
-import org.terraform.coregen.heights.HeightMap;
+import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.MegaChunk;

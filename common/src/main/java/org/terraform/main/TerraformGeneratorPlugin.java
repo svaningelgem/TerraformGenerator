@@ -15,7 +15,6 @@ import org.terraform.coregen.ChunkCache;
 import org.terraform.coregen.ChunkCacheLoader;
 import org.terraform.coregen.NMSInjectorAbstract;
 import org.terraform.coregen.bukkit.TerraformGenerator;
-import org.terraform.coregen.heights.HeightMap;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.config.TConfig;
 import org.terraform.reflection.Post14PrivateFieldHandler;
@@ -45,7 +44,6 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
     public static final Set<String> INJECTED_WORLDS = new HashSet<>();
     public static final @NotNull PrivateFieldHandler privateFieldHandler;
     public static @Nullable NMSInjectorAbstract injector;
-    private static TerraformGeneratorPlugin instance;
     public static TfgWatchdogSuppressant watchdogSuppressant;
     private final HashMap<String, TerraformGenerator> generators = new HashMap<>();
 
@@ -66,13 +64,9 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
 
         GenUtils.initGenUtils();
         BlockUtils.initBlockUtils();
-        instance = this;
 
         LanguageManager.init(new File(getDataFolder(), getTConfig().LANGUAGE_FILE));
 
-        //Initiate the height map flat radius value
-        HeightMap.spawnFlatRadiusSquared = defaultConfig.getInt(TConfig.HEIGHT_MAP_SPAWN_FLAT_RADIUS);
-        if(HeightMap.spawnFlatRadiusSquared > 0) HeightMap.spawnFlatRadiusSquared *= HeightMap.spawnFlatRadiusSquared;
 
         BiomeBank.initSinglesConfig(); //Initiates single biome modes.
 

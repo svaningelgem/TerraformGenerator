@@ -6,7 +6,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Stairs;
 import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
-import org.terraform.coregen.heights.HeightMap;
+import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.MegaChunk;

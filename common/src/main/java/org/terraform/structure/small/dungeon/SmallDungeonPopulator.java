@@ -1,7 +1,7 @@
 package org.terraform.structure.small.dungeon;
 
 import org.jetbrains.annotations.NotNull;
-import org.terraform.coregen.heights.HeightMap;
+import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;

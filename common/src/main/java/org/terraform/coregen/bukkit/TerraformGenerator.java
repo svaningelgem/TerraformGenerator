@@ -12,7 +12,7 @@ import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.coregen.ChunkCache;
 import org.terraform.coregen.TerraformPopulator;
-import org.terraform.coregen.heights.HeightMap;
+import org.terraform.coregen.HeightMap;
 import org.terraform.data.DudChunkData;
 import org.terraform.data.SimpleChunkLocation;
 import org.terraform.data.TerraformWorld;

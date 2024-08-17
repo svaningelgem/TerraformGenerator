@@ -11,7 +11,7 @@ import org.terraform.biome.BiomeHandler;
 import org.terraform.biome.beach.OasisBeach;
 import org.terraform.biome.mountainous.BadlandsCanyonHandler;
 import org.terraform.coregen.ChunkCache;
-import org.terraform.coregen.heights.HeightMap;
+import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.TerraformWorld;

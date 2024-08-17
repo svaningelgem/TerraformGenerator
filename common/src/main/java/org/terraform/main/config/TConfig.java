@@ -13,7 +13,7 @@ public class TConfig extends YamlFileInterface {
     @YamlKey("heightmap.river-frequency")
     public float HEIGHT_MAP_RIVER_FREQUENCY = 0.005f;
     @YamlKey("heightmap.land-height-amplifier")
-    public double HEIGHT_MAP_LAND_HEIGHT_AMPLIFIER = 1d;
+    public float HEIGHT_MAP_LAND_HEIGHT_AMPLIFIER = 1f;
     @YamlKey("heightmap.sea-level")
     public int HEIGHT_MAP_SEA_LEVEL = 62;
     @YamlKey("heightmap.bedrock-height")

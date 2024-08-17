@@ -1,7 +1,7 @@
 package org.terraform.biome;
 
 import org.jetbrains.annotations.NotNull;
-import org.terraform.coregen.heights.HeightMap;
+import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;

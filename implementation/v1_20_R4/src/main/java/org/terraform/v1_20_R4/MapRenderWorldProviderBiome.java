@@ -8,7 +8,7 @@ import net.minecraft.world.level.biome.Climate.Sampler;
 import net.minecraft.world.level.biome.WorldChunkManager;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_20_R4.block.CraftBiome;
-import org.terraform.coregen.heights.HeightMap;
+import org.terraform.coregen.HeightMap;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.config.TConfig;
 

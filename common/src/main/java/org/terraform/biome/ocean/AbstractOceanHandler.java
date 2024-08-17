@@ -2,7 +2,7 @@ package org.terraform.biome.ocean;
 
 import org.terraform.biome.BiomeHandler;
 import org.terraform.biome.BiomeType;
-import org.terraform.coregen.heights.HeightMap;
+import org.terraform.coregen.HeightMap;
 import org.terraform.data.TerraformWorld;
 
 public abstract class AbstractOceanHandler extends BiomeHandler {
