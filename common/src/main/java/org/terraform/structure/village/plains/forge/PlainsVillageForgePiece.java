@@ -1,6 +1,7 @@
 package org.terraform.structure.village.plains.forge;
 
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.Nullable;
 import org.terraform.structure.room.jigsaw.JigsawStructurePiece;
 import org.terraform.structure.room.jigsaw.JigsawType;
 import org.terraform.structure.village.plains.PlainsVillagePopulator;
@@ -8,8 +9,8 @@ import org.terraform.structure.village.plains.forge.PlainsVillageForgeWallPiece.
 
 public abstract class PlainsVillageForgePiece extends JigsawStructurePiece {
 
-	protected PlainsVillagePopulator plainsVillagePopulator;
-	private PlainsVillageForgeWallType wallType = null;
+	protected final PlainsVillagePopulator plainsVillagePopulator;
+	private @Nullable PlainsVillageForgeWallType wallType = null;
 	
 	public PlainsVillageForgePiece(PlainsVillagePopulator plainsVillagePopulator, int widthX, int height, int widthZ, JigsawType type, BlockFace[] validDirs) {
 		super(widthX, height, widthZ, type, validDirs);
@@ -21,11 +22,11 @@ public abstract class PlainsVillageForgePiece extends JigsawStructurePiece {
 	    	this.plainsVillagePopulator = plainsVillagePopulator;
 	}
 
-	public PlainsVillageForgeWallType getWallType() {
+	public @Nullable PlainsVillageForgeWallType getWallType() {
 		return wallType;
 	}
 
-	public void setWallType(PlainsVillageForgeWallType wallType) {
+	public void setWallType(@Nullable PlainsVillageForgeWallType wallType) {
 		this.wallType = wallType;
 	}
 	

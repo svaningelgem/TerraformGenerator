@@ -14,6 +14,7 @@ import org.bukkit.block.data.Rotatable;
 import org.bukkit.block.data.type.RedstoneWire;
 import org.bukkit.block.data.type.RedstoneWire.Connection;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.command.contants.FilenameArgument;
 import org.terraform.coregen.BlockDataFixerAbstract;
 import org.terraform.data.SimpleBlock;
@@ -36,12 +37,12 @@ import java.util.Scanner;
 
 public class TerraSchematic {
 	public static final String SCHEMATIC_FOLDER = File.separator + "schematic";
-    public static HashMap<String, HashMap<Vector,BlockData>> cache = new HashMap<>();
+    public static final @NotNull HashMap<String, HashMap<Vector,BlockData>> cache = new HashMap<>();
 
-    private final File schematicFolder;
-    public SchematicParser parser = new SchematicParser();
+    private final @NotNull File schematicFolder;
+    public @NotNull SchematicParser parser = new SchematicParser();
     HashMap<Vector, BlockData> data = new HashMap<>();
-    SimpleBlock refPoint;
+    final SimpleBlock refPoint;
     BlockFace face = BlockFace.NORTH;
     private double VERSION_VALUE;
 
@@ -52,12 +53,12 @@ public class TerraSchematic {
         this.refPoint = vector;
     }
 
-    public TerraSchematic(Location loc) {
+    public TerraSchematic(@NotNull Location loc) {
         this.schematicFolder = new File(TerraformGeneratorPlugin.get().getDataFolder(), SCHEMATIC_FOLDER);
         this.refPoint = new SimpleBlock(loc);
     }
     
-    public TerraSchematic clone(SimpleBlock refPoint) {
+    public @NotNull TerraSchematic clone(SimpleBlock refPoint) {
     	TerraSchematic clone = new TerraSchematic(refPoint);
     	clone.data = new HashMap<>();
         clone.data.putAll(data);
@@ -65,7 +66,7 @@ public class TerraSchematic {
     	return clone;
     }
 
-    public static TerraSchematic load(String internalPath, SimpleBlock refPoint) throws FileNotFoundException {
+    public static @NotNull TerraSchematic load(String internalPath, SimpleBlock refPoint) throws FileNotFoundException {
     	//A new object gets created from here. If the path is in the cache,
     	//this object is NOT the one that gets returned. Instead, a clone is
     	//returned, with a new hashmap copy and a (broken) version number.
@@ -114,7 +115,6 @@ public class TerraSchematic {
                     
                 } else {
                     //GG
-                    value = null;
                     throw e;
                 }
             }
@@ -128,7 +128,7 @@ public class TerraSchematic {
         return schem;
     }
 
-    public void registerBlock(Block b) {
+    public void registerBlock(@NotNull Block b) {
         Vector rel = b.getLocation().toVector().subtract(refPoint.toVector());
         //String coords = rel.getBlockX() + "," + rel.getBlockY() + "," + rel.getBlockZ();
         data.put(rel, b.getBlockData());
@@ -218,10 +218,7 @@ public class TerraSchematic {
                 if (bdfa != null)
                     bdfa.correctFacing(pos, null, bd, face);
             }
-            
-//            if(pos.getBlockX() == 0 && pos.getBlockZ() == 0) {
-//            	Bukkit.getLogger().info("DEBUG SCHEMATIC: " + refPoint.getRelative(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()).toVector().toString());
-//            }
+
             parser.applyData(refPoint.getRelative(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()), bd);
         }
         
@@ -240,10 +237,10 @@ public class TerraSchematic {
         }
     }
 
-    public void export(String path) throws IOException {
+    public void export(@NotNull String path) throws IOException {
         //Validate it again.
         String validation = new FilenameArgument("schem-name", false).validate(null,path);
-        if(!validation.equals(""))
+        if(!validation.isEmpty())
             throw new IOException(validation);
 
         File outputFile = new File(schematicFolder, path);
@@ -289,7 +286,6 @@ public class TerraSchematic {
     /**
      * This doesn't appear to be used at all
      * lmao.
-     * @return
      */
 	public double getVersionValue() {
 		return VERSION_VALUE;

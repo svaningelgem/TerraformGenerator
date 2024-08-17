@@ -6,6 +6,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
@@ -25,7 +26,7 @@ import java.util.Random;
 
 public class UndergroundDungeonPopulator extends SmallDungeonPopulator {
 
-    private static void dropDownBlock(SimpleBlock block, Material fluid) {
+    private static void dropDownBlock(@NotNull SimpleBlock block, @NotNull Material fluid) {
         if (block.getType().isSolid()) {
             Material type = block.getType();
             block.setType(fluid);
@@ -41,7 +42,7 @@ public class UndergroundDungeonPopulator extends SmallDungeonPopulator {
     }
 
     @Override
-    public void populate(TerraformWorld tw, PopulatorDataAbstract data) {
+    public void populate(@NotNull TerraformWorld tw, @NotNull PopulatorDataAbstract data) {
         MegaChunk mc = new MegaChunk(data.getChunkX(), data.getChunkZ());
 
         int[] spawnCoords = {data.getChunkX() * 16, data.getChunkZ() * 16};
@@ -68,8 +69,8 @@ public class UndergroundDungeonPopulator extends SmallDungeonPopulator {
         spawnDungeonRoom(x, y, z, tw, rand, data);
     }
 
-    public void spawnDungeonRoom(int x, int y, int z, TerraformWorld tw, Random rand,
-                                 PopulatorDataAbstract data) {
+    public void spawnDungeonRoom(int x, int y, int z, TerraformWorld tw, @NotNull Random rand,
+                                 @NotNull PopulatorDataAbstract data) {
         TerraformGeneratorPlugin.logger.info("Spawning Underground Dungeon at " + x + "," + y + "," + z);
         CubeRoom room = new CubeRoom(GenUtils.randOddInt(rand, 9, 15),
                 GenUtils.randOddInt(rand, 9, 15),
@@ -97,13 +98,12 @@ public class UndergroundDungeonPopulator extends SmallDungeonPopulator {
             Wall w = entry.getKey().getRelative(0, 1, 0);
             int length = entry.getValue();
             while (length >= 0) {
-                if (length % 2 == 0 || length == entry.getValue()) {
-
-                } else {
+                if(length % 2 != 0 && length != entry.getValue()) {
                     w.CAPillar(room.getHeight() - 3, rand, Material.COBBLESTONE_WALL, Material.MOSSY_COBBLESTONE_WALL);
                     if(isWet)
                     	w.waterlog(room.getHeight()-3);
                 }
+
                 for (int h = 0; h < room.getHeight() - 3; h++) {
                     BlockUtils.correctSurroundingMultifacingData(w.getRelative(0, h, 0).get());
                 }
@@ -157,18 +157,12 @@ public class UndergroundDungeonPopulator extends SmallDungeonPopulator {
         }
 
         //Place Spawner
-        EntityType type = EntityType.ZOMBIE;
-        switch (rand.nextInt(3)) {
-            case (0):
-                type = EntityType.ZOMBIE;
-                break;
-            case (1):
-                type = EntityType.SKELETON;
-                break;
-            case (2):
-                type = EntityType.SPIDER;
-                break;
-        }
+        EntityType type = switch(rand.nextInt(3)) {
+            case (0) -> EntityType.ZOMBIE;
+            case (1) -> EntityType.SKELETON;
+            case (2) -> EntityType.SPIDER;
+            default -> null;
+        };
         if(isWet) type = EntityType.DROWNED;
         
         data.setSpawner(x, y + 1, z, type);

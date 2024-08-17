@@ -6,6 +6,8 @@ import org.bukkit.Tag;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeSection;
 import org.terraform.coregen.ChunkCache;
@@ -95,13 +97,13 @@ public class GenUtils {
         return list;
     }
 
-    public static int @NotNull [] randomCoords(Random rand, int @NotNull [] lowBound, int @NotNull [] highBound) {
+    public static int @NotNull [] randomCoords(@NotNull Random rand, int @NotNull [] lowBound, int @NotNull [] highBound) {
         return new int[] {randInt(rand, lowBound[0], highBound[0]),
                 randInt(rand, lowBound[1], highBound[1]),
                 randInt(rand, lowBound[2], highBound[2])};
     }
 
-    public static boolean chance(Random rand, int chance, int outOf) {
+    public static boolean chance(@NotNull Random rand, int chance, int outOf) {
         return randInt(rand, 1, outOf) <= chance;
     }
 
@@ -125,7 +127,7 @@ public class GenUtils {
      *
      * @return Position for the biome or null if no biomes found.
      */
-    public static @Nullable Vector2f locateHeightDependentBiome(TerraformWorld tw, BiomeBank biome, Vector2f center, int radius, int blockSkip) {
+    public static @Nullable Vector2f locateHeightDependentBiome(@NotNull TerraformWorld tw, @NotNull BiomeBank biome, @NotNull Vector2f center, int radius, int blockSkip) {
         if(!BiomeBank.isBiomeEnabled(biome)) return null;
     	if(tw.getBiomeBank(Math.round(center.x), Math.round(center.y)) == biome)
             return new Vector2f(center.x, center.y);
@@ -157,7 +159,7 @@ public class GenUtils {
      * WILL NOT FIND RIVERS AND BEACHES.
      * Does not stop until biome is found, much like structure locate, because it should work.
      */
-    public static @Nullable Vector2f locateHeightIndependentBiome(TerraformWorld tw, BiomeBank biome, Vector2f centerBlockLocation) {
+    public static @Nullable Vector2f locateHeightIndependentBiome(TerraformWorld tw, @NotNull BiomeBank biome, @NotNull Vector2f centerBlockLocation) {
         if(!BiomeBank.isBiomeEnabled(biome)) return null;
         
     	BiomeSection center = BiomeBank.getBiomeSectionFromBlockCoords(tw, (int) centerBlockLocation.x, (int) centerBlockLocation.y);
@@ -174,7 +176,7 @@ public class GenUtils {
     	}
     }
 
-    public static Material weightedRandomMaterial(Random rand, Object @NotNull ... candidates) {
+    public static Material weightedRandomMaterial(@NotNull Random rand, Object @NotNull ... candidates) {
         if(candidates.length % 2 != 0) throw new IllegalArgumentException();
         ArrayList<Material> types = new ArrayList<>(50);
         for(int i = 0; i < candidates.length; i++) {
@@ -186,7 +188,7 @@ public class GenUtils {
         return types.get(randInt(rand, 0, types.size() - 1));
     }
 
-    public static Material randMaterial(Random rand, Material @NotNull ... candidates) {
+    public static Material randMaterial(@NotNull Random rand, Material @NotNull ... candidates) {
         if(candidates.length == 1) return candidates[0]; //avoid invocation to randInt
         return candidates[randInt(rand, 0, candidates.length - 1)];
     }
@@ -204,7 +206,7 @@ public class GenUtils {
         return randMaterial(RANDOMIZER, temp);
     }
 
-    public static int @NotNull [] randomSurfaceCoordinates(Random rand, @NotNull PopulatorDataAbstract data) {
+    public static int @NotNull [] randomSurfaceCoordinates(@NotNull Random rand, @NotNull PopulatorDataAbstract data) {
         int chunkX = data.getChunkX();
         int chunkZ = data.getChunkZ();
         int x = randInt(rand, chunkX * 16, chunkX * 16 + 15);
@@ -219,7 +221,7 @@ public class GenUtils {
         return randInt(RANDOMIZER, min, max);
     }
 
-    public static int randInt(Random rand, int d, int max) {
+    public static int randInt(@NotNull Random rand, int d, int max) {
         if(d == max) return d;
         boolean negative = false;
         if(d < 0 && max < 0) {
@@ -252,7 +254,7 @@ public class GenUtils {
     public static double randDouble(@NotNull Random rand, double min, double max) {
         return rand.nextDouble() * (max - min) + min;
     }
-    public static int getHighestX(PopulatorDataAbstract data, int x, int z, Material X) {
+    public static int getHighestX(@NotNull PopulatorDataAbstract data, int x, int z, Material X) {
         int y = TerraformGeneratorPlugin.injector.getMaxY() - 1;
         while(y > TerraformGeneratorPlugin.injector.getMinY() && data.getType(x, y, z) != X) y--;
         return y;
@@ -262,7 +264,7 @@ public class GenUtils {
     /**
      * @return the highest solid block
      */
-    public static int getTrueHighestBlock(PopulatorDataAbstract data, int x, int z) {
+    public static int getTrueHighestBlock(@NotNull PopulatorDataAbstract data, int x, int z) {
         int y = TerraformGeneratorPlugin.injector.getMaxY()-1;
         while(y > TerraformGeneratorPlugin.injector.getMinY() && !data.getType(x, y, z).isSolid()) y--;
         return y;
@@ -281,7 +283,7 @@ public class GenUtils {
     /**
      * @return the highest solid block below y
      */
-    public static int getTrueHighestBlockBelow(PopulatorDataAbstract data, int x, int y, int z) {
+    public static int getTrueHighestBlockBelow(@NotNull PopulatorDataAbstract data, int x, int y, int z) {
         while(y > TerraformGeneratorPlugin.injector.getMinY() && !data.getType(x, y, z).isSolid()) y--;
         return y;
     }
@@ -292,7 +294,7 @@ public class GenUtils {
         return new SimpleBlock(block.getPopData(), block.getX(), y, block.getZ());
     }
 
-	public static boolean isGroundLike(Material mat) {
+	public static boolean isGroundLike(@NotNull Material mat) {
     	//Ice is considered stone-like, but not in a million years is it ground.
         if(BlockUtils.isStoneLike(mat) 
         		&& mat != Material.PACKED_ICE 
@@ -322,7 +324,7 @@ public class GenUtils {
      * Stop fucking iterating from the sky, you look like an idiot.
      * Please for the love of god, use this where you can
      */
-    public static int getTransformedHeight(TerraformWorld tw, int rawX, int rawZ)
+    public static int getTransformedHeight(@NotNull TerraformWorld tw, int rawX, int rawZ)
     {
         ChunkCache cache = TerraformGenerator.getCache(tw, rawX, rawZ);
         int cachedY = cache.getTransformedHeight(rawX&0xF, rawZ&0xF);
@@ -383,7 +385,7 @@ public class GenUtils {
         return y;
     }
 
-    public static Material @NotNull [] mergeArr(Material[] @NotNull ... arrs) {
+    public static Material @NotNull [] mergeArr(@NotNullMaterial[] @NotNull ... arrs) {
         int totalLength = 0, index = 0;
         for(Material[] arr : arrs) totalLength += arr.length;
         Material[] res = new Material[totalLength];
@@ -406,7 +408,7 @@ public class GenUtils {
      * @param distanceBetween Initial distance between objects in a grid.
      *                        (aka. density)
      * @param maxPerturbation Max amount a point can move in each axis
-     * @return List of points
+     * @return Array of points
      */
     public static Vector2f @NotNull [] vectorRandomObjectPositions(int seed, int chunkX, int chunkZ, int distanceBetween, float maxPerturbation) {
 
@@ -494,7 +496,7 @@ public class GenUtils {
         return GenUtils.randDouble(new Random(), lowerBound * base, upperBound * base);
     }
 
-    public static <T> @Nullable T choice(Random rand, T @NotNull [] array)
+    public static <T> @Nullable T choice(@NotNull Random rand, T @NotNull [] array)
     {
         if(array.length == 0) return null;
         if(array.length == 1) return array[0];

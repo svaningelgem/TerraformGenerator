@@ -7,7 +7,7 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.terraform.command.contants.InvalidArgumentException;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.command.contants.TerraCommand;
 import org.terraform.main.TerraformGeneratorPlugin;
 import java.util.Stack;
@@ -19,7 +19,7 @@ public class BiomeVisualiserCommand extends TerraCommand {
     }
 
     @Override
-    public String getDefaultDescription() {
+    public @NotNull String getDefaultDescription() {
         return "Displays a test for biome distribution with the current configuration options";
     }
 
@@ -29,14 +29,13 @@ public class BiomeVisualiserCommand extends TerraCommand {
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender) {
+    public boolean hasPermission(@NotNull CommandSender sender) {
 
         return sender.isOp();
     }
 
     @Override
-    public void execute(CommandSender sender, Stack<String> args)
-            throws InvalidArgumentException {
+    public void execute(CommandSender sender, Stack<String> args) {
     	Player p = (Player) sender;
     	World world = Bukkit.getWorld("world");
     	//idk wtf im doing tbh this doesn't work

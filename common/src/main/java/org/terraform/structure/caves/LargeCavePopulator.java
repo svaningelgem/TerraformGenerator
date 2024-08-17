@@ -2,9 +2,9 @@ package org.terraform.structure.caves;
 
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeType;
-import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.SimpleChunkLocation;
 import org.terraform.data.SimpleLocation;
@@ -41,7 +41,7 @@ public class LargeCavePopulator extends JigsawStructurePopulator {
      * Use room populators for stalactites and the like.
      */
     @Override
-    public JigsawState calculateRoomPopulators(TerraformWorld tw, MegaChunk mc) {
+    public @NotNull JigsawState calculateRoomPopulators(@NotNull TerraformWorld tw, @NotNull MegaChunk mc) {
         JigsawState state = new JigsawState();
 
         int[] spawnCoords = mc.getCenterBiomeSectionBlockCoords();
@@ -93,7 +93,7 @@ public class LargeCavePopulator extends JigsawStructurePopulator {
         seen.add(center);
         queue.add(center);
 
-        while(queue.size() > 0)
+        while(!queue.isEmpty())
         {
             SimpleLocation v = queue.remove();
 
@@ -150,11 +150,7 @@ public class LargeCavePopulator extends JigsawStructurePopulator {
         return state;
     }
 
-    @Override
-    public void populate(TerraformWorld tw, PopulatorDataAbstract data) {
-    }
-
-    private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
+    private boolean rollSpawnRatio(@NotNull TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 12345),
                 (int) (TConfig.STRUCTURES_LARGECAVE_SPAWNRATIO
                         .getDouble() * 10000),
@@ -162,14 +158,14 @@ public class LargeCavePopulator extends JigsawStructurePopulator {
     }
 
     @Override
-    public boolean canSpawn(TerraformWorld tw, int chunkX, int chunkZ, BiomeBank biome) {
+    public boolean canSpawn(@NotNull TerraformWorld tw, int chunkX, int chunkZ, @NotNull BiomeBank biome) {
 		if(biome.getType() == BiomeType.DEEP_OCEANIC)
 			return false;
         return rollSpawnRatio(tw,chunkX,chunkZ);
     }
 
     @Override
-    public Random getHashedRandom(TerraformWorld tw, int chunkX, int chunkZ) {
+    public @NotNull Random getHashedRandom(@NotNull TerraformWorld tw, int chunkX, int chunkZ) {
         return tw.getHashedRand(123912, chunkX, chunkZ);
     }
 

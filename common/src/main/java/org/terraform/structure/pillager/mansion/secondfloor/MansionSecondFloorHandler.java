@@ -3,11 +3,11 @@ package org.terraform.structure.pillager.mansion.secondfloor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
 
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.Wall;
@@ -17,9 +17,9 @@ import org.terraform.structure.room.jigsaw.JigsawType;
 import org.terraform.utils.BlockUtils;
 
 public class MansionSecondFloorHandler {
-	public HashMap<SimpleLocation, JigsawStructurePiece> secondFloorPieces = new HashMap<>();
-    public ArrayList<JigsawStructurePiece> secondFloorOverlapperPieces = new ArrayList<>();
-	private MansionJigsawBuilder builder;
+	public final @NotNull HashMap<SimpleLocation, JigsawStructurePiece> secondFloorPieces = new HashMap<>();
+    public final @NotNull ArrayList<JigsawStructurePiece> secondFloorOverlapperPieces = new ArrayList<>();
+	private final MansionJigsawBuilder builder;
 	private Random random;
 
 	public MansionSecondFloorHandler(MansionJigsawBuilder builder) {
@@ -61,7 +61,7 @@ public class MansionSecondFloorHandler {
         }
 	}
 	
-	public void decorateAwkwardCorner(Wall target, Random random, BlockFace one, BlockFace two) {
+	public void decorateAwkwardCorner(@NotNull Wall target, Random random, BlockFace one, BlockFace two) {
         
     	//Fill in gap in the corner
     	target.Pillar(MansionJigsawBuilder.roomHeight, Material.DARK_OAK_LOG);
@@ -133,12 +133,7 @@ public class MansionSecondFloorHandler {
         }
 
         //Remove pieces that weren't placed and replace the unused wall with the entrance.        
-        Iterator<JigsawStructurePiece> it = secondFloorOverlapperPieces.iterator();
-        while(it.hasNext()) {
-        	JigsawStructurePiece piece = it.next();
-        	if(toRemove.contains(piece))
-        		it.remove();
-        }
+        secondFloorOverlapperPieces.removeIf(toRemove::contains);
     }
     
     public void setRandom(Random random) {

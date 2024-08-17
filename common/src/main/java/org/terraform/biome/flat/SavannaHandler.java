@@ -2,6 +2,7 @@ package org.terraform.biome.flat;
 
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
@@ -17,7 +18,7 @@ import java.util.Random;
 
 public class SavannaHandler extends BiomeHandler {
 
-    private static void makeYellowPatch(int x, int y, int z, PopulatorDataAbstract data, Random random) {
+    private static void makeYellowPatch(int x, int y, int z, @NotNull PopulatorDataAbstract data, @NotNull Random random) {
         int length = GenUtils.randInt(6, 16);
         int nx = x;
         int nz = z;
@@ -42,21 +43,13 @@ public class SavannaHandler extends BiomeHandler {
         return false;
     }
 
-//	@Override
-//	public int getHeight(int x, int z, Random rand) {
-//		SimplexOctaveGenerator gen = new SimplexOctaveGenerator(rand, 2);
-//		gen.setScale(0.005);
-//		
-//		return (int) (gen.noise(x, z, 0.5, 0.5)*7D+50D);
-//	}
-
     @Override
-    public Biome getBiome() {
+    public @NotNull Biome getBiome() {
         return Biome.SAVANNA;
     }
 
     @Override
-    public Material[] getSurfaceCrust(Random rand) {
+    public Material @NotNull [] getSurfaceCrust(@NotNull Random rand) {
         return new Material[]{GenUtils.randMaterial(rand, Material.GRASS_BLOCK, Material.GRASS_BLOCK, Material.GRASS_BLOCK, Material.GRASS_BLOCK, Material.GRASS_BLOCK,
                 Material.GRASS_BLOCK, Material.GRASS_BLOCK, Material.GRASS_BLOCK, Material.GRASS_BLOCK, Material.GRASS_BLOCK, Material.GRASS_BLOCK, Material.COARSE_DIRT),
                 Material.DIRT,
@@ -66,7 +59,7 @@ public class SavannaHandler extends BiomeHandler {
     }
 
     @Override
-    public void populateSmallItems(TerraformWorld world, Random random, int rawX, int surfaceY, int rawZ, PopulatorDataAbstract data) {
+    public void populateSmallItems(TerraformWorld world, @NotNull Random random, int rawX, int surfaceY, int rawZ, @NotNull PopulatorDataAbstract data) {
         if(GenUtils.chance(random,1,128))
             makeYellowPatch(rawX, surfaceY, rawZ, data, random);
 
@@ -80,7 +73,7 @@ public class SavannaHandler extends BiomeHandler {
     }
 
 	@Override
-	public void populateLargeItems(TerraformWorld tw, Random random, PopulatorDataAbstract data) {
+	public void populateLargeItems(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data) {
 		
         boolean spawnedLargeSavannaTree = false;
         

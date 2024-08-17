@@ -4,6 +4,8 @@ import org.bukkit.Axis;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected.Half;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
@@ -20,12 +22,10 @@ import java.util.Random;
 
 public class PlainsVillageRoofHandler {
 
-    public static boolean isRectangle(PlainsVillageHouseJigsawBuilder builder) {
+    public static boolean isRectangle(@NotNull PlainsVillageHouseJigsawBuilder builder) {
         int[] lowestCoords = null;
         int[] highestCoords = null;
         int y = 0;
-        //SimpleLocation lowestCoords = new SimpleLocation();
-        //SimpleLocation highestCoords = new SimpleLocation();
         for (JigsawStructurePiece piece : builder.getPieces().values()) {
             if (lowestCoords == null) {
                 y = piece.getRoom().getY();
@@ -59,8 +59,8 @@ public class PlainsVillageRoofHandler {
     }
 
 
-    public static void placeTentRoof(PlainsVillagePopulator plainsVillagePopulator, Random rand, PlainsVillageHouseJigsawBuilder builder) {
-        Axis superiorAxis = Axis.Z;
+    public static void placeTentRoof(@NotNull PlainsVillagePopulator plainsVillagePopulator, @NotNull Random rand, @NotNull PlainsVillageHouseJigsawBuilder builder) {
+        Axis superiorAxis;
         PopulatorDataAbstract data = builder.getCore().getPopData();
         int[] lowestCoords = null;
         int[] highestCoords = null;
@@ -197,7 +197,7 @@ public class PlainsVillageRoofHandler {
 
     }
 
-    private static Material getLowestMaterial(Wall w) {
+    private static @Nullable Material getLowestMaterial(@NotNull Wall w) {
         Wall other = w.findFloor(10);
         if (other != null) return other.getType();
         return null;
@@ -207,9 +207,8 @@ public class PlainsVillageRoofHandler {
      * Essentially, this just moulds the same blunt pyramid on every room, then
      * changes the sides to stairs. Doesn't look very sophisticated, so it will be
      * used for the weirdly shaped houses that aren't rectangles.
-     * @param builder
      */
-    public static void placeStandardRoof(PlainsVillagePopulator plainsVillagePopulator, PlainsVillageHouseJigsawBuilder builder) {
+    public static void placeStandardRoof(@NotNull PlainsVillagePopulator plainsVillagePopulator, @NotNull PlainsVillageHouseJigsawBuilder builder) {
         PopulatorDataAbstract data = builder.getCore().getPopData();
 
         Material[] solidMat = {plainsVillagePopulator.woodPlank};
@@ -252,9 +251,6 @@ public class PlainsVillageRoofHandler {
 
                         for (BlockFace face : BlockUtils.directBlockFaces) {
                             if (!target.getRelative(face).getType().isSolid()) {
-                                //Material[] mats = new Material[] {plainsVillagePopulator.woodStairs};
-                                //if(depth == -2 || depth == 0)
-                                //	mats = new Material[] {Material.COBBLESTONE_STAIRS,Material.MOSSY_COBBLESTONE_STAIRS};
                                 new StairBuilder(stairMat)
                                         .setFacing(face.getOppositeFace())
                                         .apply(target);

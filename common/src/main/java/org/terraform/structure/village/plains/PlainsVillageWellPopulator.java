@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -28,14 +29,14 @@ public class PlainsVillageWellPopulator extends PlainsVillageAbstractRoomPopulat
 			"plainsvillage-well2"
 	};
 	
-	private PlainsVillagePopulator plainsVillagePopulator;
+	private final PlainsVillagePopulator plainsVillagePopulator;
     public PlainsVillageWellPopulator(PlainsVillagePopulator plainsVillagePopulator, Random rand, boolean forceSpawn, boolean unique) {
         super(rand, forceSpawn, unique);
         this.plainsVillagePopulator = plainsVillagePopulator;
     }
 
     @Override
-    public void populate(PopulatorDataAbstract data, CubeRoom room) {
+    public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
 
     	//This code is repeated from super, as it must be changed a little
         int y = super.calculateRoomY(data, room);
@@ -133,13 +134,13 @@ public class PlainsVillageWellPopulator extends PlainsVillageAbstractRoomPopulat
     }
 
     @Override
-    public boolean canPopulate(CubeRoom room) {
+    public boolean canPopulate(@NotNull CubeRoom room) {
         return room.getWidthX() <= 10;
     }
     
     private class PlainsVillageWellSchematicParser extends SchematicParser{
         @Override
-        public void applyData(SimpleBlock block, BlockData data) {
+        public void applyData(@NotNull SimpleBlock block, @NotNull BlockData data) {
             if (data.getMaterial().toString().contains("COBBLESTONE")) {
                 data = Bukkit.createBlockData(
                         data.getAsString().replaceAll(

@@ -3,6 +3,7 @@ package org.terraform.biome.flat;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.block.data.Ageable;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
@@ -10,6 +11,7 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.config.TConfig;
+import org.terraform.main.config.TConfigOption;
 import org.terraform.tree.FractalTypes;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
@@ -26,20 +28,12 @@ public class TaigaHandler extends BiomeHandler {
     }
 
     @Override
-    public Biome getBiome() {
+    public @NotNull Biome getBiome() {
         return Biome.TAIGA;
     }
 
-//	@Override
-//	public int getHeight(int x, int z, Random rand) {
-//		SimplexOctaveGenerator gen = new SimplexOctaveGenerator(rand, 2);
-//		gen.setScale(0.005);
-//		
-//		return (int) (gen.noise(x, z, 0.5, 0.5)*7D+50D);
-//	}
-
     @Override
-    public Material[] getSurfaceCrust(Random rand) {
+    public Material @NotNull [] getSurfaceCrust(@NotNull Random rand) {
         return new Material[]{
         		Material.GRASS_BLOCK,
                 Material.DIRT,
@@ -49,7 +43,7 @@ public class TaigaHandler extends BiomeHandler {
     }
 
     @Override
-    public void populateSmallItems(TerraformWorld tw, Random random, int rawX, int surfaceY, int rawZ, PopulatorDataAbstract data) {
+    public void populateSmallItems(TerraformWorld tw, @NotNull Random random, int rawX, int surfaceY, int rawZ, @NotNull PopulatorDataAbstract data) {
         // Use noise to group sweet berry bushes
         FastNoise sweetBerriesNoise = NoiseCacheHandler.getNoise(
             tw,
@@ -90,7 +84,7 @@ public class TaigaHandler extends BiomeHandler {
     }
 
 	@Override
-	public void populateLargeItems(TerraformWorld tw, Random random, PopulatorDataAbstract data) {
+	public void populateLargeItems(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data) {
         SimpleLocation[] trees = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 11);
 
         for (SimpleLocation sLoc : trees) {
@@ -118,7 +112,7 @@ public class TaigaHandler extends BiomeHandler {
 	}
 	
 	@Override
-	public BiomeBank getBeachType() {
+	public @NotNull BiomeBank getBeachType() {
 		return BiomeBank.ROCKY_BEACH;
 	}
 	
@@ -126,7 +120,7 @@ public class TaigaHandler extends BiomeHandler {
      * Replaces the highest dirt-like blocks with a noise-fuzzed 
      * circle of Podzol. Fuzzes the edges.
      */
-    public static void replacePodzol(int seed, float radius, SimpleBlock base) {
+    public static void replacePodzol(int seed, float radius, @NotNull SimpleBlock base) {
     	if (radius <= 0) return;
         if (radius <= 0.5) {
             //block.setReplaceType(ReplaceType.ALL);

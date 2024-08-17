@@ -3,6 +3,7 @@ package org.terraform.structure.villagehouse.animalfarm;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
@@ -29,7 +30,7 @@ public class AnimalFarmSchematicParser extends SchematicParser {
     }
 
     @Override
-    public void applyData(SimpleBlock block, BlockData data) {
+    public void applyData(@NotNull SimpleBlock block, @NotNull BlockData data) {
         if (data.getMaterial() == Material.COBBLESTONE) {
             if (GenUtils.chance(rand, 1, 5)) data = Bukkit
                     .createBlockData(Material.STONE);
@@ -66,20 +67,18 @@ public class AnimalFarmSchematicParser extends SchematicParser {
         } else if (data.getMaterial() == Material.CHEST) {
             if (GenUtils.chance(rand, 1, 5)) {
                 block.setType(Material.AIR);
-                return; //A fifth of chests are not placed.
+                return; // A fifth of chests is not placed.
             }
             super.applyData(block, data);
             int i = rand.nextInt(3);
-            if (i == 0)
-                pop.lootTableChest(block.getX(), block.getY(), block.getZ(),
+            switch(i) {
+                case 0 -> pop.lootTableChest(block.getX(), block.getY(), block.getZ(),
                         TerraLootTable.VILLAGE_BUTCHER);
-            else if (i == 1)
-                pop.lootTableChest(block.getX(), block.getY(), block.getZ(),
+                case 1 -> pop.lootTableChest(block.getX(), block.getY(), block.getZ(),
                         TerraLootTable.VILLAGE_TANNERY);
-            else if (i == 2)
-                pop.lootTableChest(block.getX(), block.getY(), block.getZ(),
+                default -> pop.lootTableChest(block.getX(), block.getY(), block.getZ(),
                         TerraLootTable.VILLAGE_SHEPHERD);
-            return;
+            }
         } else {
             super.applyData(block, data);
         }

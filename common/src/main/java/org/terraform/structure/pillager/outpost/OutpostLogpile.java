@@ -2,6 +2,7 @@ package org.terraform.structure.pillager.outpost;
 
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
@@ -19,13 +20,13 @@ import java.util.Random;
 
 public class OutpostLogpile extends RoomPopulatorAbstract {
 
-	private BiomeBank biome;
+	private final BiomeBank biome;
     public OutpostLogpile(Random rand, boolean forceSpawn, boolean unique, BiomeBank biome) {
         super(rand, forceSpawn, unique);
         this.biome = biome;
     }
 
-    public void populate(PopulatorDataAbstract data, CubeRoom room) {
+    public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
     	Material fenceMat = WoodUtils.getWoodForBiome(biome, WoodType.FENCE);
     	Material planksMat = WoodUtils.getWoodForBiome(biome, WoodType.PLANKS);
     	int stackHeight = GenUtils.randInt(rand, 2, 4);

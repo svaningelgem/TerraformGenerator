@@ -3,8 +3,8 @@ package org.terraform.command;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
-import org.terraform.command.contants.InvalidArgumentException;
 import org.terraform.command.contants.TerraCommand;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
@@ -19,7 +19,7 @@ public class BiomeConsoleCheckCommand extends TerraCommand {
     }
 
     @Override
-    public String getDefaultDescription() {
+    public @NotNull String getDefaultDescription() {
         return "Checks biome at 10 random coordinates via console.";
     }
 
@@ -29,14 +29,14 @@ public class BiomeConsoleCheckCommand extends TerraCommand {
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender) {
+    public boolean hasPermission(@NotNull CommandSender sender) {
 
         return sender.isOp();
     }
 
     @Override
-    public void execute(CommandSender sender, Stack<String> args)
-            throws InvalidArgumentException {
+    public void execute(@NotNull CommandSender sender, Stack<String> args)
+	{
     	World world = Bukkit.getWorld("world");
 		for(int i = 0; i < 10; i++) {
     	   int x = new Random().nextInt(1000);

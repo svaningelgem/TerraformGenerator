@@ -1,6 +1,7 @@
 package org.terraform.utils.version;
 
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.NMSInjectorAbstract;
 
 import javax.annotation.Nullable;
@@ -17,8 +18,8 @@ public class Version {
         V_1_20_R4("v1_20_R4",20.5,20.6),
         V_1_21_R1("v1_21_R1",21.0,21.1),
         ;
-        private double[] versionDouble;
-        private String packageName;
+        private final double[] versionDouble;
+        private final String packageName;
 
         SupportedVersion(String packageName, double... versionDouble) {
             this.versionDouble = versionDouble;
@@ -41,7 +42,7 @@ public class Version {
     public static final double DOUBLE = toVersionDouble(VERSION);
 
     @Deprecated
-    public static boolean isAtLeast(String version) {
+    public static boolean isAtLeast(@NotNull String version) {
         return DOUBLE >= toVersionDouble(version);
     }
 
@@ -59,7 +60,7 @@ public class Version {
      * @param version a string like "1.20.4"
      * @return e.g. substrings "1." away and returns 20.4 for 1.20.4
      */
-    public static double toVersionDouble(String version) {
+    public static double toVersionDouble(@NotNull String version) {
         return Double.parseDouble(version.substring(2));
     }
 }

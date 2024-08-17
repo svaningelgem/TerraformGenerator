@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Map.Entry;
 
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
@@ -17,11 +18,11 @@ import org.terraform.structure.room.RoomLayoutGenerator;
 public class AncientCityAltarPopulator extends AncientCityAbstractRoomPopulator {
 
     public AncientCityAltarPopulator(TerraformWorld tw, HashSet<SimpleLocation> occupied, RoomLayoutGenerator gen, Random rand, boolean forceSpawn, boolean unique) {
-        super(tw, occupied, gen, rand, forceSpawn, unique);
+        super(tw, gen, rand, forceSpawn, unique);
     }
 
     @Override
-    public void populate(PopulatorDataAbstract data, CubeRoom room) {
+    public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
     	super.populate(data, room);
     	//Generates outer walls
     	for(Entry<Wall,Integer> entry:this.effectiveRoom.getFourWalls(data, 0).entrySet()) {
@@ -78,7 +79,7 @@ public class AncientCityAltarPopulator extends AncientCityAbstractRoomPopulator 
     
 
     @Override
-    public boolean canPopulate(CubeRoom room) {
+    public boolean canPopulate(@NotNull CubeRoom room) {
         return room.getWidthX() % 2 ==1 || room.getWidthZ() % 2 == 1;
     }
 }

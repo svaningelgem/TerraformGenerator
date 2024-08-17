@@ -14,14 +14,13 @@ import org.terraform.command.contants.TerraCommandArgument;
 import org.terraform.main.config.TConfig;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 
 public class TerraformCommandManager implements TabExecutor {
 
-    public TerraformCommandManager(TerraformGeneratorPlugin plugin, String... bases) {
+    public TerraformCommandManager(@NotNull TerraformGeneratorPlugin plugin, String @NotNull ... bases) {
         
     	this.plugin = plugin;
 		for(String base:bases){
@@ -91,55 +90,39 @@ public class TerraformCommandManager implements TabExecutor {
         this.registerCommand(new LocateBiomeCommand(plugin, "locatebiome", "lb"));
     }
     
-	private ArrayList<TerraCommand> commands = new ArrayList<>();
+	private final @NotNull ArrayList<TerraCommand> commands = new ArrayList<>();
 
-	private TerraformGeneratorPlugin plugin;
-	public ArrayList<String> bases = new ArrayList<String>();
+	private final TerraformGeneratorPlugin plugin;
+	public final @NotNull ArrayList<String> bases = new ArrayList<String>();
 	
-	public void unregisterCommand(Class<?> clazz){
-		Iterator<TerraCommand> it = commands.iterator();
-		while(it.hasNext()){
-			TerraCommand cmd = it.next();
-			if(clazz.isInstance(cmd)){
-				it.remove();
-			}
-		}
+	public void unregisterCommand(@NotNull Class<?> clazz){
+        commands.removeIf(clazz::isInstance);
 	}
 	
 	public void unregisterCommand(String alias){
-		Iterator<TerraCommand> it = commands.iterator();
-		while(it.hasNext()){
-			TerraCommand cmd = it.next();
-			if(cmd.matchCommand(alias)){
-				it.remove();
-			}
-		}
+        commands.removeIf(cmd -> cmd.matchCommand(alias));
 	}
 	
-	public ArrayList<TerraCommand> getCommands(){
+	public @NotNull ArrayList<TerraCommand> getCommands(){
 		return commands;
 	}
 	
-	public void registerCommand(TerraCommand cmd){
+	public void registerCommand(@NotNull TerraCommand cmd){
 		this.commands.add(cmd);
 		plugin.getLang().fetchLang("command." + cmd.aliases.get(0) + ".desc",cmd.getDefaultDescription());
 	}
 	
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String arg2,
-			String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg2,
+                             String @NotNull [] args) {
 		if(args.length == 0){
 			sender.sendMessage(plugin.getLang().fetchLang("command.unknown"));
-			try {
-				new HelpCommand(plugin, this).execute(sender, new Stack<String>());
-			} catch (InvalidArgumentException e) {
-				sender.sendMessage(ChatColor.RED + e.getProblem());
-			}
-			return false;
+            new HelpCommand(plugin, this).execute(sender, new Stack<>());
+            return false;
 		}
 		for(TerraCommand command:commands){
 			if(command.matchCommand(args[0].toLowerCase(Locale.ENGLISH))){
-				Stack<String> stack = new Stack<String>();
+				Stack<String> stack = new Stack<>();
 				//Push arguments from back to front, except the 1st arg
 				for(int i = args.length -1; i>=1; i--){
 					stack.push(args[i]);
@@ -172,7 +155,7 @@ public class TerraformCommandManager implements TabExecutor {
 
     @Nullable
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String alias, @NotNull String @NotNull [] args) {
 	    List<String> options = new ArrayList<>();
         if (args.length == 0) {
             for (TerraCommand terraCommand : commands) {

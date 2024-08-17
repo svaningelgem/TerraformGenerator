@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Slab;
 import org.bukkit.block.data.type.Slab.Type;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.Wall;
@@ -21,14 +22,14 @@ import org.terraform.utils.GenUtils;
 
 public class MansionTowerStairwayPopulator extends MansionRoomPopulator {
 
-	private int towerHeight;
+	private final int towerHeight;
 	public MansionTowerStairwayPopulator(CubeRoom room, HashMap<BlockFace, MansionInternalWallState> internalWalls, int towerHeight) {
 		super(room, internalWalls);
 		this.towerHeight = towerHeight;
 	}
 
 	@Override
-	public void decorateRoom(PopulatorDataAbstract data, Random random) {
+	public void decorateRoom(@NotNull PopulatorDataAbstract data, @NotNull Random random) {
         int bfIndex = 0;
         Wall b = new Wall(this.getRoom().getCenterSimpleBlock(data));
         int height = 8;
@@ -86,7 +87,7 @@ public class MansionTowerStairwayPopulator extends MansionRoomPopulator {
     
 
 	@Override
-	public MansionRoomSize getSize() {
+	public @NotNull MansionRoomSize getSize() {
 		return new MansionRoomSize(1,1);
 	}
 

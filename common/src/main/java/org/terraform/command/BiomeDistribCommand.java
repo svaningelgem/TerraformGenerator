@@ -2,11 +2,11 @@ package org.terraform.command;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeClimate;
 import org.terraform.biome.BiomeSection;
 import org.terraform.biome.BiomeType;
-import org.terraform.command.contants.InvalidArgumentException;
 import org.terraform.command.contants.TerraCommand;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
@@ -21,7 +21,7 @@ public class BiomeDistribCommand extends TerraCommand {
     }
 
     @Override
-    public String getDefaultDescription() {
+    public @NotNull String getDefaultDescription() {
         return "Displays a test for biome distribution with the current configuration options";
     }
 
@@ -31,14 +31,13 @@ public class BiomeDistribCommand extends TerraCommand {
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender) {
+    public boolean hasPermission(@NotNull CommandSender sender) {
 
         return sender.isOp();
     }
 
     @Override
-    public void execute(CommandSender sender, Stack<String> args)
-            throws InvalidArgumentException {
+    public void execute(@NotNull CommandSender sender, Stack<String> args) {
     	HashMap<BiomeBank, Integer> counts = new HashMap<>();
     	HashMap<BiomeClimate, Integer> climates = new HashMap<>();
         MathValues temperature = new MathValues();
@@ -71,8 +70,8 @@ public class BiomeDistribCommand extends TerraCommand {
 	        		climates.put(sect.getBiomeBank().getClimate(), climates.get(sect.getBiomeBank().getClimate())+1);
 	        }
         
-        sender.sendMessage("Temperature: " + temperature.toString());
-        sender.sendMessage("Moisture: " + moisture.toString());
+        sender.sendMessage("Temperature: " + temperature);
+        sender.sendMessage("Moisture: " + moisture);
         for(int val:counts.values()) total += val;
         
         
@@ -85,12 +84,8 @@ public class BiomeDistribCommand extends TerraCommand {
         			count = ChatColor.RED + count;
         		if(100*counts.getOrDefault(b, 0)/total < 5)
         			percent = ChatColor.RED + percent;
-        		
-//            	sender.sendMessage(b + 
-//            			" (" + b.getClimate().getTemperatureRange() + "," + b.getClimate().getMoistureRange() + "): \t\t\t\t" 
-//            			+ count 
-//            			+ "\t" + percent + "%)");
-        		sender.sendMessage("%-35s(%-10s, %-10s): %-10s%s)"
+
+                sender.sendMessage("%-35s(%-10s, %-10s): %-10s%s)"
         				.formatted(b.toString(), b.getClimate().getTemperatureRange(), b.getClimate().getMoistureRange(),
         						count, percent+"%)"));
         	}
@@ -131,7 +126,7 @@ public class BiomeDistribCommand extends TerraCommand {
         }
     }
 
-    private class MathValues {
+    private static class MathValues {
         private double total = 0;
         private double lowest = 99999;
         private double highest = -99999;
@@ -159,7 +154,7 @@ public class BiomeDistribCommand extends TerraCommand {
             return highest;
         }
 
-        public String toString() {
+        public @NotNull String toString() {
             return getLowest() + " to " + getHighest() + ": " + avg();
         }
     }

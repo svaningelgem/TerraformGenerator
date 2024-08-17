@@ -2,7 +2,7 @@ package org.terraform.biome.mountainous;
 
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
-import org.terraform.biome.BiomeBank;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.flat.JungleHandler;
 import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
@@ -27,7 +27,7 @@ import java.util.Random;
 
 public class ForestedMountainsHandler extends AbstractMountainHandler {
 
-    private static void dirtStack(PopulatorDataAbstract data, Random rand, int x, int y, int z) {
+    private static void dirtStack(@NotNull PopulatorDataAbstract data, @NotNull Random rand, int x, int y, int z) {
         data.setType(x, y, z, Material.GRASS_BLOCK);
 
         if (GenUtils.chance(rand, 1, 10))
@@ -48,22 +48,14 @@ public class ForestedMountainsHandler extends AbstractMountainHandler {
     public boolean isOcean() {
         return false;
     }
-//
-//	@Override
-//	public int getHeight(int x, int z, Random rand) {
-//		SimplexOctaveGenerator gen = new SimplexOctaveGenerator(rand, 8);
-//		gen.setScale(0.005);
-//		
-//		return (int) ((gen.noise(x, z, 0.5, 0.5)*7D+50D)*1.5);
-//	}
 
     @Override
-    public Biome getBiome() {
+    public @NotNull Biome getBiome() {
         return Biome.JUNGLE;
     }
 
     @Override
-    public Material[] getSurfaceCrust(Random rand) {
+    public Material @NotNull [] getSurfaceCrust(@NotNull Random rand) {
         return new Material[]{GenUtils.randMaterial(rand, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.COBBLESTONE),
                 GenUtils.randMaterial(rand, Material.COBBLESTONE, Material.STONE, Material.STONE),
                 GenUtils.randMaterial(rand, Material.COBBLESTONE, Material.STONE, Material.STONE),
@@ -72,7 +64,7 @@ public class ForestedMountainsHandler extends AbstractMountainHandler {
     }
 
     @Override
-    public void populateSmallItems(TerraformWorld tw, Random random, int rawX, int surfaceY, int rawZ, PopulatorDataAbstract data) {
+    public void populateSmallItems(TerraformWorld tw, @NotNull Random random, int rawX, int surfaceY, int rawZ, @NotNull PopulatorDataAbstract data) {
 
         //Carve under-mountain river holes
         if(rawX % 3 == 0 && rawZ % 3 == 0)
@@ -116,7 +108,7 @@ public class ForestedMountainsHandler extends AbstractMountainHandler {
     }    
 
 	@Override
-	public void populateLargeItems(TerraformWorld tw, Random random, PopulatorDataAbstract data) {
+	public void populateLargeItems(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data) {
         
         FastNoise groundWoodNoise = NoiseCacheHandler.getNoise(
         		tw, 
@@ -210,9 +202,5 @@ public class ForestedMountainsHandler extends AbstractMountainHandler {
             }
         }
     }
-	
-	@Override
-	public BiomeBank getBeachType() {
-		return BiomeBank.SANDY_BEACH;
-	}
+
 }

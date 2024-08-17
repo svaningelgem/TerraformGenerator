@@ -1,7 +1,7 @@
 package org.terraform.command;
 
 import org.bukkit.command.CommandSender;
-import org.terraform.command.contants.InvalidArgumentException;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.command.contants.TerraCommand;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
@@ -21,7 +21,7 @@ public class ValuesCommand extends TerraCommand {
     }
 
     @Override
-    public String getDefaultDescription() {
+    public @NotNull String getDefaultDescription() {
         return "Shows a range of values for stuff";
     }
 
@@ -31,14 +31,14 @@ public class ValuesCommand extends TerraCommand {
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender) {
+    public boolean hasPermission(@NotNull CommandSender sender) {
 
         return sender.isOp();
     }
     
     @SuppressWarnings("unused")
 	private double warpSine(double tempUnwarpedSineX, int period, int seed) {
-		double warp = GenUtils.randInt(new Random(3*seed),-3, 3);
+		double warp = GenUtils.randInt(new Random(3L *seed),-3, 3);
 		if(warp == 0) warp = 1;
 		if(warp < 0) {
 			warp = (10-2*warp)/10.0;
@@ -58,8 +58,7 @@ public class ValuesCommand extends TerraCommand {
 
     @SuppressWarnings("unused")
 	@Override
-    public void execute(CommandSender sender, Stack<String> args)
-            throws InvalidArgumentException {
+    public void execute(@NotNull CommandSender sender, Stack<String> args) {
     	
         MathValues vals = new MathValues();
         MathValues unwarped = new MathValues();
@@ -79,8 +78,7 @@ public class ValuesCommand extends TerraCommand {
         		});
         
         int period = 4;
-        for (int i = 0; i < 9000000; i++) {
-            int x = i;
+        for (int x = 0; x < 9000000; x++) {
             int y = GenUtils.randInt(0,100);
             int z = GenUtils.randInt(-10000, 10000);
             vals.addValue(carverEntranceStandard.GetNoise(x, y, z));
@@ -94,7 +92,7 @@ public class ValuesCommand extends TerraCommand {
         sender.sendMessage("Unwarped" + unwarped);
     }
 
-    private class MathValues {
+    private static class MathValues {
         private double total = 0;
         private double lowest = 99999;
         private double highest = -99999;
@@ -122,7 +120,7 @@ public class ValuesCommand extends TerraCommand {
             return highest;
         }
 
-        public String toString() {
+        public @NotNull String toString() {
             return getLowest() + " to " + getHighest() + ": " + avg();
         }
     }

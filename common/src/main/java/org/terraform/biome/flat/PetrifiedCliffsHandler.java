@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.block.BlockFace;
 import org.bukkit.generator.ChunkGenerator;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeBlender;
 import org.terraform.biome.BiomeHandler;
@@ -14,7 +15,6 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
 import org.terraform.tree.FractalTreeBuilder;
-import org.terraform.tree.FractalTypes;
 import org.terraform.tree.FractalTypes.Tree;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
@@ -33,12 +33,12 @@ public class PetrifiedCliffsHandler extends BiomeHandler {
     }
 
     @Override
-    public Biome getBiome() {
+    public @NotNull Biome getBiome() {
         return Biome.BIRCH_FOREST;
     }
 
     @Override
-    public Material[] getSurfaceCrust(Random rand) {
+    public Material @NotNull [] getSurfaceCrust(@NotNull Random rand) {
         return new Material[]{Material.GRASS_BLOCK,
                 Material.DIRT,
                 Material.DIRT,
@@ -53,7 +53,7 @@ public class PetrifiedCliffsHandler extends BiomeHandler {
     }};
 
     @Override
-    public void populateSmallItems(TerraformWorld world, Random random, int rawX, int surfaceY, int rawZ, PopulatorDataAbstract data) {
+    public void populateSmallItems(TerraformWorld world, @NotNull Random random, int rawX, int surfaceY, int rawZ, @NotNull PopulatorDataAbstract data) {
 
         for(int i = 0; i < 30; i++)
             if(data.getType(rawX, surfaceY, rawZ) == Material.DIORITE
@@ -104,13 +104,13 @@ public class PetrifiedCliffsHandler extends BiomeHandler {
     }
     
     @Override
-    public int getMaxHeightForCaves(TerraformWorld tw, int x, int z) {
+    public int getMaxHeightForCaves(@NotNull TerraformWorld tw, int x, int z) {
     	return (int) HeightMap.CORE.getHeight(tw, x, z);
     }
     
 
     @Override
-    public void transformTerrain(ChunkCache cache, TerraformWorld tw, Random random, ChunkGenerator.ChunkData chunk, int x, int z, int chunkX, int chunkZ) {
+    public void transformTerrain(@NotNull ChunkCache cache, @NotNull TerraformWorld tw, Random random, ChunkGenerator.@NotNull ChunkData chunk, int x, int z, int chunkX, int chunkZ) {
 
         FastNoise noise = NoiseCacheHandler.getNoise(
         		tw, 
@@ -127,7 +127,7 @@ public class PetrifiedCliffsHandler extends BiomeHandler {
         		tw, 
         		NoiseCacheEntry.BIOME_PETRIFIEDCLIFFS_INNERNOISE, 
         		world -> {
-        	    	FastNoise n = new FastNoise(tw.getHashedRand(111, 0102, 1).nextInt(99999));
+        	    	FastNoise n = new FastNoise(tw.getHashedRand(111, 102, 1).nextInt(99999));
         	        n.SetNoiseType(FastNoise.NoiseType.SimplexFractal);
         	        n.SetFractalOctaves(3);
         	        n.SetFrequency(0.05f);
@@ -165,14 +165,14 @@ public class PetrifiedCliffsHandler extends BiomeHandler {
         }
     }
 
-    private static BiomeBlender getBiomeBlender(TerraformWorld tw) {
+    private static @NotNull BiomeBlender getBiomeBlender(TerraformWorld tw) {
         if (biomeBlender == null) biomeBlender = new BiomeBlender(tw, true, true)
                 .setRiverThreshold(4).setBlendBeaches(false);
         return biomeBlender;
     }
 
 	@Override
-	public void populateLargeItems(TerraformWorld tw, Random random, PopulatorDataAbstract data) {
+	public void populateLargeItems(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data) {
 		//Rock trees
         SimpleLocation[] trees = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 13, 0.2f);
         
@@ -182,26 +182,19 @@ public class PetrifiedCliffsHandler extends BiomeHandler {
                 sLoc.setY(treeY);
                 if(data.getBiome(sLoc.getX(),sLoc.getZ()) == getBiome() &&
                         data.getType(sLoc.getX(),sLoc.getY(),sLoc.getZ()).toString().endsWith("STONE")) {
-                    Tree treeType;
-                    switch(random.nextInt(3)) {
-                    case 0:
-                		treeType = FractalTypes.Tree.ANDESITE_PETRIFIED_SMALL;
-                		break;
-                    case 1:
-                		treeType = FractalTypes.Tree.GRANITE_PETRIFIED_SMALL;
-                		break;
-                	default:
-                		treeType = FractalTypes.Tree.DIORITE_PETRIFIED_SMALL;
-                		break;
-                    }
-                	new FractalTreeBuilder(treeType).build(tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
+                    Tree treeType = switch(random.nextInt(3)) {
+                        case 0 -> Tree.ANDESITE_PETRIFIED_SMALL;
+                        case 1 -> Tree.GRANITE_PETRIFIED_SMALL;
+                        default -> Tree.DIORITE_PETRIFIED_SMALL;
+                    };
+                    new FractalTreeBuilder(treeType).build(tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
                 }
         	}            
         }
 	}
 	
 	@Override
-	public BiomeBank getBeachType() {
+	public @NotNull BiomeBank getBeachType() {
 		return BiomeBank.ROCKY_BEACH;
 	}
 }

@@ -2,6 +2,7 @@ package org.terraform.utils;
 
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
 
@@ -17,13 +18,12 @@ public class StalactiteBuilder {
 	private boolean isFacingUp;
 	private int verticalSpace;
     private float minRadius = 0;
-    private float maxRadius = 3f;
-	
-	public StalactiteBuilder(Material... wallType) {
+
+    public StalactiteBuilder(Material... wallType) {
 		this.wallType = wallType;
 	}
 	
-	public StalactiteBuilder build(Random rand, Wall w) {
+	public @NotNull StalactiteBuilder build(@NotNull Random rand, @NotNull Wall w) {
 		if(verticalSpace < 6) return this;
 		
 		int stalactiteHeight;
@@ -74,27 +74,27 @@ public class StalactiteBuilder {
 		return this;
 	}
 
-	public StalactiteBuilder setSolidBlockType(Material... solidBlockType) {
+	public @NotNull StalactiteBuilder setSolidBlockType(Material... solidBlockType) {
 		this.solidBlockType = solidBlockType;
 		return this;
 	}
 
-	public StalactiteBuilder setWallType(Material... wallType) {
+	public @NotNull StalactiteBuilder setWallType(Material... wallType) {
 		this.wallType = wallType;
 		return this;
 	}
 
-	public StalactiteBuilder setFacingUp(boolean isFacingUp) {
+	public @NotNull StalactiteBuilder setFacingUp(boolean isFacingUp) {
 		this.isFacingUp = isFacingUp;
 		return this;
 	}
 
-	public StalactiteBuilder setMinRadius(int minRadius) {
+	public @NotNull StalactiteBuilder setMinRadius(int minRadius) {
 		this.minRadius = minRadius;
 		return this;
 	}
 	
-	public StalactiteBuilder setVerticalSpace(int verticalSpace) {
+	public @NotNull StalactiteBuilder setVerticalSpace(int verticalSpace) {
 		this.verticalSpace = verticalSpace;
 		return this;
 	}
@@ -103,15 +103,13 @@ public class StalactiteBuilder {
      * Responsible for generating a stalactite or stalagmite.
      * @param facingUp generates stalagmites if true. If not, makes stalactites.
      */
-	public void makeSpike(Random random, SimpleBlock root, double baseRadius, int height, boolean facingUp) {
+	public void makeSpike(Random random, @NotNull SimpleBlock root, double baseRadius, int height, boolean facingUp) {
 
         //HEIGHT CANNOT BE LESS THAN 1. (1.0/0.0) DOES NOT THROW ARITHMETIC ERRORS
         if(height < 8) return;
-/*        FastNoise noise = new FastNoise(random.nextInt(1239870));
-        noise.SetNoiseType(FastNoise.NoiseType.Simplex);
-        noise.SetFrequency(0.13f);*/
 
-		baseRadius = Math.min(maxRadius, Math.max(baseRadius, minRadius));
+        float maxRadius = 3f;
+        baseRadius = Math.min(maxRadius, Math.max(baseRadius, minRadius));
 
         //Perform a BFS against the cone 3d equation to prevent spheres from overwriting
         //each other. Should reduce chunk r/w ops

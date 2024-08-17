@@ -3,6 +3,7 @@ package org.terraform.biome.cavepopulators;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
@@ -15,7 +16,7 @@ import java.util.Random;
 public class MossyCavePopulator extends AbstractCavePopulator {
 
     @Override
-    public void populate(TerraformWorld tw, Random random, SimpleBlock ceil, SimpleBlock floor) {
+    public void populate(TerraformWorld tw, @NotNull Random random, @NotNull SimpleBlock ceil, @NotNull SimpleBlock floor) {
 
         int caveHeight = ceil.getY() - floor.getY();
 
@@ -65,7 +66,6 @@ public class MossyCavePopulator extends AbstractCavePopulator {
         if (GenUtils.chance(random, 1, 35)) {
             int h = caveHeight / 4;
             if (h < 1) h = 1;
-            if (h > 4) h = 4;
             Wall w = new Wall(floor.getRelative(0,1,0), BlockFace.NORTH);
             if (BlockUtils.isAir(w.getType())) {
                 if (w.getRelative(0, -1, 0).getType() == Material.SAND || w.getRelative(0, 1, 0).getType() == Material.SANDSTONE)

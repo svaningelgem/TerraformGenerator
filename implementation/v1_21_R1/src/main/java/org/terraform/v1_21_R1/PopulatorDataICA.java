@@ -10,10 +10,10 @@ import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.craftbukkit.v1_21_R1.block.CraftBiome;
-import org.bukkit.craftbukkit.v1_21_R1.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_21_R1.block.data.CraftBlockData;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.custombiomes.CustomBiomeType;
 import org.terraform.coregen.NaturalSpawnType;
 import org.terraform.coregen.TerraLootTable;
@@ -48,7 +48,7 @@ import java.util.Optional;
 import java.util.Random;
 
 public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
-	private PopulatorDataAbstract parent;
+	private final PopulatorDataAbstract parent;
     private final IChunkAccess ica;
     private final int chunkX;
     private final int chunkZ;
@@ -64,7 +64,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
         this.tw = tw;
     }
     
-    public Material getType(int x, int y, int z) {
+    public @NotNull Material getType(int x, int y, int z) {
     	//return parent.getType(x, y, z);
     	IBlockData ibd = ica.a_(new BlockPosition(x, y, z)); //getState
         return CraftBlockData.fromData(ibd).getMaterial();
@@ -104,7 +104,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 	}
 
     @Override
-    public void setType(int x, int y, int z, Material type) {
+    public void setType(int x, int y, int z, @NotNull Material type) {
     	//parent.setType(x, y, z, type);
     	ica.a(new BlockPosition(x, y, z), ((CraftBlockData) Bukkit.createBlockData(type)).getState(), false);
 
@@ -112,17 +112,11 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
     }
 
     @Override
-    public void setBlockData(int x, int y, int z, BlockData data) {
+    public void setBlockData(int x, int y, int z, @NotNull BlockData data) {
     	//parent.setBlockData(x, y, z, data);
     	ica.a(new BlockPosition(x, y, z), ((CraftBlockData) data).getState(), false);
 
-    	//ica.setType(new BlockPosition(x, y, z)
-        //        , ((CraftBlockData) data).getState(), false);
     }
-
-//	public Biome getBiome(int rawX, int rawY, int rawZ){
-//		return CraftBlock.biomeBaseToBiome(gen.getBiome(ica.d(), new BlockPosition(rawX,rawY,rawZ)));
-//	}
 
     public Biome getBiome(int rawX, int rawZ) {
     	return parent.getBiome(rawX, rawZ);
@@ -147,22 +141,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 
     @Override
     public void setSpawner(int rawX, int rawY, int rawZ, EntityType type) {
-//        BlockPosition pos = new BlockPosition(rawX, rawY, rawZ);
-//        ica.setType(pos, Blocks.bV.getBlockData(), true); //Spawner
-//        TileEntity tileentity = ica.getTileEntity(pos);
-//
-//        if (tileentity instanceof TileEntityMobSpawner) {
-//            try {
-//                ((TileEntityMobSpawner) tileentity).getSpawner().setMobName((EntityTypes<?>) EntityTypes.class.getField(type.toString()).get(null));
-//            } catch (IllegalArgumentException | IllegalAccessException
-//                    | NoSuchFieldException | SecurityException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-//            TerraformGeneratorPlugin.logger.error("Failed to fetch mob spawner entity at (" + "," + pos.getX() + "," + pos.getY() + "," + pos.getZ() + ")");
-//            //WorldGenDungeons.LOGGER.error("Failed to fetch mob spawner entity at ({}, {}, {})", blockposition.getX(), blockposition.getY(), blockposition.getZ());
-//        }
-    	parent.setSpawner(rawX, rawY, rawZ, type);
+        parent.setSpawner(rawX, rawY, rawZ, type);
     }
 
     @Override
@@ -182,7 +161,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 
     @SuppressWarnings("deprecation")
 	@Override
-    public void registerNaturalSpawns(NaturalSpawnType type, int x0, int y0, int z0, int x1, int y1, int z1) {
+    public void registerNaturalSpawns(@NotNull NaturalSpawnType type, int x0, int y0, int z0, int x1, int y1, int z1) {
     	ResourceKey<Structure> structureKey = switch(type) {
             case GUARDIAN -> BuiltinStructures.l; //Ocean Monument
             case PILLAGER -> BuiltinStructures.a; //Pillager Outpost
@@ -197,17 +176,15 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 
         try {
             //Something's broken about EnumDirection's import. Might be a temporary thing.
-            Class enumDirectionClass = Class.forName("net.minecraft.core.EnumDirection");
+            Class<?> enumDirectionClass = Class.forName("net.minecraft.core.EnumDirection");
             Field enumDirectionA = enumDirectionClass.getField("a");
             enumDirectionA.setAccessible(true);
-            Class oceanMonumentPiecesHClass = OceanMonumentPieces.h.class;
+            Class<OceanMonumentPieces.h> oceanMonumentPiecesHClass = OceanMonumentPieces.h.class;
             StructurePiece customBoundPiece = (StructurePiece) oceanMonumentPiecesHClass
                 .getConstructor(RandomSource.class, int.class, int.class, enumDirectionClass)
                 .newInstance(
                         RandomSource.a(), x0, z0, enumDirectionA.get(null)
                 );
-            //StructurePiece customBoundPiece = new OceanMonumentPieces
-            //.h(RandomSource.a(), x0, z0, enumDirectionClass.getField("a"));
 
             PiecesContainer container = new PiecesContainer(new ArrayList<>() {{add(customBoundPiece);}});
 
@@ -244,7 +221,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 
     @SuppressWarnings("deprecation")
 	@Override
-    public void spawnMinecartWithChest(int x, int y, int z, TerraLootTable table, Random random) {
+    public void spawnMinecartWithChest(int x, int y, int z, TerraLootTable table, @NotNull Random random) {
         EntityMinecartChest entityminecartchest = new EntityMinecartChest(
                 ws.getMinecraftWorld(),
                 (float) x + 0.5F,

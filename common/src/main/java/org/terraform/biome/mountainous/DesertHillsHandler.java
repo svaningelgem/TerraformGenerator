@@ -2,6 +2,7 @@ package org.terraform.biome.mountainous;
 
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeSection;
 import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
@@ -23,25 +24,17 @@ public class DesertHillsHandler extends AbstractMountainHandler {
 
 	//Make these resemble dunes more, not massive mountains.
 	@Override
-	protected double getPeakMultiplier(BiomeSection section, Random sectionRandom) {
+	protected double getPeakMultiplier(@NotNull BiomeSection section, @NotNull Random sectionRandom) {
 		return GenUtils.randDouble(sectionRandom, 1.1, 1.3);
 	}
 
     @Override
-    public Biome getBiome() {
+    public @NotNull Biome getBiome() {
         return Biome.DESERT;
     }
-//
-//	@Override
-//	public int getHeight(int x, int z, Random rand) {
-//		SimplexOctaveGenerator gen = new SimplexOctaveGenerator(rand, 8);
-//		gen.setScale(0.005);
-//		
-//		return (int) ((gen.noise(x, z, 0.5, 0.5)*7D+50D)*1.5);
-//	}
 
     @Override
-    public Material[] getSurfaceCrust(Random rand) {
+    public Material @NotNull [] getSurfaceCrust(@NotNull Random rand) {
         return new Material[]{Material.SAND,
                 Material.SAND,
                 GenUtils.randMaterial(rand, Material.SANDSTONE, Material.SAND),
@@ -58,7 +51,7 @@ public class DesertHillsHandler extends AbstractMountainHandler {
     }
 
     @Override
-    public void populateSmallItems(TerraformWorld world, Random random, int rawX, int surfaceY, int rawZ, PopulatorDataAbstract data) {
+    public void populateSmallItems(TerraformWorld world, Random random, int rawX, int surfaceY, int rawZ, @NotNull PopulatorDataAbstract data) {
         
         FastNoise duneNoise = NoiseCacheHandler.getNoise(
             world,

@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Random;
 
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
-import org.terraform.data.Wall;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.structure.pillager.mansion.MansionInternalWallState;
 import org.terraform.structure.pillager.mansion.MansionRoomPopulator;
@@ -25,7 +25,7 @@ public class MansionSecondFloorBunkPopulator extends MansionRoomPopulator {
 	private static final int roomWidthX = 15;
 	private static final int roomWidthZ = 6;
 	@Override
-	public void decorateRoom(PopulatorDataAbstract data, Random random) {
+	public void decorateRoom(@NotNull PopulatorDataAbstract data, @NotNull Random random) {
 
 		int[] lowerBounds = this.getRoom().getLowerCorner(1);
 		BlockFace randomFace = new BlockFace[] {BlockFace.NORTH, BlockFace.SOUTH}[random.nextInt(2)];
@@ -50,25 +50,10 @@ public class MansionSecondFloorBunkPopulator extends MansionRoomPopulator {
 		}
 	
 	}
-	
-	@Override
-	public void decorateExit(Random rand, Wall w) {
-		
-	}
-
-	@Override
-	public void decorateWindow(Random rand, Wall w) {
-		
-	}
-	
-	@Override
-	public void decorateWall(Random rand, Wall w) {
-		
-	}
 
 
 	@Override
-	public MansionRoomSize getSize() {
+	public @NotNull MansionRoomSize getSize() {
 		return new MansionRoomSize(2,1);
 	}
 }

@@ -6,8 +6,9 @@ dependencies {
     compileOnly("org.jetbrains:annotations:20.1.0")
     compileOnly("com.github.AvarionMC:yaml:1.1.1")
 }
+
 //Set this to the lowest compat in implementation
 java {
-    sourceCompatibility = JavaVersion.VERSION_16
-    targetCompatibility = JavaVersion.VERSION_16
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }

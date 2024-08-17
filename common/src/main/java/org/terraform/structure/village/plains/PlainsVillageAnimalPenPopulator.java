@@ -3,6 +3,7 @@ package org.terraform.structure.village.plains;
 import org.bukkit.Material;
 import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -27,14 +28,14 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
             EntityType.CHICKEN
     };
 
-	private PlainsVillagePopulator plainsVillagePopulator;
+	private final PlainsVillagePopulator plainsVillagePopulator;
     public PlainsVillageAnimalPenPopulator(PlainsVillagePopulator plainsVillagePopulator, Random rand, boolean forceSpawn, boolean unique) {
         super(rand, forceSpawn, unique);
         this.plainsVillagePopulator = plainsVillagePopulator;
     }
 
     @Override
-    public void populate(PopulatorDataAbstract data, CubeRoom room) {
+    public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
     	
     	//If terrain is adverse, 
     	//just forget it, animal pens don't fare well in hilly terrain.
@@ -63,10 +64,8 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
     					int wallHeight = 3;
         				if(target.getY() < roomY) 
         					wallHeight = 2 + (roomY - target.getY());
-//        				else if(target.getY() > roomY) 
-//        					wallHeight -= 1;
-        				
-        				if(i % 2 == 0) {
+
+                        if(i % 2 == 0) {
         					target.Pillar(wallHeight, plainsVillagePopulator.woodLog);
         					target.getUp(wallHeight).setType(Material.COBBLESTONE_SLAB);
         					target.getDown(2).getRight().CorrectMultipleFacing(wallHeight+2);
@@ -216,7 +215,7 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
     }
 
     @Override
-    public boolean canPopulate(CubeRoom room) {
+    public boolean canPopulate(@NotNull CubeRoom room) {
         return room.getWidthX() >= 15 && (room.getWidthX() < 18 || room.getWidthZ() < 18);
     }
 }

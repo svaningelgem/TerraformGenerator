@@ -1,6 +1,7 @@
 package org.terraform.structure.village.plains;
 
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -13,25 +14,19 @@ import java.util.Random;
 
 public class PlainsVillageStandardHousePopulator extends PlainsVillageAbstractRoomPopulator {
 	
-	private PlainsVillagePopulator plainsVillagePopulator;
+	private final PlainsVillagePopulator plainsVillagePopulator;
     public PlainsVillageStandardHousePopulator(PlainsVillagePopulator plainsVillagePopulator, Random rand, boolean forceSpawn, boolean unique) {
         super(rand, forceSpawn, unique);
         this.plainsVillagePopulator = plainsVillagePopulator;
     }
 
     @Override
-    public void populate(PopulatorDataAbstract data, CubeRoom room) {
+    public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
     	super.populate(data, room);
         int height = super.calculateRoomY(data, room);
         //GenUtils.getHighestGroundOrSeaLevel(data, room.getX(), room.getZ());
         
         //Debug squares
-//    	int[] lowerCorner = room.getLowerCorner();
-//    	int[] upperCorner = room.getUpperCorner();
-//    	for(int x = lowerCorner[0]; x <= upperCorner[0]; x++)
-//    		for(int z = lowerCorner[1]; z <= upperCorner[1]; z++) {
-//    			data.setType(x, height, z, Material.RED_WOOL);
-//    		}
 
         PlainsVillageHouseJigsawBuilder builder = new PlainsVillageHouseJigsawBuilder(
         		plainsVillagePopulator,
@@ -72,7 +67,7 @@ public class PlainsVillageStandardHousePopulator extends PlainsVillageAbstractRo
 
 
     @Override
-    public boolean canPopulate(CubeRoom room) {
+    public boolean canPopulate(@NotNull CubeRoom room) {
         return room.getWidthX() >= 15;
     }
 }

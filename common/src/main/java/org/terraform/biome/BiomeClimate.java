@@ -1,5 +1,6 @@
 package org.terraform.biome;
 
+import org.jetbrains.annotations.NotNull;
 import org.terraform.utils.Range;
 import org.terraform.main.config.TConfig;
 
@@ -49,9 +50,9 @@ public enum BiomeClimate {
 	TRANSITION(Range.between(-4.0,4.0),Range.between(-4.0,4.0),0), 
 	; 
 	
-	Range<Double> temperatureRange;
-	Range<Double> moistureRange;
-	int priority; //Higher priority means override.
+	final Range<Double> temperatureRange;
+	final Range<Double> moistureRange;
+	final int priority; //Higher priority means override.
 	BiomeClimate(Range<Double> temperatureRange, Range<Double> moistureRange, int priority){
 		this.temperatureRange = temperatureRange;
 		this.moistureRange = moistureRange;
@@ -66,11 +67,11 @@ public enum BiomeClimate {
 		return moistureRange;
 	}
 	
-	private static boolean isInRange(double val, Range<Double> r) {
+	private static boolean isInRange(double val, @NotNull Range<Double> r) {
 		return r.getMaximum() >= val && r.getMinimum() <= val;
 	}
 	
-	public static BiomeClimate selectClimate(double temp, double moist) {
+	public static @NotNull BiomeClimate selectClimate(double temp, double moist) {
 		
 		BiomeClimate candidate = BiomeClimate.TRANSITION;
 		
@@ -80,10 +81,8 @@ public enum BiomeClimate {
 				
 				//If there are multiple climate ranges that apply to this, then
 				//the climate with the highest priority will win.
-				if(candidate == null)
-					candidate = climate;
-				else if(candidate.priority < climate.priority)
-					candidate = climate;
+                if(candidate.priority < climate.priority)
+                    candidate = climate;
 			}
 		
 		return candidate;

@@ -9,6 +9,8 @@ import org.bukkit.craftbukkit.v1_18_R2.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_18_R2.block.data.CraftBlockData;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.terraform.biome.custombiomes.CustomBiomeType;
 import org.terraform.coregen.NaturalSpawnType;
 import org.terraform.coregen.TerraLootTable;
@@ -46,7 +48,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
-	private PopulatorDataAbstract parent;
+	private final PopulatorDataAbstract parent;
     private final IChunkAccess ica;
     private final int chunkX;
     private final int chunkZ;
@@ -87,10 +89,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 			targetBiome = biomeRegistry.g(rkey); //getHolderOrThrow
 	        if(targetBiome == null) {
 	        	TerraformGeneratorPlugin.logger.error("Custom biome was not found in the vanilla registry!");
-//	        	String[] split = cbt.getKey().split(":");
-//	            ResourceKey<BiomeBase> newrkey = ResourceKey.a(IRegistry.aP, new MinecraftKey(split[0],split[1]));
-//	            base = biomeRegistry.a(newrkey);
-	        	targetBiome =  CraftBlock.biomeToBiomeBase(ica.biomeRegistry, fallback);
+                targetBiome =  CraftBlock.biomeToBiomeBase(ica.biomeRegistry, fallback);
 	        }
 		}
 		
@@ -104,7 +103,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 	}
 
     @Override
-    public void setType(int x, int y, int z, Material type) {
+    public void setType(int x, int y, int z, @NotNull Material type) {
     	//parent.setType(x, y, z, type);
     	ica.a(new BlockPosition(x, y, z), ((CraftBlockData) Bukkit.createBlockData(type)).getState(), false);
 
@@ -112,17 +111,11 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
     }
 
     @Override
-    public void setBlockData(int x, int y, int z, BlockData data) {
+    public void setBlockData(int x, int y, int z, @NotNull BlockData data) {
     	//parent.setBlockData(x, y, z, data);
     	ica.a(new BlockPosition(x, y, z), ((CraftBlockData) data).getState(), false);
 
-    	//ica.setType(new BlockPosition(x, y, z)
-        //        , ((CraftBlockData) data).getState(), false);
     }
-
-//	public Biome getBiome(int rawX, int rawY, int rawZ){
-//		return CraftBlock.biomeBaseToBiome(gen.getBiome(ica.d(), new BlockPosition(rawX,rawY,rawZ)));
-//	}
 
     public Biome getBiome(int rawX, int rawZ) {
     	return parent.getBiome(rawX, rawZ);
@@ -142,63 +135,28 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 
     @Override
     public void addEntity(int rawX, int rawY, int rawZ, EntityType type) {
-//        EntityTypes<?> et;
-//        try {
-//            et = (EntityTypes<?>) EntityTypes.class.getDeclaredField(EntityTypeMapper.getObfsNameFromBukkitEntityType(type)).get(null);
-//            Entity e = et.a(ws.getMinecraftWorld());
-//            e.setPositionRotation((double) rawX + 0.5D, rawY, (double) rawZ + 0.5D, 0.0F, 0.0F);
-//            if (e instanceof EntityInsentient) {
-//                ((EntityInsentient) e).setPersistent();
-//                ((EntityInsentient) e).prepare(ws, ws.getDamageScaler(new BlockPosition(rawX, rawY, rawZ)), EnumMobSpawn.d, null, null); //EnumMobSpawn.STRUCTURE
-//            }
-//
-//            ws.addEntity(e);
-//        } catch (IllegalArgumentException | IllegalAccessException
-//                | NoSuchFieldException | SecurityException e1) {
-//            e1.printStackTrace();
-//        }
-    	parent.addEntity(rawX, rawY, rawZ, type);
+        parent.addEntity(rawX, rawY, rawZ, type);
     }
 
     @Override
     public void setSpawner(int rawX, int rawY, int rawZ, EntityType type) {
-//        BlockPosition pos = new BlockPosition(rawX, rawY, rawZ);
-//        ica.setType(pos, Blocks.bV.getBlockData(), true); //Spawner
-//        TileEntity tileentity = ica.getTileEntity(pos);
-//
-//        if (tileentity instanceof TileEntityMobSpawner) {
-//            try {
-//                ((TileEntityMobSpawner) tileentity).getSpawner().setMobName((EntityTypes<?>) EntityTypes.class.getField(type.toString()).get(null));
-//            } catch (IllegalArgumentException | IllegalAccessException
-//                    | NoSuchFieldException | SecurityException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-//            TerraformGeneratorPlugin.logger.error("Failed to fetch mob spawner entity at (" + "," + pos.getX() + "," + pos.getY() + "," + pos.getZ() + ")");
-//            //WorldGenDungeons.LOGGER.error("Failed to fetch mob spawner entity at ({}, {}, {})", blockposition.getX(), blockposition.getY(), blockposition.getZ());
-//        }
-    	parent.setSpawner(rawX, rawY, rawZ, type);
+        parent.setSpawner(rawX, rawY, rawZ, type);
     }
 
     @Override
-    public void lootTableChest(int x, int y, int z, TerraLootTable table) {
+    public void lootTableChest(int x, int y, int z, @NotNull TerraLootTable table) {
         BlockPosition pos = new BlockPosition(x, y, z);
         TileEntityLootable.a(ica, tw.getHashedRand(x, y, z), pos, getLootTable(table));
     }
 
     @Override
-    public void registerNaturalSpawns(NaturalSpawnType type, int x0, int y0, int z0, int x1, int y1, int z1) {
-    	ResourceKey<StructureFeature<?, ?>> structureKey = BuiltinStructures.l; //Monument
-    	switch(type) {
-    	case GUARDIAN:
-    		structureKey = BuiltinStructures.l; //Ocean Monument
-    		break;
-    	case PILLAGER:
-    		structureKey = BuiltinStructures.a; //Pillager Outpost
-    		break;
-    	}
+    public void registerNaturalSpawns(@NotNull NaturalSpawnType type, int x0, int y0, int z0, int x1, int y1, int z1) {
+    	ResourceKey<StructureFeature<?, ?>> structureKey = switch(type) {
+            case GUARDIAN -> BuiltinStructures.l; //Ocean Monument
+            case PILLAGER -> BuiltinStructures.a; //Pillager Outpost
+        }; //Monument
 
-		CraftServer craftserver = (CraftServer)Bukkit.getServer();
+        CraftServer craftserver = (CraftServer)Bukkit.getServer();
 		DedicatedServer dedicatedserver = craftserver.getServer();
     	IRegistry<StructureFeature<?,?>> featureRegistry = dedicatedserver.aU().b(IRegistry.aL);
 		
@@ -208,7 +166,9 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
         .WorldGenMonumentPiece1(new Random(), x0, z0,
         EnumDirection.a);
     	
-    	PiecesContainer container = new PiecesContainer(new ArrayList<StructurePiece>() {{add(customBoundPiece);}});
+    	PiecesContainer container = new PiecesContainer(new ArrayList<>() {{
+            add(customBoundPiece);
+        }});
 
 		StructureStart start = new StructureStart(
 				structureFeature,
@@ -236,7 +196,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 
     @SuppressWarnings("deprecation")
 	@Override
-    public void spawnMinecartWithChest(int x, int y, int z, TerraLootTable table, Random random) {
+    public void spawnMinecartWithChest(int x, int y, int z, @NotNull TerraLootTable table, @NotNull Random random) {
         EntityMinecartChest entityminecartchest = new EntityMinecartChest(
                 ws.getMinecraftWorld(),
                 (float) x + 0.5F,
@@ -247,92 +207,47 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
         ws.addFreshEntity(entityminecartchest, SpawnReason.CHUNK_GEN);
     }
     
-    private MinecraftKey getLootTable(TerraLootTable table) {
-        switch (table) {
-        case EMPTY:
-            return LootTables.a;
-        case SPAWN_BONUS_CHEST:
-            return LootTables.b;
-        case END_CITY_TREASURE:
-            return LootTables.c;
-        case SIMPLE_DUNGEON:
-            return LootTables.d;
-        case VILLAGE_WEAPONSMITH:
-            return LootTables.e;
-        case VILLAGE_TOOLSMITH:
-            return LootTables.f;
-        case VILLAGE_ARMORER:
-            return LootTables.g;
-        case VILLAGE_CARTOGRAPHER:
-            return LootTables.h;
-        case VILLAGE_MASON:
-            return LootTables.i;
-        case VILLAGE_SHEPHERD:
-            return LootTables.j;
-        case VILLAGE_BUTCHER:
-            return LootTables.k;
-        case VILLAGE_FLETCHER:
-            return LootTables.l;
-        case VILLAGE_FISHER:
-            return LootTables.m;
-        case VILLAGE_TANNERY:
-            return LootTables.n;
-        case VILLAGE_TEMPLE:
-            return LootTables.o;
-        case VILLAGE_DESERT_HOUSE:
-            return LootTables.p;
-        case VILLAGE_PLAINS_HOUSE:
-            return LootTables.q;
-        case VILLAGE_TAIGA_HOUSE:
-            return LootTables.r;
-        case VILLAGE_SNOWY_HOUSE:
-            return LootTables.s;
-        case VILLAGE_SAVANNA_HOUSE:
-            return LootTables.t;
-        case ABANDONED_MINESHAFT:
-            return LootTables.u;
-        case NETHER_BRIDGE:
-            return LootTables.v;
-        case STRONGHOLD_LIBRARY:
-            return LootTables.w;
-        case STRONGHOLD_CROSSING:
-            return LootTables.x;
-        case STRONGHOLD_CORRIDOR:
-            return LootTables.y;
-        case DESERT_PYRAMID:
-            return LootTables.z;
-        case JUNGLE_TEMPLE:
-            return LootTables.A;
-        case JUNGLE_TEMPLE_DISPENSER:
-            return LootTables.B;
-        case IGLOO_CHEST:
-            return LootTables.C;
-        case WOODLAND_MANSION:
-            return LootTables.D;
-        case UNDERWATER_RUIN_SMALL:
-            return LootTables.E;
-        case UNDERWATER_RUIN_BIG:
-            return LootTables.F;
-        case BURIED_TREASURE:
-            return LootTables.G;
-        case SHIPWRECK_MAP:
-            return LootTables.H;
-        case SHIPWRECK_SUPPLY:
-            return LootTables.I;
-        case SHIPWRECK_TREASURE:
-            return LootTables.J;
-        case PILLAGER_OUTPOST:
-            return LootTables.K;
-//        case BASTION_TREASURE:
-//            return LootTables.L;
-//        case BASTION_OTHER:
-//            return LootTables.M;
-//        case BASTION_BRIDGE:
-//            return LootTables.N;
-//        case BASTION_HOGLIN_STABLE:
-//            return LootTables.O;
-        case RUINED_PORTAL:
-            return LootTables.P;
+    private @Nullable MinecraftKey getLootTable(@NotNull TerraLootTable table) {
+        return switch(table) {
+            case EMPTY -> LootTables.a;
+            case SPAWN_BONUS_CHEST -> LootTables.b;
+            case END_CITY_TREASURE -> LootTables.c;
+            case SIMPLE_DUNGEON -> LootTables.d;
+            case VILLAGE_WEAPONSMITH -> LootTables.e;
+            case VILLAGE_TOOLSMITH -> LootTables.f;
+            case VILLAGE_ARMORER -> LootTables.g;
+            case VILLAGE_CARTOGRAPHER -> LootTables.h;
+            case VILLAGE_MASON -> LootTables.i;
+            case VILLAGE_SHEPHERD -> LootTables.j;
+            case VILLAGE_BUTCHER -> LootTables.k;
+            case VILLAGE_FLETCHER -> LootTables.l;
+            case VILLAGE_FISHER -> LootTables.m;
+            case VILLAGE_TANNERY -> LootTables.n;
+            case VILLAGE_TEMPLE -> LootTables.o;
+            case VILLAGE_DESERT_HOUSE -> LootTables.p;
+            case VILLAGE_PLAINS_HOUSE -> LootTables.q;
+            case VILLAGE_TAIGA_HOUSE -> LootTables.r;
+            case VILLAGE_SNOWY_HOUSE -> LootTables.s;
+            case VILLAGE_SAVANNA_HOUSE -> LootTables.t;
+            case ABANDONED_MINESHAFT -> LootTables.u;
+            case NETHER_BRIDGE -> LootTables.v;
+            case STRONGHOLD_LIBRARY -> LootTables.w;
+            case STRONGHOLD_CROSSING -> LootTables.x;
+            case STRONGHOLD_CORRIDOR -> LootTables.y;
+            case DESERT_PYRAMID -> LootTables.z;
+            case JUNGLE_TEMPLE -> LootTables.A;
+            case JUNGLE_TEMPLE_DISPENSER -> LootTables.B;
+            case IGLOO_CHEST -> LootTables.C;
+            case WOODLAND_MANSION -> LootTables.D;
+            case UNDERWATER_RUIN_SMALL -> LootTables.E;
+            case UNDERWATER_RUIN_BIG -> LootTables.F;
+            case BURIED_TREASURE -> LootTables.G;
+            case SHIPWRECK_MAP -> LootTables.H;
+            case SHIPWRECK_SUPPLY -> LootTables.I;
+            case SHIPWRECK_TREASURE -> LootTables.J;
+            case PILLAGER_OUTPOST -> LootTables.K;
+            case RUINED_PORTAL -> LootTables.P;
+            default ->
 //        case SHEEP_WHITE:
 //            return LootTables.Q;
 //        case SHEEP_ORANGE:
@@ -403,8 +318,8 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 //            return LootTables.ax;
 //        case PIGLIN_BARTERING:
 //            return LootTables.ay
-        }
-        return null;
+                    null;
+        };
     }
 
 	@Override

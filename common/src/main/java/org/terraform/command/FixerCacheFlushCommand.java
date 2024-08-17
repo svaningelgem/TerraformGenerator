@@ -1,7 +1,7 @@
 package org.terraform.command;
 
 import org.bukkit.command.CommandSender;
-import org.terraform.command.contants.InvalidArgumentException;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.command.contants.TerraCommand;
 import org.terraform.coregen.bukkit.NativeGeneratorPatcherPopulator;
 import org.terraform.coregen.bukkit.PhysicsUpdaterPopulator;
@@ -16,7 +16,7 @@ public class FixerCacheFlushCommand extends TerraCommand {
     }
 
     @Override
-    public String getDefaultDescription() {
+    public @NotNull String getDefaultDescription() {
         return "Flushes the chunk fixer cache.";
     }
 
@@ -26,14 +26,14 @@ public class FixerCacheFlushCommand extends TerraCommand {
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender) {
+    public boolean hasPermission(@NotNull CommandSender sender) {
 
         return sender.isOp();
     }
 
     @Override
-    public void execute(CommandSender sender, Stack<String> args)
-            throws InvalidArgumentException {
+    public void execute(@NotNull CommandSender sender, Stack<String> args)
+	{
     	NativeGeneratorPatcherPopulator.flushChanges();
     	PhysicsUpdaterPopulator.flushChanges();
     	sender.sendMessage("Flushing changes.");

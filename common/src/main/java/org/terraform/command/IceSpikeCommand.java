@@ -2,8 +2,8 @@ package org.terraform.command;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.flat.IceSpikesHandler;
-import org.terraform.command.contants.InvalidArgumentException;
 import org.terraform.command.contants.TerraCommand;
 import org.terraform.coregen.populatordata.PopulatorDataPostGen;
 import org.terraform.data.TerraformWorld;
@@ -20,7 +20,7 @@ public class IceSpikeCommand extends TerraCommand {
     }
 
     @Override
-    public String getDefaultDescription() {
+    public @NotNull String getDefaultDescription() {
         return "Spawns an ice spike";
     }
 
@@ -30,13 +30,12 @@ public class IceSpikeCommand extends TerraCommand {
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender) {
+    public boolean hasPermission(@NotNull CommandSender sender) {
         return sender.isOp();
     }
 
     @Override
-    public void execute(CommandSender sender, Stack<String> args)
-            throws InvalidArgumentException {
+    public void execute(CommandSender sender, Stack<String> args) {
 
         Player p = (Player) sender;
         PopulatorDataPostGen data = new PopulatorDataPostGen(p.getLocation().getChunk());

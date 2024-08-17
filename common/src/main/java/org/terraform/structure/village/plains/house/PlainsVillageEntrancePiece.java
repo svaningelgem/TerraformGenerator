@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Orientable;
 import org.bukkit.block.data.type.Slab;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.Wall;
 import org.terraform.structure.room.jigsaw.JigsawStructurePiece;
@@ -20,8 +21,8 @@ import java.util.Random;
 
 public class PlainsVillageEntrancePiece extends JigsawStructurePiece {
 
-    PlainsVillageHouseVariant var;
-    PlainsVillagePopulator plainsVillagePopulator;
+    final PlainsVillageHouseVariant var;
+    final PlainsVillagePopulator plainsVillagePopulator;
     public PlainsVillageEntrancePiece(PlainsVillagePopulator plainsVillagePopulator, PlainsVillageHouseVariant var, int widthX, int height, int widthZ, JigsawType type, BlockFace[] validDirs) {
         super(widthX, height, widthZ, type, validDirs);
         this.var = var;
@@ -30,7 +31,7 @@ public class PlainsVillageEntrancePiece extends JigsawStructurePiece {
     }
 
     @Override
-    public void build(PopulatorDataAbstract data, Random rand) {
+    public void build(@NotNull PopulatorDataAbstract data, @NotNull Random rand) {
 
         SimpleEntry<Wall, Integer> entry = this.getRoom().getWall(data, getRotation().getOppositeFace(), 0);
         Wall w = entry.getKey().getRelative(0, -1, 0);
@@ -51,11 +52,6 @@ public class PlainsVillageEntrancePiece extends JigsawStructurePiece {
         BlockUtils.placeDoor(data, plainsVillagePopulator.woodDoor,
                 w.getX(), w.getY(), w.getZ(), w.getDirection().getOppositeFace());
 
-//        BlockUtils.angledStairwayUntilSolid(
-//                w.getFront().getRelative(0, -1, 0).get(), w.getDirection(),
-//                new Material[]{Material.COBBLESTONE, Material.MOSSY_COBBLESTONE},
-//                Material.COBBLESTONE_STAIRS, Material.MOSSY_COBBLESTONE_STAIRS);
-        
 
         if(w.getFront().getType().isSolid()) {
 	        new StairwayBuilder(Material.COBBLESTONE_STAIRS, Material.MOSSY_COBBLESTONE_STAIRS)

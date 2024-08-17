@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Biome;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataICABiomeWriterAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
@@ -21,14 +22,14 @@ import java.util.Random;
 
 public class LushClusterCavePopulator extends AbstractCaveClusterPopulator {
 
-	private boolean isForLargeCave;
+	private final boolean isForLargeCave;
 	public LushClusterCavePopulator(float radius, boolean isForLargeCave) {
 		super(radius);
 		this.isForLargeCave = isForLargeCave;
 	}
 	
     @Override
-	public void oneUnit(TerraformWorld tw, Random random, SimpleBlock ceil, SimpleBlock floor, boolean boundary) {
+	public void oneUnit(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull SimpleBlock ceil, @NotNull SimpleBlock floor, boolean boundary) {
     	
     	//=========================
         //Upper decorations

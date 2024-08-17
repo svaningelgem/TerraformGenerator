@@ -20,7 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_20_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_20_R2.block.CraftBiome;
-import org.bukkit.craftbukkit.v1_20_R2.block.CraftBlock;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.custombiomes.CustomBiomeType;
 import org.terraform.main.TerraformGeneratorPlugin;
 
@@ -29,10 +29,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -97,13 +95,9 @@ public class CustomBiomeHandler {
 			e1.printStackTrace();
 		}
 
-//		getBiomeRegistry().forEach(biomeBase -> {
-//			TerraformGeneratorPlugin.logger.info("biome id " + getBiomeRegistry().b(biomeBase));
-//        });
-		
-	}
+    }
 
-	private static void registerCustomBiomeBase(CustomBiomeType biomeType, DedicatedServer dedicatedserver, IRegistryWritable<BiomeBase> registrywritable, BiomeBase forestbiome) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	private static void registerCustomBiomeBase(@NotNull CustomBiomeType biomeType, DedicatedServer dedicatedserver, @NotNull IRegistryWritable<BiomeBase> registrywritable, @NotNull BiomeBase forestbiome) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
 		ResourceKey<BiomeBase> newKey = ResourceKey.a(Registries.ap, new MinecraftKey("terraformgenerator", biomeType.toString().toLowerCase(Locale.ENGLISH)));
 
@@ -118,10 +112,7 @@ public class CustomBiomeHandler {
 //		temperatureModififierField.setAccessible(true);
 
 		//i is climateSettings
-		//Field f = BiomeBase.class.getDeclaredField("i");
-		//f.setAccessible(true);
-		//newBiomeBuilder.a((BiomeBase.TemperatureModifier) temperatureModififierField.get(f.get(forestbiome)));
-		newBiomeBuilder.a(forestbiome.c()); //c is getPrecipitation
+        newBiomeBuilder.a(forestbiome.c()); //c is getPrecipitation
 
 		//k is mobSettings
 		Field biomeSettingMobsField = BiomeBase.class.getDeclaredField("k");
@@ -134,10 +125,8 @@ public class CustomBiomeHandler {
 		biomeSettingGenField.setAccessible(true);
 		BiomeSettingsGeneration biomeSettingGen = (BiomeSettingsGeneration) biomeSettingGenField.get(forestbiome);
 		newBiomeBuilder.a(biomeSettingGen);
-		
-		//newBiome.a(0.2F); //Depth of biome (Obsolete?)
-		//newBiome.b(0.05F); //Scale of biome (Obsolete?)
-		newBiomeBuilder.a(0.7F); //Temperature of biome
+
+        newBiomeBuilder.a(0.7F); //Temperature of biome
 		newBiomeBuilder.b(biomeType.getRainFall()); //Downfall of biome
 
 		//BiomeBase.TemperatureModifier.a will make your biome normal
@@ -153,24 +142,26 @@ public class CustomBiomeHandler {
 		//Set biome colours. If field is empty, default to forest color
 		
 		//fogcolor
-		newFog.a(biomeType.getFogColor().equals("") ? forestbiome.e():Integer.parseInt(biomeType.getFogColor(),16));
+		newFog.a(biomeType.getFogColor().isEmpty() ? forestbiome.e():Integer.parseInt(biomeType.getFogColor(),16));
 		
 		//water color i is getWaterColor
-		newFog.b(biomeType.getWaterColor().equals("") ? forestbiome.i():Integer.parseInt(biomeType.getWaterColor(),16));
+		newFog.b(biomeType.getWaterColor().isEmpty() ? forestbiome.i():Integer.parseInt(biomeType.getWaterColor(),16));
 		
 		//water fog color j is getWaterFogColor
-		newFog.c(biomeType.getWaterFogColor().equals("") ? forestbiome.j():Integer.parseInt(biomeType.getWaterFogColor(),16));
+		newFog.c(biomeType.getWaterFogColor().isEmpty() ? forestbiome.j():Integer.parseInt(biomeType.getWaterFogColor(),16));
 		
 		//sky color
-		newFog.d(biomeType.getSkyColor().equals("") ? forestbiome.a():Integer.parseInt(biomeType.getSkyColor(),16)); 
+		newFog.d(biomeType.getSkyColor().isEmpty() ? forestbiome.a():Integer.parseInt(biomeType.getSkyColor(),16));
+
 
 		//Unnecessary values; can be removed safely if you don't want to change them
 		
 		//foliage color (leaves, fines and more) f is getFoliageColor
-		newFog.e(biomeType.getFoliageColor().equals("") ? forestbiome.f():Integer.parseInt(biomeType.getFoliageColor(),16));
+		newFog.e(biomeType.getFoliageColor().isEmpty() ? forestbiome.f():Integer.parseInt(biomeType.getFoliageColor(),16));
 		
 		//grass blocks color
-		newFog.f(biomeType.getGrassColor().equals("") ? Integer.parseInt("79C05A",16):Integer.parseInt(biomeType.getGrassColor(),16)); 
+		newFog.f(biomeType.getGrassColor().isEmpty() ? Integer.parseInt("79C05A",16):Integer.parseInt(biomeType.getGrassColor(),16));
+
 		
 		newBiomeBuilder.a(newFog.a());
 		
@@ -222,7 +213,7 @@ public class CustomBiomeHandler {
 	}
 
 
-    public static Set<Holder<BiomeBase>> biomeListToBiomeBaseSet(IRegistry<BiomeBase> registry) {
+    public static Set<Holder<BiomeBase>> biomeListToBiomeBaseSet(@NotNull IRegistry<BiomeBase> registry) {
 
         List<Holder<BiomeBase>> biomeBases = new ArrayList<>();
 

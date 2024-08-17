@@ -1,6 +1,7 @@
 package org.terraform.populators;
 
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.TerraformWorld;
@@ -23,10 +24,10 @@ public class OrePopulator {
     private final int maxNumberOfVeins; //Maximum number of veins per chunk
     private final int peakSpawnChanceHeight; //Optimal height for ore to spawn
     private final int maxSpawnHeight; //max y height where ore can be rarely found
-    private int minRange = 5; //min spawn height
+    private int minRange; //min spawn height
     private final BiomeBank[] requiredBiomes;
     private final int maxDistance;
-    private boolean ignorePeakSpawnChance = false;
+    private final boolean ignorePeakSpawnChance;
 
     public OrePopulator(Material type, int baseChance, int maxOreSize,
                         int maxNumberOfVeins, int peakSpawnChanceHeight, int maxSpawnHeight, 
@@ -62,7 +63,7 @@ public class OrePopulator {
         this.maxDistance = Math.max(Math.abs(minRange - peakSpawnChanceHeight), Math.abs(maxSpawnHeight - peakSpawnChanceHeight));
     }
     
-    public void populate(TerraformWorld world, Random random, PopulatorDataAbstract data) {
+    public void populate(@NotNull TerraformWorld world, @NotNull Random random, @NotNull PopulatorDataAbstract data) {
     	if(requiredBiomes.length > 0) {
     		BiomeBank b = BiomeBank.getBiomeSectionFromChunk(world, data.getChunkX(), data.getChunkZ()).getBiomeBank();
     		boolean canPopulate = false;
@@ -103,17 +104,8 @@ public class OrePopulator {
                 	int distance = Math.abs(y - peakSpawnChanceHeight);
                 	
                 	if(!GenUtils.chance((int) Math.round(100.0*(1.0 - ((float)distance)/((float)maxDistance))), 100)) {
-//                		TerraformGeneratorPlugin.logger.info(" ====== ORE [" + this.type + "]======\n"
-//                				+ "Distance: " + distance + "\n"
-//                				+ "MaxDistance: " + maxDistance + "\n"
-//                				+ "Status: FAIL\n"
-//                				+ "minRange: " + minRange + "\n"
-//                				+ "maxRange: " + range + "\n"
-//                				+ "peakHeight: " + peakSpawnChanceHeight + "\n"
-//                				+ "Calculated Chance: " + (Math.round(100.0*(1.0 - ((float)distance)/((float)maxDistance)))) + "\n"
-//                				+ "==========\n");
-                		
-                		continue;
+
+                        continue;
                 	}
             	}
             	
@@ -127,7 +119,7 @@ public class OrePopulator {
     }
     
     //Don't use simpleblock to forcefully compress memory usage and GC invocations by this.
-    public void placeOre(int seed, PopulatorDataAbstract data, int coreX, int coreY, int coreZ) {
+    public void placeOre(int seed, @NotNull PopulatorDataAbstract data, int coreX, int coreY, int coreZ) {
     	double size = GenUtils.randDouble(new Random(seed), minOreSize, maxOreSize);
     	//Size is the volume of the sphere, so radius is:
     	double radius = Math.pow(((3.0/4.0)*size*(1.0/Math.PI)), 1.0/3.0);

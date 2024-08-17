@@ -21,7 +21,6 @@ import org.bukkit.material.MaterialData;
 import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeType;
-import org.terraform.command.contants.InvalidArgumentException;
 import org.terraform.command.contants.TerraCommand;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.TerraformWorld;
@@ -34,7 +33,7 @@ public class PreviewCommand extends TerraCommand {
     }
 
     @Override
-    public String getDefaultDescription() {
+    public @NotNull String getDefaultDescription() {
         return "Shows a preview of a specified generation technique";
     }
 
@@ -44,14 +43,13 @@ public class PreviewCommand extends TerraCommand {
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender) {
+    public boolean hasPermission(@NotNull CommandSender sender) {
 
         return sender.isOp();
     }
     
     @Override
-    public void execute(CommandSender sender, Stack<String> args)
-            throws InvalidArgumentException {
+    public void execute(CommandSender sender, Stack<String> args) {
         //int seed = GenUtils.randInt(1, 1000000);
         int maxX = 16*10;
         int maxY = TerraformGeneratorPlugin.injector.getMaxY()-TerraformGeneratorPlugin.injector.getMinY();
@@ -83,7 +81,7 @@ public class PreviewCommand extends TerraCommand {
         System.out.println("Done.");
     }
 
-    private class ImageChunkData implements ChunkGenerator.ChunkData{
+    private static class ImageChunkData implements ChunkGenerator.ChunkData{
         final BufferedImage img;
         final int chunkX,chunkZ,maxX,maxY;
         private final int[][] maxHeights = new int[16][16];
@@ -193,7 +191,7 @@ public class PreviewCommand extends TerraCommand {
         }
     }
 
-    private class ImageWorldInfo implements WorldInfo{
+    private static class ImageWorldInfo implements WorldInfo{
         private final String name;
         private final long seed;
 
@@ -236,28 +234,21 @@ public class PreviewCommand extends TerraCommand {
         }
     }
     @SuppressWarnings("unused")
-	private Color getClimateColor(BiomeBank bank) {
+	private Color getClimateColor(@NotNull BiomeBank bank) {
     	if(bank.getType() == BiomeType.OCEANIC||bank.getType() == BiomeType.DEEP_OCEANIC)
     		return Color.blue;
-    	switch(bank.getClimate()) {
-    	case HUMID_VEGETATION:
-    		return new Color(118,163,3);
-    	case DRY_VEGETATION:
-    		return new Color(172,187,2);
-    	case HOT_BARREN:
-    		return Color.red;
-    	case COLD:
-    		return new Color(59, 255, 150);
-    	case SNOWY:
-    		return Color.white;
-		case TRANSITION:
-    		return new Color(59, 255, 59);
-    	}
-    	return Color.pink;
+        return switch(bank.getClimate()) {
+            case HUMID_VEGETATION -> new Color(118, 163, 3);
+            case DRY_VEGETATION -> new Color(172, 187, 2);
+            case HOT_BARREN -> Color.red;
+            case COLD -> new Color(59, 255, 150);
+            case SNOWY -> Color.white;
+            case TRANSITION -> new Color(59, 255, 59);
+        };
     }
 
     @SuppressWarnings("unused")
-    private Color getBiomeColor(BiomeBank bank) {
+    private Color getBiomeColor(@NotNull BiomeBank bank) {
     	switch(bank) {
     	case SNOWY_WASTELAND:
     		return Color.white;
@@ -295,7 +286,7 @@ public class PreviewCommand extends TerraCommand {
     
     
     @SuppressWarnings("unused")
-	private Color getHeightColorFromNoise(int noise) {
+	private @NotNull Color getHeightColorFromNoise(int noise) {
         if (noise <= 62) { //Sea level
             return new Color(50, 50, 100 + (noise * 2));//Blue
         } else if (noise < 62 + 4) { //Beaches?

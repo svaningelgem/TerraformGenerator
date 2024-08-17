@@ -1,17 +1,19 @@
 package org.terraform.data;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 public class TWSimpleLocation extends SimpleLocation {
 
-	TerraformWorld tw;
+	final TerraformWorld tw;
 	public TWSimpleLocation(TerraformWorld tw, int x, int y, int z) {
 		super(x, y, z);
 		this.tw = tw;
 		// TODO Auto-generated constructor stub
 	}
 	
-	public TWSimpleLocation(TerraformWorld tw, SimpleLocation loc) {
+	public TWSimpleLocation(TerraformWorld tw, @NotNull SimpleLocation loc) {
 		super(loc);
 		this.tw = tw;
 	}
@@ -24,9 +26,8 @@ public class TWSimpleLocation extends SimpleLocation {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof TWSimpleLocation) {
-        	TWSimpleLocation sLoc = (TWSimpleLocation) obj;
-            return sLoc.x == x 
+        if (obj instanceof TWSimpleLocation sLoc) {
+            return sLoc.x == x
             		&& sLoc.y == y 
             		&& sLoc.z == z 
             		&& tw.getName().equals(sLoc.getTerraformWorld().getName());

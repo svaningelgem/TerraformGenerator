@@ -1,6 +1,7 @@
 package org.terraform.structure.monument;
 
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.data.Wall;
 import org.terraform.structure.room.PathPopulatorAbstract;
 import org.terraform.structure.room.PathPopulatorData;
@@ -9,8 +10,8 @@ import org.terraform.utils.GenUtils;
 import java.util.Random;
 
 public class MonumentPathPopulator extends PathPopulatorAbstract {
-    Random rand;
-    MonumentDesign design;
+    final Random rand;
+    final MonumentDesign design;
     private boolean light = true;
 
     public MonumentPathPopulator(MonumentDesign design, Random rand) {
@@ -19,7 +20,7 @@ public class MonumentPathPopulator extends PathPopulatorAbstract {
     }
 
     @Override
-    public void populate(PathPopulatorData ppd) {
+    public void populate(@NotNull PathPopulatorData ppd) {
         Wall w = new Wall(ppd.base, ppd.dir);
 
         //Fill with water :<
@@ -64,8 +65,4 @@ public class MonumentPathPopulator extends PathPopulatorAbstract {
         }
     }
 
-    @Override
-    public int getPathWidth() {
-        return 3;
-    }
 }

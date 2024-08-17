@@ -8,6 +8,8 @@ import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Rotatable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.terraform.coregen.populatordata.PopulatorDataPostGen;
 import org.terraform.data.SimpleBlock;
 import org.terraform.utils.version.OneTwentyFiveBlockHandler;
@@ -93,7 +95,7 @@ public class BannerUtils {
             Material.WHITE_WALL_BANNER,
     };
     
-    public static Banner generateBanner(SimpleBlock base, BlockFace facing, Material type, ArrayList<Pattern> patterns) {
+    public static void generateBanner(@NotNull SimpleBlock base, @NotNull BlockFace facing, @NotNull Material type, @Nullable ArrayList<Pattern> patterns) {
 
         base.setType(type);
         Directional bd = ((Directional) base.getBlockData());
@@ -107,10 +109,9 @@ public class BannerUtils {
         
         banner.setPatterns(patterns);
         banner.update();
-        return banner;
     }
     
-    public static Banner generateBanner(Random rand, SimpleBlock base, BlockFace facing, boolean wallBanner) {
+    public static void generateBanner(@NotNull Random rand, @NotNull SimpleBlock base, @NotNull BlockFace facing, boolean wallBanner) {
 
         Material type = null;
         if (wallBanner)
@@ -139,10 +140,9 @@ public class BannerUtils {
         }
         banner.setPatterns(patterns);
         banner.update();
-        return banner;
     }
     
-    public static Banner generatePillagerBanner(SimpleBlock base, BlockFace facing, boolean wallBanner) {
+    public static void generatePillagerBanner(@NotNull SimpleBlock base, @NotNull BlockFace facing, boolean wallBanner) {
 
         Material type;
         if (wallBanner)
@@ -164,31 +164,30 @@ public class BannerUtils {
         
         banner.setPatterns(getOminousBannerPatterns());
         banner.update();
-        return banner;
     }
 
 
-    public static Material randomBannerMaterial(Random rand) {
-        return BANNERS[rand.nextInt(BANNERS.length)];
+    public static void randomBannerMaterial(@NotNull Random rand) {
+        rand.nextInt(BANNERS.length);
     }
 
-    public static Material randomWallBannerMaterial(Random rand) {
+    public static @NotNull Material randomWallBannerMaterial(@NotNull Random rand) {
         return WALL_BANNERS[rand.nextInt(WALL_BANNERS.length)];
     }
 
 	/**
-	 * kms
-	 * https://minecraft.fandom.com/wiki/Banner/Patterns
-		Pattern:"mr",Color:CYAN
-		Pattern:"bs",Color:LIGHT_GRAY
-		Pattern:"cs",Color:GRAY
-		Pattern:"bo",Color:LIGHT_GRAY
-		Pattern:"ms",Color:BLACK
-		Pattern:"hh",Color:LIGHT_GRAY
-		Pattern:"mc",Color:LIGHT_GRAY
-		Pattern:"bo",Color:BLACK
-	 */
-    public static ArrayList<Pattern> getOminousBannerPatterns(){
+     * kms
+     * <a href="https://minecraft.fandom.com/wiki/Banner/Patterns">...</a>
+     Pattern:"mr",Color:CYAN
+     Pattern:"bs",Color:LIGHT_GRAY
+     Pattern:"cs",Color:GRAY
+     Pattern:"bo",Color:LIGHT_GRAY
+     Pattern:"ms",Color:BLACK
+     Pattern:"hh",Color:LIGHT_GRAY
+     Pattern:"mc",Color:LIGHT_GRAY
+     Pattern:"bo",Color:BLACK
+     */
+    public static @NotNull ArrayList<Pattern> getOminousBannerPatterns(){
     	return new ArrayList<>() {{
 			add(new Pattern(DyeColor.CYAN, OneTwentyFiveBlockHandler.RHOMBUS));
 			add(new Pattern(DyeColor.LIGHT_GRAY, PatternType.STRIPE_BOTTOM));

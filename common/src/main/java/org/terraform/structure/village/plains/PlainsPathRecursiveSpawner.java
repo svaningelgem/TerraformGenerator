@@ -3,6 +3,8 @@ package org.terraform.structure.village.plains;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Slab.Type;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
@@ -30,30 +32,27 @@ public class PlainsPathRecursiveSpawner {
     private final int range;
     private int minRoomWidth = 15;
     private int maxRoomWidth = 20;
-    private int smallRoomChance = 10;
-    private int minSmallRoomWidth = 7;
-    private int maxSmallRoomWidth = 10;
-    
+
     /** 
      * 1 for max room density, 0 for no rooms.
      */
     private double villageDensity = 1;
     private PathPopulatorAbstract pathPop;
-    private final ArrayList<RoomPopulatorAbstract> validRooms = new ArrayList<RoomPopulatorAbstract>();
+    private final ArrayList<RoomPopulatorAbstract> validRooms = new ArrayList<>();
 
-    private final SimpleBlock core;
+    private final @NotNull SimpleBlock core;
     private final HashMap<SimpleLocation, DirectionalCubeRoom> rooms = new HashMap<>();
     private final HashMap<SimpleLocation, BlockFace> path = new HashMap<>();
     private final HashMap<SimpleLocation, CrossRoad> crossRoads = new HashMap<>();
 
-    public PlainsPathRecursiveSpawner(SimpleBlock core, int range, BlockFace... faces) {
+    public PlainsPathRecursiveSpawner(@NotNull SimpleBlock core, int range, BlockFace... faces) {
         SimpleLocation start = new SimpleLocation(core.getX(), 0, core.getZ());
         crossRoads.put(start, new CrossRoad(start, faces));
         this.range = range;
         this.core = core;
     }
 
-    private void advanceCrossRoad(Random random, CrossRoad target, BlockFace direction) {
+    private void advanceCrossRoad(@NotNull Random random, @NotNull CrossRoad target, @NotNull BlockFace direction) {
         target.satisfiedFaces.add(direction);
 
         boolean cull = false;
@@ -75,9 +74,10 @@ public class PlainsPathRecursiveSpawner {
                             BlockFace rF = adjDir.getOppositeFace();
                             int minRoomWidth = this.minRoomWidth;
                             int maxRoomWidth = this.maxRoomWidth;
+                            int smallRoomChance = 10;
                             if(GenUtils.chance(random, smallRoomChance, 100)) {
-                            	minRoomWidth = this.minSmallRoomWidth;
-                            	maxRoomWidth = this.maxSmallRoomWidth;
+                                minRoomWidth = 7;
+                                maxRoomWidth = 10;
                             }
                             
                             int roomWidthX = GenUtils.randInt(minRoomWidth, maxRoomWidth);
@@ -121,11 +121,6 @@ public class PlainsPathRecursiveSpawner {
                 }
             }
             edgeTurns = 0;
-//            BlockFace[] valid = new BlockFace[3];
-//            valid[0] = BlockUtils.getLeft(direction);
-//            valid[1] = BlockUtils.getRight(direction);
-//            valid[2] = direction;
-//            direction = valid[random.nextInt(3)];
             direction = BlockUtils.getTurnBlockFace(random, direction);
             loc = loc.getRelative(direction);
         }
@@ -138,10 +133,9 @@ public class PlainsPathRecursiveSpawner {
     
     /**
      * 
-     * @param loc
      * @return whether or not a location can hold a cuberoom (no overlaps, not too far etc)
      */
-    private boolean isLocationValid(SimpleLocation loc) {
+    private boolean isLocationValid(@NotNull SimpleLocation loc) {
         for (DirectionalCubeRoom room : rooms.values()) {
             if (room.isPointInside(loc)) {
                 //TerraformGeneratorPlugin.logger.info("Point was inside room. Dying.");
@@ -156,7 +150,7 @@ public class PlainsPathRecursiveSpawner {
         return !path.containsKey(loc);
     }
 
-    public boolean registerRoom(DirectionalCubeRoom room) {
+    public boolean registerRoom(@NotNull DirectionalCubeRoom room) {
         //Cannot be below sea level
         if (core.getPopData().getType(room.getX(),GenUtils.getHighestGround(core.getPopData(), room.getX(), room.getZ())+1,room.getZ()) == Material.WATER) {
             return false;
@@ -175,11 +169,11 @@ public class PlainsPathRecursiveSpawner {
         return true;
     }
 
-    public void forceRegisterRoom(DirectionalCubeRoom room) {
+    public void forceRegisterRoom(@NotNull DirectionalCubeRoom room) {
         rooms.put(new SimpleLocation(room.getX(), 0, room.getZ()), room);
     }
 
-    public void generate(Random random) {
+    public void generate(@NotNull Random random) {
         while (getFirstUnsatisfiedCrossRoad() != null) {
             CrossRoad target = getFirstUnsatisfiedCrossRoad();
             BlockFace direction = target.getFirstUnsatisfiedDirection();
@@ -188,7 +182,7 @@ public class PlainsPathRecursiveSpawner {
     }
 
     @SuppressWarnings("unchecked")
-    public void build(Random random) {
+    public void build(@NotNull Random random) {
 
         //place pathways
         for (SimpleLocation loc : path.keySet()) {
@@ -282,8 +276,6 @@ public class PlainsPathRecursiveSpawner {
                 TerraformGeneratorPlugin.logger.info("Registered: " + room.getPop().getClass().getName() + " at " + room.getX() + " " + room.getY() + " " + room.getZ() + " in a room of size "
                         + room.getWidthX() + "x" + room.getWidthZ());
                 room.populate(core.getPopData());
-            } else {
-                //Bukkit.getLogger().info("Registered: plain room at " + room.getX() + " " + room.getY() + " " + room.getZ() + " in a room of size " + room.getWidthX() + "x" + room.getWidthZ());
             }
         }
 
@@ -296,7 +288,7 @@ public class PlainsPathRecursiveSpawner {
 
     }
 
-    private CrossRoad getFirstUnsatisfiedCrossRoad() {
+    private @Nullable CrossRoad getFirstUnsatisfiedCrossRoad() {
         for (CrossRoad road : crossRoads.values())
             if (!road.isSatisfied()) return road;
         return null;
@@ -326,7 +318,7 @@ public class PlainsPathRecursiveSpawner {
         this.pathPop = pathPop;
     }
 
-    public HashMap<SimpleLocation, DirectionalCubeRoom> getRooms() {
+    public @NotNull HashMap<SimpleLocation, DirectionalCubeRoom> getRooms() {
         return rooms;
     }
 
@@ -338,10 +330,10 @@ public class PlainsPathRecursiveSpawner {
         this.villageDensity = villageDensity;
     }
 
-    private class CrossRoad {
-        public SimpleLocation loc;
-        public BlockFace[] faces;
-        public ArrayList<BlockFace> satisfiedFaces = new ArrayList<>();
+    private static class CrossRoad {
+        public final SimpleLocation loc;
+        public final BlockFace[] faces;
+        public final @NotNull ArrayList<BlockFace> satisfiedFaces = new ArrayList<>();
 
         public CrossRoad(SimpleLocation loc, BlockFace[] faces) {
             this.loc = loc;
@@ -352,7 +344,7 @@ public class PlainsPathRecursiveSpawner {
             return getFirstUnsatisfiedDirection() == null;
         }
 
-        public BlockFace getFirstUnsatisfiedDirection() {
+        public @Nullable BlockFace getFirstUnsatisfiedDirection() {
             for (BlockFace face : faces) {
                 if (!satisfiedFaces.contains(face))
                     return face;

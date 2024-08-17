@@ -3,6 +3,7 @@ package org.terraform.biome.cavepopulators;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
@@ -15,7 +16,7 @@ import java.util.Random;
 public class DeepCavePopulator extends AbstractCavePopulator {
     
     @Override
-    public void populate(TerraformWorld tw, Random random, SimpleBlock ceil, SimpleBlock floor) {
+    public void populate(TerraformWorld tw, @NotNull Random random, @NotNull SimpleBlock ceil, @NotNull SimpleBlock floor) {
         
         int caveHeight = ceil.getY() - floor.getY();
         
@@ -30,9 +31,6 @@ public class DeepCavePopulator extends AbstractCavePopulator {
 
         //Stalactites
         if (GenUtils.chance(random, 1, 10*Math.max(3, caveHeight/4))) {
-//            int h = caveHeight / 4;
-//            if (h < 1) h = 1;
-//            if (h > 4) h = 4;
             Wall w = new Wall(ceil, BlockFace.NORTH);
             if(w.getUp().getType() == Material.DEEPSLATE) {
                 new StalactiteBuilder(Material.COBBLED_DEEPSLATE_WALL)
@@ -61,7 +59,6 @@ public class DeepCavePopulator extends AbstractCavePopulator {
         if (GenUtils.chance(random, 1, 10*Math.max(3, caveHeight/4))) {
             int h = caveHeight / 4;
             if (h < 1) h = 1;
-            if (h > 4) h = 4;
             Wall w = new Wall(floor.getRelative(0,1,0));
             if (BlockUtils.isAir(w.getType()))
             	if(w.getDown().getType() == Material.DEEPSLATE)

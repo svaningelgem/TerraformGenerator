@@ -1,10 +1,12 @@
 package org.terraform.v1_19_R3;
 
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.main.TerraformGeneratorPlugin;
 
 import java.util.HashMap;
 
+@SuppressWarnings("UnstableApiUsage")
 public class EntityTypeMapper {
 
     private static final HashMap<EntityType, String> obsNames = new HashMap<>(){{
@@ -133,10 +135,10 @@ public class EntityTypeMapper {
         put(EntityType.PLAYER, "bt");
         put(EntityType.FISHING_HOOK, "bu");
     }};
-	public static String getObfsNameFromBukkitEntityType(EntityType e){
+	public static @NotNull String getObfsNameFromBukkitEntityType(@NotNull EntityType e){
         String name = obsNames.get(e);
         if(name == null) {
-            TerraformGeneratorPlugin.logger.error("INVALID ENTITY REQUESTED: " + e.toString());
+            TerraformGeneratorPlugin.logger.error("INVALID ENTITY REQUESTED: " + e);
             return "";
         }
         return name;

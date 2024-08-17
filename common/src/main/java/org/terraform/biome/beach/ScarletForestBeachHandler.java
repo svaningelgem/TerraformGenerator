@@ -2,6 +2,7 @@ package org.terraform.biome.beach;
 
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.biome.custombiomes.CustomBiomeType;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
@@ -18,17 +19,17 @@ public class ScarletForestBeachHandler extends BiomeHandler {
     }
 
     @Override
-    public Biome getBiome() {
+    public @NotNull Biome getBiome() {
         return Biome.BEACH;
     }
 
     @Override
-    public CustomBiomeType getCustomBiome() {
+    public @NotNull CustomBiomeType getCustomBiome() {
         return CustomBiomeType.SCARLET_FOREST;
     }
     
     @Override
-    public Material[] getSurfaceCrust(Random rand) {
+    public Material @NotNull [] getSurfaceCrust(@NotNull Random rand) {
         return new Material[]{
         		Material.WHITE_CONCRETE,
                 Material.WHITE_CONCRETE,
@@ -41,12 +42,7 @@ public class ScarletForestBeachHandler extends BiomeHandler {
     public void populateSmallItems(TerraformWorld world, Random random, int rawX, int surfaceY, int rawZ, PopulatorDataAbstract data) {
 
         //WHAT THE FUCK DO YOU MEAN REMOVE SUBMERGED GRASS??? WHY WAS IT BEING SET???
-//        Material base = data.getType(x, y, z);
-//
-//        //Remove submerged grass
-//        if(base == Material.GRASS_BLOCK && data.getType(x, y+1, z) == Material.WATER)
-//            data.setType(x,y,z,Material.DIRT);
-    }
+	}
 
 	@Override
 	public void populateLargeItems(TerraformWorld tw, Random random, PopulatorDataAbstract data) {

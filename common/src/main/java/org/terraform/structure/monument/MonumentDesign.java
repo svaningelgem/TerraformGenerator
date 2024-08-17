@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.type.Stairs;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
@@ -22,7 +24,7 @@ public enum MonumentDesign {
     PRISMARINE_LANTERNS(Material.PRISMARINE_BRICKS, Material.PRISMARINE_BRICKS, Material.PRISMARINE),
     DARK_LIGHTLESS(Material.PRISMARINE, Material.DARK_PRISMARINE, Material.DARK_PRISMARINE, Material.DARK_PRISMARINE);
 
-    Material[] tileSet;
+    final Material[] tileSet;
 
     MonumentDesign(Material... tileSet) {
         this.tileSet = tileSet;
@@ -32,35 +34,24 @@ public enum MonumentDesign {
         return tileSet;
     }
 
-    public Material slab() {
-        switch (this) {
-            case DARK_LIGHTLESS:
-                return Material.DARK_PRISMARINE_SLAB;
-            case DARK_PRISMARINE_CORNERS:
-                return GenUtils.randMaterial(Material.DARK_PRISMARINE_SLAB, Material.PRISMARINE_BRICK_SLAB);
-            case PRISMARINE_LANTERNS:
-                return GenUtils.randMaterial(Material.PRISMARINE_SLAB, Material.PRISMARINE_BRICK_SLAB);
-        }
-        return null;
+    public @Nullable Material slab() {
+        return switch(this) {
+            case DARK_LIGHTLESS -> Material.DARK_PRISMARINE_SLAB;
+            case DARK_PRISMARINE_CORNERS ->
+                    GenUtils.randMaterial(Material.DARK_PRISMARINE_SLAB, Material.PRISMARINE_BRICK_SLAB);
+            case PRISMARINE_LANTERNS -> GenUtils.randMaterial(Material.PRISMARINE_SLAB, Material.PRISMARINE_BRICK_SLAB);
+        };
     }
 
-    public Material stairs() {
-//		switch(this){
-//		case DARK_LIGHTLESS:
-//			return Material.DARK_PRISMARINE_STAIRS;
-//		case DARK_PRISMARINE_CORNERS:
-//			return GenUtils.randMaterial(Material.DARK_PRISMARINE_STAIRS,Material.DARK_PRISMARINE_STAIRS,Material.DARK_PRISMARINE_STAIRS,Material.PRISMARINE_BRICK_STAIRS);
-//		case PRISMARINE_LANTERNS:
-//			return GenUtils.randMaterial(Material.PRISMARINE_STAIRS,Material.PRISMARINE_BRICK_STAIRS);
-//		}
+    public @NotNull Material stairs() {
         return Material.DARK_PRISMARINE_STAIRS;
     }
 
-    public Material mat(Random rand) {
+    public Material mat(@NotNull Random rand) {
         return GenUtils.randMaterial(rand, tileSet);
     }
 
-    public void spawnLargeLight(PopulatorDataAbstract data, int x, int y, int z) {
+    public void spawnLargeLight(@NotNull PopulatorDataAbstract data, int x, int y, int z) {
         try {
             x++;
             z++;
@@ -75,7 +66,7 @@ public enum MonumentDesign {
         }
     }
 
-    public void upSpire(SimpleBlock base, Random rand) {
+    public void upSpire(@NotNull SimpleBlock base, @NotNull Random rand) {
         while (base.getType().isSolid() || base.getRelative(0, 1, 0).getType().isSolid()) {
             base = base.getRelative(0, 1, 0);
             if (base.getY() > TerraformGenerator.seaLevel)
@@ -84,11 +75,11 @@ public enum MonumentDesign {
         spire(new Wall(base, BlockFace.NORTH), rand);
     }
 
-    public void spire(Wall w, Random rand) {
+    public void spire(@NotNull Wall w, @NotNull Random rand) {
         spire(w, rand, 7);
     }
 
-    public void spire(Wall w, Random rand, int height) {
+    public void spire(@NotNull Wall w, @NotNull Random rand, int height) {
         switch (this) {
             case DARK_LIGHTLESS:
                 for (int i = 0; i < height; i++) {

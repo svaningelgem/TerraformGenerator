@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Lantern;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -11,15 +12,14 @@ import org.terraform.structure.room.jigsaw.JigsawStructurePiece;
 import org.terraform.structure.room.jigsaw.JigsawType;
 import org.terraform.structure.village.plains.PlainsVillagePopulator;
 import org.terraform.utils.GenUtils;
-import org.terraform.utils.version.Version;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Random;
 
 public class PlainsVillageStandardPiece extends JigsawStructurePiece {
 
-    PlainsVillageHouseVariant variant;
-    PlainsVillagePopulator plainsVillagePopulator;
+    final PlainsVillageHouseVariant variant;
+    final PlainsVillagePopulator plainsVillagePopulator;
     public PlainsVillageStandardPiece(PlainsVillagePopulator plainsVillagePopulator, PlainsVillageHouseVariant variant, int widthX, int height, int widthZ, JigsawType type, BlockFace[] validDirs) {
         super(widthX, height, widthZ, type, validDirs);
         this.variant = variant;
@@ -27,7 +27,7 @@ public class PlainsVillageStandardPiece extends JigsawStructurePiece {
     }
 
     @Override
-    public void build(PopulatorDataAbstract data, Random rand) {
+    public void build(@NotNull PopulatorDataAbstract data, @NotNull Random rand) {
         int[] lowerCorner = this.getRoom().getLowerCorner(0);
         int[] upperCorner = this.getRoom().getUpperCorner(0);
 
@@ -54,7 +54,7 @@ public class PlainsVillageStandardPiece extends JigsawStructurePiece {
     }
 
     @Override
-    public void postBuildDecoration(Random random, PopulatorDataAbstract data) {
+    public void postBuildDecoration(Random random, @NotNull PopulatorDataAbstract data) {
         int[] lowerCorner = this.getRoom().getLowerCorner(0);
         int[] upperCorner = this.getRoom().getUpperCorner(0);
         //Raise ceiling.
@@ -69,7 +69,7 @@ public class PlainsVillageStandardPiece extends JigsawStructurePiece {
             Wall w = entry.getKey().getRelative(0, 2, 0);
             for (int i = 0; i < entry.getValue(); i++) {
                 Material type = w.getType();
-                if (w.getRelative(0, 1, 0).getType() != plainsVillagePopulator.woodLog) ;
+                w.getRelative(0, 1, 0).getType();
                 w.getRelative(0, 1, 0).setType(type);
 
                 w = w.getLeft();
@@ -77,14 +77,10 @@ public class PlainsVillageStandardPiece extends JigsawStructurePiece {
         }
 
         //Place lanterns (At least one per room)
-        //for(int i = 0; i < GenUtils.randInt(random, 1, 4); i++) {
-        //	int[] coords = room.randomCoords(random,1);
-        //	genLanterns(data,coords[0],coords[2]);
-        //}
         genLanterns(data, this.getRoom().getX(), this.getRoom().getZ());
     }
 
-    private void genLanterns(PopulatorDataAbstract data, int x, int z) {
+    private void genLanterns(@NotNull PopulatorDataAbstract data, int x, int z) {
         Wall w = new Wall(new SimpleBlock(data, x, this.getRoom().getY() + 1, z));
         w = w.findCeiling(25);
         if (w == null) {

@@ -3,6 +3,7 @@ package org.terraform.structure.pillager.outpost;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
@@ -21,15 +22,15 @@ import java.util.Random;
 
 public class OutpostStakeCage extends RoomPopulatorAbstract {
 
-	private BiomeBank biome;
-	private Material[] stakeGravel;
+	private final BiomeBank biome;
+	private final Material[] stakeGravel;
     public OutpostStakeCage(Random rand, boolean forceSpawn, boolean unique, BiomeBank biome, Material... stakeGravel) {
         super(rand, forceSpawn, unique);
         this.biome = biome;
         this.stakeGravel = stakeGravel;
     }
 
-    public void populate(PopulatorDataAbstract data, CubeRoom room) {
+    public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
     	Material fenceMat = WoodUtils.getWoodForBiome(biome, WoodType.FENCE);
     	Material plankMat = WoodUtils.getWoodForBiome(biome, WoodType.PLANKS);
     	
@@ -112,7 +113,7 @@ public class OutpostStakeCage extends RoomPopulatorAbstract {
     	
     }
 
-    public void spawnOneStake(Random rand, int baseHeight, SimpleBlock base) {
+    public void spawnOneStake(@NotNull Random rand, int baseHeight, @NotNull SimpleBlock base) {
     	WoodType type = new WoodType[] {WoodType.LOG, WoodType.STRIPPED_LOG}[rand.nextInt(2)];
 
     	int h = baseHeight + GenUtils.randInt(1, 3);

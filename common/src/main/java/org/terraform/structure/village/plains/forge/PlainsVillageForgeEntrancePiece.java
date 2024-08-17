@@ -3,6 +3,7 @@ package org.terraform.structure.village.plains.forge;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected.Half;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -25,7 +26,7 @@ public class PlainsVillageForgeEntrancePiece extends PlainsVillageForgePiece {
     }
 
     @Override
-    public void build(PopulatorDataAbstract data, Random rand) {
+    public void build(@NotNull PopulatorDataAbstract data, @NotNull Random rand) {
         SimpleEntry<Wall, Integer> entry = this.getRoom().getWall(data, getRotation().getOppositeFace(), 0);
         Wall w = entry.getKey().getRelative(0, -1, 0);
 
@@ -39,12 +40,7 @@ public class PlainsVillageForgeEntrancePiece extends PlainsVillageForgePiece {
         core = core.getRear(2);
         
         //Stairway down
-//        BlockUtils.angledStairwayUntilSolid(core.getFront().getRelative(0, -1, 0).get(), core.getDirection(),
-//                new Material[]{
-//                        Material.COBBLESTONE, Material.MOSSY_COBBLESTONE
-//                },
-//                Material.COBBLESTONE_STAIRS, Material.MOSSY_COBBLESTONE_STAIRS);
-        
+
         if(core.getFront().getType().isSolid()) {
 	        new StairwayBuilder(Material.COBBLESTONE_STAIRS, Material.MOSSY_COBBLESTONE_STAIRS)
 	        .setAngled(true)
@@ -62,7 +58,7 @@ public class PlainsVillageForgeEntrancePiece extends PlainsVillageForgePiece {
     }
     
     @Override
-    public void postBuildDecoration(Random rand, PopulatorDataAbstract data) {    	
+    public void postBuildDecoration(@NotNull Random rand, @NotNull PopulatorDataAbstract data) {
     	if(getWallType() == PlainsVillageForgeWallType.SOLID) { //Door entrance
     		SimpleEntry<Wall, Integer> entry = this.getRoom().getWall(data, getRotation().getOppositeFace(), 0);
     		Wall w = entry.getKey().getRelative(0, -1, 0);

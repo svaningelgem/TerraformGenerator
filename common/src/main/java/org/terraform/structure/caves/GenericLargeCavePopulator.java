@@ -4,6 +4,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.data.type.SeaPickle;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.structure.room.CubeRoom;
@@ -21,8 +22,8 @@ public class GenericLargeCavePopulator extends RoomPopulatorAbstract {
     }
 
     protected void populateFloor(SimpleBlock floor, int waterLevel){}
-    protected void populateCeil(SimpleBlock ceil){}
-    protected void populateCeilFloorPair(SimpleBlock ceil, SimpleBlock floor, int height){
+
+    protected void populateCeilFloorPair(@NotNull SimpleBlock ceil, @NotNull SimpleBlock floor, int height){
         //Stalactites
         if(GenUtils.chance(rand, 1, 200))
         {
@@ -54,14 +55,13 @@ public class GenericLargeCavePopulator extends RoomPopulatorAbstract {
     }
 
     @Override
-    public void populate(PopulatorDataAbstract data, CubeRoom room) {
+    public void populate(@NotNull PopulatorDataAbstract data, CubeRoom room) {
         if(!(room instanceof LargeCaveRoomPiece caveRoom))
             throw new NotImplementedException("room for LargeCavePopulator was not a LargeCaveRoomPiece");
         assert data.getChunkX() == room.getX()>>4;
         assert data.getChunkZ() == room.getZ()>>4;
 
         caveRoom.ceilFloorPairs.forEach((l, pair)->{
-            if(pair[0] != null) populateCeil(new SimpleBlock(data, pair[0]));
             if(pair[1] != null) populateFloor(new SimpleBlock(data, pair[1]), caveRoom.waterLevel);
             if(pair[0] != null && pair[1] != null)
             {

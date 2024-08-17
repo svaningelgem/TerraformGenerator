@@ -1,5 +1,7 @@
 package org.terraform.structure;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
@@ -80,10 +82,8 @@ public class StructureRegistry {
 
     /**
      * Assumes that the supplied type is a singlemegachunkstructurepopulator.
-     * @param populatorType
-     * @return
      */
-    public static StructureType getStructureType(Class<? extends SingleMegaChunkStructurePopulator> populatorType) {
+    public static @Nullable StructureType getStructureType(@NotNull Class<? extends SingleMegaChunkStructurePopulator> populatorType) {
         for (Entry<StructureType, SingleMegaChunkStructurePopulator[]> entry : largeStructureRegistry.entrySet()) {
             for (SingleMegaChunkStructurePopulator pops : entry.getValue()) {
                 if (populatorType.isInstance(pops))
@@ -94,12 +94,10 @@ public class StructureRegistry {
     }
 
     /**
-     * @param tw
-     * @param mc
      * @return the structure types that can spawn in this mega chunk
      * Only one is meant to be picked.
      */
-    public static SingleMegaChunkStructurePopulator[] getLargeStructureForMegaChunk(TerraformWorld tw, MegaChunk mc) {
+    public static SingleMegaChunkStructurePopulator[] getLargeStructureForMegaChunk(@NotNull TerraformWorld tw, @NotNull MegaChunk mc) {
     	//TerraformGeneratorPlugin.logger.info("getLargeStructureForMegaChunkQuery: " + mc.getX() + "," + mc.getZ());
         //Clear the cache if it gets big.
         if (queryCache.size() > 50) queryCache.clear();
@@ -160,7 +158,7 @@ public class StructureRegistry {
 
 
     // Implementing FisherYates shuffle
-    private static Object[] shuffleArray(Random rand, Object[] ar) {
+    private static Object @NotNull [] shuffleArray(@NotNull Random rand, Object[] ar) {
         ar = ar.clone();
         if (ar.length == 0) return ar;
         for (int i = ar.length - 1; i > 0; i--) {
@@ -175,10 +173,8 @@ public class StructureRegistry {
 
     /**
      * Registers small or large structures. Must implement either SingleMegaChunkStructurePopulator or MultiMegaChunkStructurePopulator.
-     * @param type
-     * @param pop
      */
-    public static void registerStructure(StructureType type, StructurePopulator pop) {
+    public static void registerStructure(StructureType type, @NotNull StructurePopulator pop) {
         if (!pop.isEnabled()) return;//Don't register disabled features
 
         if (pop instanceof SingleMegaChunkStructurePopulator) {
@@ -199,7 +195,7 @@ public class StructureRegistry {
 
     }
 
-    public static StructurePopulator[] getAllPopulators() {
+    public static StructurePopulator @NotNull [] getAllPopulators() {
         int size = smallStructureRegistry.size();
         for (StructurePopulator[] types : largeStructureRegistry.values()) {
             size += types.length;
@@ -224,8 +220,8 @@ public class StructureRegistry {
     }
     
     private static class MegaChunkKey {
-    	private TerraformWorld tw;
-    	private MegaChunk mc;
+    	private final TerraformWorld tw;
+    	private final MegaChunk mc;
 		public MegaChunkKey(TerraformWorld tw, MegaChunk mc) {
 			super();
 			this.tw = tw;
@@ -239,9 +235,8 @@ public class StructureRegistry {
 
 	    @Override
 	    public boolean equals(Object obj) {
-	        if (!(obj instanceof MegaChunkKey)) return false;
-	        MegaChunkKey other = (MegaChunkKey) obj;
-	        return this.tw.equals(other.tw) && mc.getX() == other.mc.getX() && mc.getZ() == other.mc.getZ();
+	        if (!(obj instanceof MegaChunkKey other)) return false;
+            return this.tw.equals(other.tw) && mc.getX() == other.mc.getX() && mc.getZ() == other.mc.getZ();
 	    }
     }
 }

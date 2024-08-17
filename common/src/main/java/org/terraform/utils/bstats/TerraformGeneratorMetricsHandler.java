@@ -1,17 +1,14 @@
 package org.terraform.utils.bstats;
 
+import org.jetbrains.annotations.NotNull;
 import org.terraform.main.TerraformGeneratorPlugin;
 import org.terraform.main.config.TConfig;
 
 public class TerraformGeneratorMetricsHandler {
 
-	@SuppressWarnings("unused")
-	private TerraformGeneratorPlugin plugin;
-	
-	public TerraformGeneratorMetricsHandler(TerraformGeneratorPlugin plugin) {
-		this.plugin = plugin;
-		
-		int pluginId = 13968;
+    public TerraformGeneratorMetricsHandler(@NotNull TerraformGeneratorPlugin plugin) {
+
+        int pluginId = 13968;
         Metrics metrics = new Metrics(plugin, pluginId);
         
         if(metrics.isEnabled()) {

@@ -3,7 +3,7 @@ package org.terraform.command;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.terraform.command.contants.InvalidArgumentException;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.command.contants.TerraCommand;
 import org.terraform.coregen.populatordata.PopulatorDataPostGen;
 import org.terraform.data.TerraformWorld;
@@ -20,7 +20,7 @@ public class CrappyDebugStructureCommand extends TerraCommand {
     }
 
     @Override
-    public String getDefaultDescription() {
+    public @NotNull String getDefaultDescription() {
         return "Debug spawning command not meant for server use ever.";
     }
 
@@ -30,20 +30,15 @@ public class CrappyDebugStructureCommand extends TerraCommand {
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender) {
+    public boolean hasPermission(@NotNull CommandSender sender) {
 
         return sender.isOp();
     }
 
     @Override
-    public void execute(CommandSender sender, Stack<String> args)
-            throws InvalidArgumentException {
+    public void execute(CommandSender sender, Stack<String> args) {
 
         Player p = (Player) sender;
-//		PopulatorDataAbstract gen = 
-//				new org.terraform.coregen.v1_15_R1.PopulatorData(
-//						((org.bukkit.craftbukkit.v1_15_R1.CraftChunk)p.getChunk()).getHandle(),
-//						null,p.getLocation().getChunk().getX(),p.getLocation().getChunk().getZ());
         PopulatorDataPostGen data = new PopulatorDataPostGen(p.getLocation().getChunk());
         int x = p.getLocation().getBlockX() + 1000;
         int y = -24;

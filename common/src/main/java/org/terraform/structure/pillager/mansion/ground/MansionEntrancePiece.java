@@ -3,6 +3,7 @@ package org.terraform.structure.pillager.mansion.ground;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected.Half;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MansionEntrancePiece extends JigsawStructurePiece {
-	MansionJigsawBuilder builder;
+	final MansionJigsawBuilder builder;
     public MansionEntrancePiece(MansionJigsawBuilder builder, int widthX, int height, int widthZ, JigsawType type, BlockFace[] validDirs) {
         super(widthX, height, widthZ, type, validDirs);
         this.builder = builder;
@@ -27,7 +28,7 @@ public class MansionEntrancePiece extends JigsawStructurePiece {
     }
 
     @Override
-    public void build(PopulatorDataAbstract data, Random rand) {
+    public void build(@NotNull PopulatorDataAbstract data, @NotNull Random rand) {
 
     	SimpleEntry<Wall, Integer> entry = this.getRoom().getWall(data, getRotation().getOppositeFace(), 0);
         Wall w = entry.getKey().getRelative(0, -1, 0);

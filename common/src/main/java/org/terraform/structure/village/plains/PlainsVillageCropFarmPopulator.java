@@ -7,6 +7,7 @@ import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.type.Farmland;
 import org.bukkit.block.data.type.Lantern;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -32,14 +33,14 @@ public class PlainsVillageCropFarmPopulator extends PlainsVillageAbstractRoomPop
             Material.MELON_STEM
     };
 
-	private PlainsVillagePopulator plainsVillagePopulator;
+	private final PlainsVillagePopulator plainsVillagePopulator;
     public PlainsVillageCropFarmPopulator(PlainsVillagePopulator plainsVillagePopulator, Random rand, boolean forceSpawn, boolean unique) {
         super(rand, forceSpawn, unique);
         this.plainsVillagePopulator = plainsVillagePopulator;
     }
 
     @Override
-    public void populate(PopulatorDataAbstract data, CubeRoom room) {
+    public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
     	int roomY = super.calculateRoomY(data, room);
     	boolean areaFailedTolerance = super.doesAreaFailTolerance(data, room);
     	
@@ -211,7 +212,7 @@ public class PlainsVillageCropFarmPopulator extends PlainsVillageAbstractRoomPop
 
     }
 
-    private void setScareCrow(PopulatorDataAbstract data, int x, int y, int z) {
+    private void setScareCrow(@NotNull PopulatorDataAbstract data, int x, int y, int z) {
         BlockFace facing = BlockUtils.getDirectBlockFace(rand);
         Wall w = new Wall(new SimpleBlock(data, x, y, z), facing);
         w.setType(Material.COBBLESTONE, Material.MOSSY_COBBLESTONE);
@@ -228,7 +229,7 @@ public class PlainsVillageCropFarmPopulator extends PlainsVillageAbstractRoomPop
     }
 
     @Override
-    public boolean canPopulate(CubeRoom room) {
+    public boolean canPopulate(@NotNull CubeRoom room) {
         return room.getWidthX() >= 15 && (room.getWidthX() < 18 || room.getWidthZ() < 18);
     }
 }

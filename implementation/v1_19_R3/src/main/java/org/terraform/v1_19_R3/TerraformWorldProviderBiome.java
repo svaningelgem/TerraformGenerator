@@ -6,10 +6,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import net.minecraft.core.IRegistryWritable;
-import net.minecraft.core.registries.Registries;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_19_R3.block.CraftBlock;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.custombiomes.CustomBiomeType;
 import org.terraform.data.TerraformWorld;
@@ -20,7 +20,6 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
 import net.minecraft.core.IRegistry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.biome.BiomeResolver;
 import net.minecraft.world.level.biome.Climate.Sampler;
@@ -30,23 +29,21 @@ public class TerraformWorldProviderBiome extends WorldChunkManager {
 
 	//Idk what this is for
 	public static class TerraformBiomeResolverProxy implements BiomeResolver{
-		TerraformWorldProviderBiome delegate;
+		final TerraformWorldProviderBiome delegate;
 		public TerraformBiomeResolverProxy(TerraformWorldProviderBiome delegate) {
 			this.delegate = delegate;
 		}
 		
 		@Override
-		public Holder<BiomeBase> getNoiseBiome(int arg0, int arg1, int arg2, Sampler arg3) {
+		public @Nullable Holder<BiomeBase> getNoiseBiome(int arg0, int arg1, int arg2, Sampler arg3) {
 			return delegate.getNoiseBiome(arg0, arg1, arg2, arg3);
 		}
 	}
 	
     private final TerraformWorld tw;
     private final IRegistry<BiomeBase> registry;
-    @SuppressWarnings("unused")
-	private final WorldChunkManager delegate;
-    
-    private static Set<Holder<BiomeBase>> biomeListToBiomeBaseSet(IRegistry<BiomeBase> registry) {
+
+    private static Set<Holder<BiomeBase>> biomeListToBiomeBaseSet(@NotNull IRegistry<BiomeBase> registry) {
 
         List<Holder<BiomeBase>> biomeBases = new ArrayList<>();
 
@@ -72,13 +69,11 @@ public class TerraformWorldProviderBiome extends WorldChunkManager {
         return Set.copyOf(biomeBases);
     }
 
-    private Set<Holder<BiomeBase>> biomeList;
-    @SuppressWarnings("deprecation")
-	public TerraformWorldProviderBiome(TerraformWorld tw, WorldChunkManager delegate) {
+    private final Set<Holder<BiomeBase>> biomeList;
+    public TerraformWorldProviderBiome(TerraformWorld tw, WorldChunkManager delegate) {
         //super(biomeListToBiomeBaseList(CustomBiomeHandler.getBiomeRegistry()));
         this.biomeList = biomeListToBiomeBaseSet(CustomBiomeHandler.getBiomeRegistry());
         this.tw = tw;
-        this.delegate = delegate;
         this.registry = CustomBiomeHandler.getBiomeRegistry();
     }
 
@@ -101,9 +96,9 @@ public class TerraformWorldProviderBiome extends WorldChunkManager {
 
 	
 	@SuppressWarnings("unused")
-	private static boolean debug = false;
+	private static final boolean debug = false;
 	@Override
-	public Holder<BiomeBase> getNoiseBiome(int x, int y, int z, Sampler arg3) {
+	public @Nullable Holder<BiomeBase> getNoiseBiome(int x, int y, int z, Sampler arg3) {
 		//For vanilla cave biome positioning. However, doesn't work now.
 //		BiomeBase delegateCandidate = delegate.getNoiseBiome(x, y, z, arg3);
 //		if(CraftBlock.biomeBaseToBiome(registry, delegateCandidate) == Biome.LUSH_CAVES 
@@ -112,21 +107,15 @@ public class TerraformWorldProviderBiome extends WorldChunkManager {
 		
 		//Left shift x and z 
 		BiomeBank bank = tw.getBiomeBank(x << 2, z << 2);
-		//DedicatedServer dedicatedserver = ((CraftServer) Bukkit.getServer()).getServer();
-		
-        //IRegistry<BiomeBase> iregistry = dedicatedserver.aU().b(IRegistry.aP);
-        
-		if(bank.getHandler().getCustomBiome() == CustomBiomeType.NONE) {
+
+        if(bank.getHandler().getCustomBiome() == CustomBiomeType.NONE) {
 			
 			return CraftBlock.biomeToBiomeBase(registry, bank.getHandler().getBiome());
 		} else {
 			ResourceKey<BiomeBase> rkey = CustomBiomeHandler.terraformGenBiomeRegistry.get(bank.getHandler().getCustomBiome()); //ResourceKey.a(IRegistry.aP, new MinecraftKey(bank.getHandler().getCustomBiome().getKey()));
 			Optional<Holder.c<BiomeBase>> holder = registry.b(rkey); //g is getHolderOrThrow
 	        if(holder.isEmpty()) {
-//	        	String[] split = bank.getHandler().getCustomBiome().getKey().split(":");
-//	            ResourceKey<BiomeBase> newrkey = ResourceKey.a(IRegistry.aP, new MinecraftKey(split[0],split[1]));
-//	            base = iregistry.a(newrkey);
-	        	TerraformGeneratorPlugin.logger.error("Custom biome was not found in the vanilla registry!");
+                TerraformGeneratorPlugin.logger.error("Custom biome was not found in the vanilla registry!");
 	        }
 			
 			if(holder.isPresent()) {

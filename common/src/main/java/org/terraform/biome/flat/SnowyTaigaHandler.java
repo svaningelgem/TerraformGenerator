@@ -3,12 +3,14 @@ package org.terraform.biome.flat;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.block.data.Snowable;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
+import org.terraform.main.config.TConfigOption;
 import org.terraform.main.config.TConfig;
 import org.terraform.tree.FractalTypes;
 import org.terraform.utils.BlockUtils;
@@ -26,20 +28,12 @@ public class SnowyTaigaHandler extends BiomeHandler {
     }
 
     @Override
-    public Biome getBiome() {
+    public @NotNull Biome getBiome() {
         return Biome.SNOWY_TAIGA;
     }
 
-//	@Override
-//	public int getHeight(int x, int z, Random rand) {
-//		SimplexOctaveGenerator gen = new SimplexOctaveGenerator(rand, 2);
-//		gen.setScale(0.005);
-//		
-//		return (int) (gen.noise(x, z, 0.5, 0.5)*7D+50D);
-//	}
-
     @Override
-    public Material[] getSurfaceCrust(Random rand) {
+    public Material @NotNull [] getSurfaceCrust(@NotNull Random rand) {
         return new Material[]{GenUtils.weightedRandomMaterial(rand, Material.GRASS_BLOCK, 35, Material.DIRT, 3, Material.PODZOL, 2),
                 Material.DIRT,
                 Material.DIRT,
@@ -48,7 +42,7 @@ public class SnowyTaigaHandler extends BiomeHandler {
     }
 
     @Override
-    public void populateSmallItems(TerraformWorld world, Random random, int rawX, int surfaceY, int rawZ, PopulatorDataAbstract data) {
+    public void populateSmallItems(TerraformWorld world, @NotNull Random random, int rawX, int surfaceY, int rawZ, @NotNull PopulatorDataAbstract data) {
         if (data.getType(rawX, surfaceY, rawZ) == Material.DIRT) {
             if (GenUtils.chance(random, 1, 20)) {
                 data.setType(rawX, surfaceY + 1, rawZ, Material.DEAD_BUSH);
@@ -68,7 +62,7 @@ public class SnowyTaigaHandler extends BiomeHandler {
     }
 
 	@Override
-	public void populateLargeItems(TerraformWorld tw, Random random, PopulatorDataAbstract data) {
+	public void populateLargeItems(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data) {
 		SimpleLocation[] trees = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 11);
 
         for (SimpleLocation sLoc : trees) {
@@ -96,7 +90,7 @@ public class SnowyTaigaHandler extends BiomeHandler {
      * Replaces the highest dirt-like blocks with a noise-fuzzed 
      * circle of Podzol. Fuzzes the edges.
      */
-    public static void defrostAndReplacePodzol(int seed, float radius, SimpleBlock base) {
+    public static void defrostAndReplacePodzol(int seed, float radius, @NotNull SimpleBlock base) {
     	if (radius <= 0) return;
         if (radius <= 0.5) {
             //block.setReplaceType(ReplaceType.ALL);
@@ -134,12 +128,12 @@ public class SnowyTaigaHandler extends BiomeHandler {
     }
 
 	@Override
-	public BiomeBank getBeachType() {
+	public @NotNull BiomeBank getBeachType() {
 		return BiomeBank.ICY_BEACH;
 	}
 	
 	@Override
-    public BiomeBank getRiverType() {
+    public @NotNull BiomeBank getRiverType() {
     	return BiomeBank.FROZEN_RIVER;
     }
 }

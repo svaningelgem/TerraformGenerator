@@ -4,6 +4,7 @@ import org.bukkit.Axis;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.biome.beach.OasisBeach;
@@ -26,7 +27,7 @@ public class DesertHandler extends BiomeHandler {
     }
 
     @Override
-    public Biome getBiome() {
+    public @NotNull Biome getBiome() {
         return Biome.DESERT;
     }
 
@@ -36,13 +37,13 @@ public class DesertHandler extends BiomeHandler {
     }
 
     @Override
-    public BiomeBank getRiverType() {
+    public @NotNull BiomeBank getRiverType() {
         return BiomeBank.DESERT_RIVER;
     }
 
     //Pad more sandstone so that mountains don't get stone exposed vertically
     @Override
-    public Material[] getSurfaceCrust(Random rand) {
+    public Material @NotNull [] getSurfaceCrust(@NotNull Random rand) {
         return new Material[]{Material.SAND,
                 Material.SAND,
                 GenUtils.randMaterial(rand, Material.SANDSTONE, Material.SAND),
@@ -55,7 +56,7 @@ public class DesertHandler extends BiomeHandler {
     }
 
     @Override
-    public void populateSmallItems(TerraformWorld world, Random random, int rawX, int surfaceY, int rawZ, PopulatorDataAbstract data) {
+    public void populateSmallItems(@NotNull TerraformWorld world, @NotNull Random random, int rawX, int surfaceY, int rawZ, @NotNull PopulatorDataAbstract data) {
         boolean cactusGathering = GenUtils.chance(random, 1, 100);
         OasisBeach.generateOasisBeach(world, random, data, rawX, rawZ, BiomeBank.DESERT);
 
@@ -83,7 +84,7 @@ public class DesertHandler extends BiomeHandler {
     }
 
 	@Override
-	public void populateLargeItems(TerraformWorld tw, Random random, PopulatorDataAbstract data) {
+	public void populateLargeItems(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data) {
 		
 		//Rib cages
         SimpleLocation[] ribCages = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 
@@ -99,10 +100,10 @@ public class DesertHandler extends BiomeHandler {
         }
 	}
 
-	public void spawnRibCage(Random random, SimpleBlock target) {
+	public void spawnRibCage(@NotNull Random random, @NotNull SimpleBlock target) {
 		BlockFace direction = BlockUtils.getDirectBlockFace(random);
 		int spineLength = GenUtils.randInt(random, 10, 14);
-		float ribWidthRadius = GenUtils.randInt(random, 1, 2) + spineLength/2;
+		float ribWidthRadius = GenUtils.randInt(random, 1, 2) + (float) spineLength /2;
 		float ribHeightRadius = 0.7f*ribWidthRadius; //GenUtils.randInt(random, 6, 8);
 		//eqn -> ((y-ribHeight)/(ribHeight))^2 + ((x)/(ribWidth))^2 = 1
 		int interval = 2;
@@ -123,7 +124,7 @@ public class DesertHandler extends BiomeHandler {
 				ribSizeMultiplier -= 0.05f;
 			
 			if(segmentIndex % interval == 0 && segmentIndex > spineLength/6) {
-				for(float nHor = 1; nHor <= ribWidthRadius*ribSizeMultiplier; nHor+=0.01) {
+				for(float nHor = 1; nHor <= ribWidthRadius*ribSizeMultiplier; nHor+= 0.01F) {
 					
 					int[] multipliers = {-1};
 					if(nHor > ribWidthRadius*ribSizeMultiplier/3)

@@ -2,6 +2,7 @@ package org.terraform.biome.cavepopulators;
 
 import java.util.Random;
 
+import org.jetbrains.annotations.NotNull;
 import org.terraform.main.config.TConfig;
 import org.terraform.utils.GenUtils;
 
@@ -28,16 +29,16 @@ public enum CaveClusterRegistry {
     ),
 	;
 	
-	int hashSeed;
-	int separation;
-	float pertub;
+	final int hashSeed;
+	final int separation;
+	final float pertub;
 	CaveClusterRegistry(int hashSeed, int separation, float pertub){
 		this.hashSeed = hashSeed;
 		this.separation = separation;
 		this.pertub = pertub;
 	}
 	
-	public AbstractCaveClusterPopulator getPopulator(Random random) {
+	public @NotNull AbstractCaveClusterPopulator getPopulator(@NotNull Random random) {
         return switch(this) {
             case LUSH -> new LushClusterCavePopulator(
                     GenUtils.randInt(random,

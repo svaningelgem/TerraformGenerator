@@ -4,7 +4,7 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.terraform.command.contants.InvalidArgumentException;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.command.contants.TerraCommand;
 import org.terraform.main.TerraformGeneratorPlugin;
 import java.util.Stack;
@@ -16,7 +16,7 @@ public class InjectorDebugTestCommand extends TerraCommand {
     }
 
     @Override
-    public String getDefaultDescription() {
+    public @NotNull String getDefaultDescription() {
         return "Invokes NMSInjector.debugTest(Player)";
     }
 
@@ -26,17 +26,15 @@ public class InjectorDebugTestCommand extends TerraCommand {
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender) {
+    public boolean hasPermission(@NotNull CommandSender sender) {
         return sender.isOp();
     }
 
     @Override
-    public void execute(CommandSender sender, Stack<String> args)
-            throws InvalidArgumentException {
+    public void execute(CommandSender sender, Stack<String> args) {
 
         Player p = (Player) sender;
-        TerraformGeneratorPlugin.injector.debugTest(p);
-        
+
         World w = p.getWorld();
         
         for(int y = -64; y < 320; y++) {

@@ -3,6 +3,7 @@ package org.terraform.structure.villagehouse.animalfarm;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeClimate;
 import org.terraform.coregen.bukkit.TerraformGenerator;
@@ -38,16 +39,16 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
             EntityType.HORSE,
             EntityType.CHICKEN
     };
-    
+
 
     @Override
-    public Random getHashedRandom(TerraformWorld tw, int chunkX, int chunkZ) {
+    public @NotNull Random getHashedRandom(@NotNull TerraformWorld tw, int chunkX, int chunkZ) {
         return tw.getHashedRand(425332, chunkX, chunkZ);
     }
 
     @Override
-    public void populate(TerraformWorld tw,
-                         PopulatorDataAbstract data) {
+    public void populate(@NotNull TerraformWorld tw,
+                         @NotNull PopulatorDataAbstract data) {
         MegaChunk mc = new MegaChunk(data.getChunkX(), data.getChunkZ());
         int[] coords = mc.getCenterBiomeSectionBlockCoords(); //getCoordsFromMegaChunk(tw, mc);
         int x = coords[0];//data.getChunkX()*16 + random.nextInt(16);
@@ -56,7 +57,7 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
         spawnAnimalFarm(tw, data, x, height + 1, z);
     }
 
-    public void spawnAnimalFarm(TerraformWorld tw, PopulatorDataAbstract data, int x, int y, int z) {
+    public void spawnAnimalFarm(@NotNull TerraformWorld tw, @NotNull PopulatorDataAbstract data, int x, int y, int z) {
         try {
             Random random = this.getHashedRandom(tw, data.getChunkX(), data.getChunkZ());
             BiomeBank biome = tw.getBiomeBank(x, z);
@@ -96,7 +97,7 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
         }
     }
 
-    private void createSurroundingFences(TerraformWorld tw, BiomeBank biome, Random random, PopulatorDataAbstract data, int x, int y, int z) {
+    private void createSurroundingFences(@NotNull TerraformWorld tw, @NotNull BiomeBank biome, @NotNull Random random, @NotNull PopulatorDataAbstract data, int x, int y, int z) {
         RoomLayoutGenerator gen = new RoomLayoutGenerator(random, RoomLayout.RANDOM_BRUTEFORCE, 50, x, y, z, 75);
         gen.setPathPopulator(new AnimalFarmPathPopulator(gen, tw.getHashedRand(x, y, z, 1234)));
         gen.setRoomMaxX(17);
@@ -127,28 +128,25 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
                 double dist = Math.pow(nx, 2) + Math.pow(nz, 2);
                 double multiplier = Math.pow((1 / (dist - 2500)) + 1, 255);
                 if (multiplier < 0 || dist > 2500 + (radiusNoise.GetNoise(nx, nz) * 500.0)) multiplier = 0;
-                noise = noise * multiplier;
+                noise = Math.abs(noise * multiplier);
 
-                if (GenUtils.chance(random, (2500 - dist) > 0 ? (int) (2500 - dist) : 0, 2500))
-                    if (noise < -0.2) {
-
-                    } else if (noise > 0.2) {
-
-                    } else if (Math.abs(noise) < 0.2 && Math.abs(noise) > 0.1) { //Grass hedges
+                if (GenUtils.chance(random, (2500 - dist) > 0 ? (int) (2500 - dist) : 0, 2500)) {
+                    if(0.1 < noise && noise < 0.2) { //Grass hedges
                         data.setType(nx + x, height, nz + z, GenUtils.randMaterial(
                                 random,
                                 Material.CHISELED_STONE_BRICKS,
                                 Material.STONE_BRICKS,
                                 Material.STONE_BRICKS,
                                 Material.STONE_BRICKS));
-                    } else {
-                        if (GenUtils.chance(random, (int) (100 * Math.pow(multiplier, 3)), 100)) {
+                    } else if ( noise <= 0.1 ) {
+                        if(GenUtils.chance(random, (int) (100 * Math.pow(multiplier, 3)), 100)) {
                             data.setType(nx + x, height, nz + z, GenUtils.randMaterial(
                                     random,
                                     Material.COBBLESTONE_SLAB,
                                     Material.MOSSY_COBBLESTONE_SLAB));
                         }
                     }
+                }
             }
         }
 
@@ -163,8 +161,8 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
 
             //Create fences
             for (int t = 0; t <= 360; t += 5) {
-                int ePX = room.getX() + (int) ((room.getWidthX() / 2) * Math.cos(Math.toRadians(t)));
-                int ePZ = room.getZ() + (int) ((room.getWidthZ() / 2) * Math.sin(Math.toRadians(t)));
+                int ePX = room.getX() + (int) (((double) room.getWidthX() / 2) * Math.cos(Math.toRadians(t)));
+                int ePZ = room.getZ() + (int) (((double) room.getWidthZ() / 2) * Math.sin(Math.toRadians(t)));
                 int highest = GenUtils.getHighestGround(data, ePX, ePZ);
 
                 data.setType(ePX, highest + 1, ePZ, Material.SPRUCE_FENCE);

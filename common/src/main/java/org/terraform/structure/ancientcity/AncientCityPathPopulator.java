@@ -6,6 +6,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.type.Lantern;
 import org.bukkit.block.data.type.Slab.Type;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.Wall;
@@ -22,19 +23,17 @@ import java.util.HashSet;
 import java.util.Random;
 
 public class AncientCityPathPopulator extends PathPopulatorAbstract {
-	
-	//private int state = 0;
-    private final Random rand;
+
     private final RoomLayoutGenerator gen;
-    private HashSet<SimpleLocation> occupied;
+    private final HashSet<SimpleLocation> occupied;
     public AncientCityPathPopulator(Random rand, RoomLayoutGenerator gen, HashSet<SimpleLocation> occupied) {
-        this.rand = rand;
+        //private int state = 0;
         this.gen = gen;
         this.occupied = occupied;
     }
 
     @Override
-    public void populate(PathPopulatorData ppd) {
+    public void populate(@NotNull PathPopulatorData ppd) {
         
         Wall core = new Wall(ppd.base, ppd.dir);
         
@@ -88,11 +87,11 @@ public class AncientCityPathPopulator extends PathPopulatorAbstract {
             //state++;
         }
         else { //End
-        	AncientCityPathMiniRoomPlacer.placeAltar(core, rand);
+        	AncientCityPathMiniRoomPlacer.placeAltar(core);
         }
     }
     
-    private void placeWallArc(Wall core, int state) {
+    private void placeWallArc(@NotNull Wall core, int state) {
     	if(occupied.contains(core.getLoc()) 
     			|| occupied.contains(core.getRight().getLoc())
     			|| occupied.contains(core.getLeft().getLoc())) 
@@ -240,7 +239,7 @@ public class AncientCityPathPopulator extends PathPopulatorAbstract {
     }
 
     @Override
-    public boolean customCarve(SimpleBlock base, BlockFace dir, int pathWidth) {
+    public boolean customCarve(@NotNull SimpleBlock base, BlockFace dir, int pathWidth) {
         Wall core = new Wall(base.getRelative(0, 1, 0), dir);
         int seed = 55 + core.getX() + core.getY() ^ 2 + core.getZ() ^ 3;
         EnumSet<Material> carveMaterials = BlockUtils.stoneLike.clone();
@@ -255,8 +254,4 @@ public class AncientCityPathPopulator extends PathPopulatorAbstract {
         return true;
     }
 
-    @Override
-    public int getPathWidth() {
-        return 3;
-    }
 }

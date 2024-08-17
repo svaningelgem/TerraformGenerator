@@ -1,6 +1,5 @@
 package org.terraform.utils.blockdata.fixers;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.BlockFace;
@@ -8,6 +7,8 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Wall;
 import org.bukkit.block.data.type.Wall.Height;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.terraform.coregen.BlockDataFixerAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.utils.BlockUtils;
@@ -15,7 +16,7 @@ import org.terraform.utils.BlockUtils;
 public class v1_16_R1_BlockDataFixer extends BlockDataFixerAbstract {
 
     //TODO: Investigate what this class is for. Seems quite random to have this around.
-    public static void correctWallData(SimpleBlock target) {
+    public static void correctWallData(@NotNull SimpleBlock target) {
         if (!(target.getBlockData() instanceof Wall data)) return;
         for (BlockFace face : BlockUtils.directBlockFaces) {
         	Material relType = target.getRelative(face).getType();
@@ -42,15 +43,10 @@ public class v1_16_R1_BlockDataFixer extends BlockDataFixerAbstract {
             	data.setHeight(face, Height.NONE);
         }
 
-//		if(target.getRelative(BlockFace.UP).getBlockData() instanceof Wall&&
-//				((Wall) target.getRelative(BlockFace.UP).getBlockData()).isUp()) {
-//			data.setUp(true);
-//		}
-        //TerraformGeneratorPlugin.logger.info("Changed wall at " + target.toVector().toString());
         target.setBlockData(data);
     }
 
-    public static void correctSurroundingWallData(SimpleBlock target) {
+    public static void correctSurroundingWallData(@NotNull SimpleBlock target) {
         if (!(target.getBlockData() instanceof Wall)) return;
 
         correctWallData(target);
@@ -62,22 +58,11 @@ public class v1_16_R1_BlockDataFixer extends BlockDataFixerAbstract {
 
     @Override
     public String updateSchematic(double schematicVersion, String schematic) {
-//        if(schematicVersion < 16)
-//            if (schematic.contains("_wall[")) {
-//                schematic = StringUtils.replace(schematic, "north=false", "north=none");
-//                schematic = StringUtils.replace(schematic, "south=false", "south=none");
-//                schematic = StringUtils.replace(schematic, "east=false", "east=none");
-//                schematic = StringUtils.replace(schematic, "west=false", "west=none");
-//                schematic = StringUtils.replace(schematic, "north=true", "north=low");
-//                schematic = StringUtils.replace(schematic, "south=true", "south=low");
-//                schematic = StringUtils.replace(schematic, "east=true", "east=low");
-//                schematic = StringUtils.replace(schematic, "west=true", "west=low");
-//            }
         return schematic;
     }
 
     @Override
-    public void correctFacing(Vector v, SimpleBlock b, BlockData data, BlockFace face) {
+    public void correctFacing(Vector v, @Nullable SimpleBlock b, @Nullable BlockData data, BlockFace face) {
         if (data == null && b != null) data = b.getBlockData();
 
         if (!hasFlushed && data instanceof Wall) {

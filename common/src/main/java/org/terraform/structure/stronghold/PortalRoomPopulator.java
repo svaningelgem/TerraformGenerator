@@ -8,6 +8,7 @@ import org.bukkit.block.data.type.EndPortalFrame;
 import org.bukkit.block.data.type.Slab;
 import org.bukkit.block.data.type.Slab.Type;
 import org.bukkit.block.data.type.Stairs;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -25,14 +26,14 @@ public class PortalRoomPopulator extends RoomPopulatorAbstract {
         super(rand, forceSpawn, unique);
     }
 
-    private Slab randTopSlab() {
+    private @NotNull Slab randTopSlab() {
         Slab slab = (Slab) Bukkit.createBlockData(BlockUtils.stoneBrickSlab(rand));
         slab.setType(Type.TOP);
         return slab;
     }
 
     @Override
-    public void populate(PopulatorDataAbstract data, CubeRoom room) {
+    public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
         int[] lowerBounds = room.getLowerCorner();
         int[] upperBounds = room.getUpperCorner();
 
@@ -190,7 +191,7 @@ public class PortalRoomPopulator extends RoomPopulatorAbstract {
         }
     }
 
-    public void lavaPool(PopulatorDataAbstract data, int x, int y, int z, int height) {
+    public void lavaPool(@NotNull PopulatorDataAbstract data, int x, int y, int z, int height) {
         for (BlockFace face : BlockUtils.directBlockFaces) {
             Wall w = new Wall(new SimpleBlock(data, x, y, z), face).getFront().getFront();
             Stairs stairs = (Stairs) Bukkit.createBlockData(Material.POLISHED_ANDESITE_STAIRS);
@@ -210,12 +211,12 @@ public class PortalRoomPopulator extends RoomPopulatorAbstract {
             for (int nz = -1; nz <= 1; nz++) {
                 data.setType(x + nx, y + height, z + nz, Material.CHISELED_STONE_BRICKS);
                 if (nx == 0 && nz == 0)
-                    data.setType(x + 0, y + height, z + 0, Material.LAVA);
+                    data.setType(x, y + height, z, Material.LAVA);
             }
         }
     }
 
-    public void decoratedPillar(Random rand, PopulatorDataAbstract data, int x, int y, int z, int height) {
+    public void decoratedPillar(@NotNull Random rand, @NotNull PopulatorDataAbstract data, int x, int y, int z, int height) {
         BlockUtils.spawnPillar(rand, data, x, y, z, Material.CHISELED_STONE_BRICKS, height, height);
         BlockUtils.spawnPillar(rand, data, x + 1, y, z + 1, Material.COBBLESTONE_WALL, height, height);
         BlockUtils.spawnPillar(rand, data, x - 1, y, z + 1, Material.COBBLESTONE_WALL, height, height);
@@ -246,11 +247,11 @@ public class PortalRoomPopulator extends RoomPopulatorAbstract {
     }
 
     @Override
-    public boolean canPopulate(CubeRoom room) {
+    public boolean canPopulate(@NotNull CubeRoom room) {
         return room.getWidthX() == 25 && room.getWidthZ() == 25 && room.getHeight() == 15;
     }
 
-    private void ceilDecor(SimpleBlock ceil) {
+    private void ceilDecor(@NotNull SimpleBlock ceil) {
         ceil.setType(Material.CHISELED_STONE_BRICKS);
         ceil.getRelative(0, 0, -1).setType(Material.CHISELED_STONE_BRICKS);
         ceil.getRelative(0, 0, -2).setType(Material.MOSSY_STONE_BRICKS);
@@ -262,22 +263,22 @@ public class PortalRoomPopulator extends RoomPopulatorAbstract {
         ceil.getRelative(0, 0, 3).setType(Material.MOSSY_COBBLESTONE);
         ceil.getRelative(0, 0, 4).setBlockData(randTopSlab());
         for (int i : new int[]{-1, 1}) {
-            ceil.getRelative(1 * i, 0, -1).setType(Material.MOSSY_STONE_BRICKS);
-            ceil.getRelative(1 * i, 0, 0).setType(Material.MOSSY_STONE_BRICKS);
-            ceil.getRelative(1 * i, 0, 1).setType(Material.MOSSY_STONE_BRICKS);
+            ceil.getRelative(i, 0, -1).setType(Material.MOSSY_STONE_BRICKS);
+            ceil.getRelative(i, 0, 0).setType(Material.MOSSY_STONE_BRICKS);
+            ceil.getRelative(i, 0, 1).setType(Material.MOSSY_STONE_BRICKS);
 
             ceil.getRelative(2 * i, 0, -1).setType(Material.MOSSY_COBBLESTONE);
             ceil.getRelative(2 * i, 0, 0).setType(Material.MOSSY_COBBLESTONE);
             ceil.getRelative(2 * i, 0, 1).setType(Material.MOSSY_COBBLESTONE);
-            ceil.getRelative(1 * i, 0, -2).setType(Material.MOSSY_COBBLESTONE);
-            ceil.getRelative(1 * i, 0, 2).setType(Material.MOSSY_COBBLESTONE);
+            ceil.getRelative(i, 0, -2).setType(Material.MOSSY_COBBLESTONE);
+            ceil.getRelative(i, 0, 2).setType(Material.MOSSY_COBBLESTONE);
 
             SimpleBlock[] blocks = new SimpleBlock[7];
             blocks[0] = ceil.getRelative(3 * i, 0, -1);
             blocks[1] = ceil.getRelative(3 * i, 0, 0);
             blocks[2] = ceil.getRelative(3 * i, 0, 1);
-            blocks[3] = ceil.getRelative(1 * i, 0, 3);
-            blocks[4] = ceil.getRelative(1 * i, 0, -3);
+            blocks[3] = ceil.getRelative(i, 0, 3);
+            blocks[4] = ceil.getRelative(i, 0, -3);
             blocks[5] = ceil.getRelative(2 * i, 0, 2);
             blocks[6] = ceil.getRelative(2 * i, 0, -2);
             for (SimpleBlock b : blocks) {

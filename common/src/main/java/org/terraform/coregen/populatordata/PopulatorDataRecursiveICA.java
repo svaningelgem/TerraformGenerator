@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.data.SimpleChunkLocation;
 import org.terraform.main.TerraformGeneratorPlugin;
@@ -14,22 +15,20 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PopulatorDataRecursiveICA extends PopulatorDataPostGen {
 
-    private final World w;
-    private final Chunk c;
+    private final @NotNull World w;
+    private final @NotNull Chunk c;
     private final ConcurrentHashMap<SimpleChunkLocation, PopulatorDataICAAbstract> loadedChunks = new ConcurrentHashMap<>();
 
-    public PopulatorDataRecursiveICA(Chunk c) {
+    public PopulatorDataRecursiveICA(@NotNull Chunk c) {
         super(c);
         this.c = c;
         this.w = c.getWorld();
     }
 
     /**
-     * @param x
-     * @param z
      * @return The PopulatorDataICA related to those coords.
      */
-    private PopulatorDataICAAbstract getData(int x, int z) {
+    private @NotNull PopulatorDataICAAbstract getData(int x, int z) {
         SimpleChunkLocation scl = new SimpleChunkLocation(w.getName(), x, z);
         synchronized(loadedChunks) {
             return loadedChunks.computeIfAbsent(scl, k -> {
@@ -54,12 +53,12 @@ public class PopulatorDataRecursiveICA extends PopulatorDataPostGen {
     }
 
     @Override
-    public void setType(int x, int y, int z, Material type) {
+    public void setType(int x, int y, int z, @NotNull Material type) {
         getData(x, z).setType(x, y, z, type);
     }
 
     @Override
-    public void setBlockData(int x, int y, int z, BlockData data) {
+    public void setBlockData(int x, int y, int z, @NotNull BlockData data) {
         getData(x, z).setBlockData(x, y, z, data);
     }
 
@@ -69,7 +68,7 @@ public class PopulatorDataRecursiveICA extends PopulatorDataPostGen {
     }
 
     @Override
-    public void addEntity(int rawX, int rawY, int rawZ, EntityType type) {
+    public void addEntity(int rawX, int rawY, int rawZ, @NotNull EntityType type) {
         getData(rawX, rawZ).addEntity(rawX, rawY, rawZ, type);
     }
 
@@ -84,7 +83,7 @@ public class PopulatorDataRecursiveICA extends PopulatorDataPostGen {
     }
 
     @Override
-    public void setSpawner(int rawX, int rawY, int rawZ, EntityType type) {
+    public void setSpawner(int rawX, int rawY, int rawZ, @NotNull EntityType type) {
         getData(rawX, rawZ).setSpawner(rawX, rawY, rawZ, type);
     }
 

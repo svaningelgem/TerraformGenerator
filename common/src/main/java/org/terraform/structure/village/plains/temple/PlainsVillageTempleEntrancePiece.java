@@ -3,6 +3,7 @@ package org.terraform.structure.village.plains.temple;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected.Half;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -18,14 +19,14 @@ import java.util.Random;
 
 public class PlainsVillageTempleEntrancePiece extends JigsawStructurePiece {
 
-	PlainsVillagePopulator plainsVillagePopulator;
+	final PlainsVillagePopulator plainsVillagePopulator;
     public PlainsVillageTempleEntrancePiece(PlainsVillagePopulator plainsVillagePopulator, int widthX, int height, int widthZ, JigsawType type, BlockFace[] validDirs) {
         super(widthX, height, widthZ, type, validDirs);
         this.plainsVillagePopulator = plainsVillagePopulator;
     }
 
     @Override
-    public void build(PopulatorDataAbstract data, Random rand) {
+    public void build(@NotNull PopulatorDataAbstract data, @NotNull Random rand) {
         Material[] stoneBricks = {Material.STONE_BRICKS, Material.STONE_BRICKS, Material.STONE_BRICKS, Material.CRACKED_STONE_BRICKS};
 
         SimpleEntry<Wall, Integer> entry = this.getRoom().getWall(data, getRotation().getOppositeFace(), 0);
@@ -45,11 +46,6 @@ public class PlainsVillageTempleEntrancePiece extends JigsawStructurePiece {
         BlockUtils.placeDoor(data, plainsVillagePopulator.woodDoor, core.getX(), core.getY(), core.getZ(), core.getDirection());
 
         //Stairway down
-//        BlockUtils.angledStairwayUntilSolid(core.getFront().getRelative(0, -1, 0).get(), core.getDirection(),
-//                new Material[]{
-//                        Material.COBBLESTONE, Material.MOSSY_COBBLESTONE
-//                },
-//                Material.COBBLESTONE_STAIRS, Material.MOSSY_COBBLESTONE_STAIRS);
 
         if(core.getFront().getType().isSolid()) {
 	        new StairwayBuilder(Material.COBBLESTONE_STAIRS, Material.MOSSY_COBBLESTONE_STAIRS)

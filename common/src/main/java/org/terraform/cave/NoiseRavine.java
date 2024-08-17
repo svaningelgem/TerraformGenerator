@@ -1,5 +1,6 @@
 package org.terraform.cave;
 
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.TerraformWorld;
 import org.terraform.utils.noise.FastNoise;
@@ -11,7 +12,7 @@ public class NoiseRavine extends NoiseCaveAbstract{
      * Use similar logic to Rivers to carve ravines, filtered against Y-height relative to the sea.
      */
     @Override
-    public boolean canCarve(TerraformWorld tw, int rawX, int y, int rawZ, double height, float filter) {
+    public boolean canCarve(@NotNull TerraformWorld tw, int rawX, int y, int rawZ, double height, float filter) {
         if(height < TerraformGenerator.seaLevel) return false; //Hard filter.
         if(y < height-RAVINE_DEPTH) return false;
         FastNoise ravineNoise = NoiseCacheHandler.getNoise(tw, NoiseCacheHandler.NoiseCacheEntry.CAVE_XRAVINE_NOISE, world -> {
@@ -31,17 +32,12 @@ public class NoiseRavine extends NoiseCaveAbstract{
 
         float xzStretcher = ravineFilter.GetNoise(rawX,rawZ);
         float sign = xzStretcher/Math.abs(xzStretcher);
-        xzStretcher = sign*0.5f*Math.min(1, Math.max(0,Math.abs(xzStretcher)));
 
         //Stretch caves vertically so that they're not excessively spherical
         float ravine = ravineNoise.GetNoise(3*rawX,y*0.4f,3*rawZ);
         //Multiply by a filter that varies with depth relative to height.
         //At depth 50 blocks, force to 0
-        ravine *= filter*0.5885*Math.log(RAVINE_DEPTH+1-(height-y)); //ASSUMPTION: y <= height.
-//        if(ravine < smallest){
-//            smallest = ravine;
-//            TerraformGeneratorPlugin.logger.info("SMALLEST: " + smallest);
-//        }
+        ravine *= (float) (filter*0.5885*Math.log(RAVINE_DEPTH+1-(height-y))); //ASSUMPTION: y <= height.
         return ravine <= -1.3f;
     }
 //    private static float smallest = 0;

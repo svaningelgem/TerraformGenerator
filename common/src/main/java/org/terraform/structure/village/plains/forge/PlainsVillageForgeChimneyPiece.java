@@ -3,6 +3,7 @@ package org.terraform.structure.village.plains.forge;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected.Half;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -24,9 +25,9 @@ public class PlainsVillageForgeChimneyPiece extends PlainsVillageForgeStandardPi
 	
 	//Use postBuildDecoration, as the walls are built after build()
     @Override
-    public void postBuildDecoration(Random random, PopulatorDataAbstract data) {
+    public void postBuildDecoration(@NotNull Random random, @NotNull PopulatorDataAbstract data) {
     	SimpleBlock core = new SimpleBlock(data, this.getRoom().getX(), this.getRoom().getY(), this.getRoom().getZ());
-    	if(this.getWalledFaces().size() == 0) {
+    	if(this.getWalledFaces().isEmpty()) {
     		spawnStraightChimney(random, new Wall(core));
     	}
     	
@@ -52,10 +53,9 @@ public class PlainsVillageForgeChimneyPiece extends PlainsVillageForgeStandardPi
     
     /**
      * 3x3 chimney spawned right in the middle of the room.
-     * @param random
      * @param core must contain the direction the chimney is to face.
      */
-    private void spawnWallChimney(Random random, Wall core) {
+    private void spawnWallChimney(@NotNull Random random, Wall core) {
     	core = core.getRelative(0,1,0);
     	
     	//Refers to the height of the segment of the 
@@ -144,16 +144,12 @@ public class PlainsVillageForgeChimneyPiece extends PlainsVillageForgeStandardPi
     	core.getRelative(0,-1,0).setType(Material.CAMPFIRE);
     	core.getRelative(0,-2,0).setType(Material.HAY_BLOCK);
     	core.setType(Material.LAVA);
-    	//core.getRelative(0,chimneyCoreHeight+2,0).Pillar(2, random, Material.COBBLESTONE);
-    	//core.getRelative(0,chimneyCoreHeight+4,0).Pillar(2, random, Material.COBBLESTONE_WALL);
     }
     
     /**
      * 3x3 chimney spawned right in the middle of the room.
-     * @param random
-     * @param core
      */
-    private void spawnStraightChimney(Random random, Wall core) {
+    private void spawnStraightChimney(@NotNull Random random, Wall core) {
     	core = core.getRelative(0,1,0);
     	
     	//Refers to the height of the segment of the 
@@ -190,9 +186,7 @@ public class PlainsVillageForgeChimneyPiece extends PlainsVillageForgeStandardPi
     	core.getRelative(0,-1,0).setType(Material.CAMPFIRE);
     	core.getRelative(0,-2,0).setType(Material.HAY_BLOCK);
     	core.setType(Material.LAVA);
-    	
-    	//core.getRelative(0,chimneyCoreHeight+2,0).Pillar(2, random, Material.COBBLESTONE);
-    	//core.getRelative(0,chimneyCoreHeight+4,0).Pillar(2, random, Material.COBBLESTONE_WALL);
+
     }
 
 }

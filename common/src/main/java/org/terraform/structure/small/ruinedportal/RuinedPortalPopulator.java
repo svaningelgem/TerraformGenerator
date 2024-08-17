@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeClimate;
 import org.terraform.coregen.TerraLootTable;
@@ -31,7 +32,7 @@ public class RuinedPortalPopulator extends MultiMegaChunkStructurePopulator {
 	private static final Material[] portalBlocks = new Material[] {Material.OBSIDIAN, Material.CRYING_OBSIDIAN};
 
     @Override
-    public void populate(TerraformWorld tw, PopulatorDataAbstract data) {
+    public void populate(@NotNull TerraformWorld tw, @NotNull PopulatorDataAbstract data) {
 
         if (!config.getBoolean(TConfig.Option.STRUCTURES_RUINEDPORTAL_ENABLED))
             return;
@@ -48,7 +49,7 @@ public class RuinedPortalPopulator extends MultiMegaChunkStructurePopulator {
         }
     }
 
-    public void spawnRuinedPortal(TerraformWorld tw, Random random, PopulatorDataAbstract data, int x, int y, int z) {
+    public void spawnRuinedPortal(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data, int x, int y, int z) {
     	SimpleBlock core = new SimpleBlock(data, x, y, z);
     	BiomeBank biome = tw.getBiomeBank(x, z);
     	boolean overgrown = biome.getClimate() == BiomeClimate.HUMID_VEGETATION;
@@ -67,13 +68,9 @@ public class RuinedPortalPopulator extends MultiMegaChunkStructurePopulator {
     /**
      * Underwater checks are done here, as the portal being underwater will
      * override all these vegetation settings.
-     * @param tw
-     * @param random
-     * @param core
-     * @param overgrown
      */
-    public void spawnRuinedPortal(TerraformWorld tw, Random random, SimpleBlock core,
-    		int mossiness, boolean overgrown, boolean snowy) {
+    public void spawnRuinedPortal(TerraformWorld tw, @NotNull Random random, @NotNull SimpleBlock core,
+                                  int mossiness, boolean overgrown, boolean snowy) {
     	int horRadius = GenUtils.randInt(random, 2, 4); // ALWAYS EVEN
     	int vertHeight = 1+horRadius*2; //Can be odd
     	BlockFace facing = BlockUtils.getDirectBlockFace(random);
@@ -179,8 +176,8 @@ public class RuinedPortalPopulator extends MultiMegaChunkStructurePopulator {
     	 
     	 HashMap<SimpleBlock, Integer> lavaLocs = new HashMap<>();
     	 int lowestY = 9999;
-    	 for(int relx = - horRadius*3; relx <  + horRadius*3; relx++) {
-    		 for(int relz = - horRadius*3; relz < + horRadius*3; relz++) {
+    	 for(int relx = - horRadius*3; relx < horRadius*3; relx++) {
+    		 for(int relz = - horRadius*3; relz < horRadius*3; relz++) {
     	         double fissureNoise = (3 - 100 * Math.abs(noise.GetNoise(relx+core.getX(), relz + core.getZ())));
     	         if(fissureNoise > 0) {
     	        	 SimpleBlock target = core.getRelative(relx,0,relz).getGround();
@@ -273,7 +270,7 @@ public class RuinedPortalPopulator extends MultiMegaChunkStructurePopulator {
 	    	.getGround().getUp());
     }
     
-    private Material getFluid(SimpleBlock block) {
+    private @NotNull Material getFluid(@NotNull SimpleBlock block) {
     	if(BlockUtils.isWet(block)) return Material.WATER;
     	for(BlockFace face:BlockUtils.directBlockFaces)
     		if(BlockUtils.isWet(block.getRelative(face))) return Material.WATER;
@@ -281,7 +278,7 @@ public class RuinedPortalPopulator extends MultiMegaChunkStructurePopulator {
     }
     
     @Override
-    public int[][] getCoordsFromMegaChunk(TerraformWorld tw, MegaChunk mc) {
+    public int[][] getCoordsFromMegaChunk(@NotNull TerraformWorld tw, @NotNull MegaChunk mc) {
         int num = config.getInt(TConfig.Option.STRUCTURES_RUINEDPORTAL_COUNT_PER_MEGACHUNK);
         int[][] coords = new int[num][2];
         for (int i = 0; i < num; i++)
@@ -290,7 +287,7 @@ public class RuinedPortalPopulator extends MultiMegaChunkStructurePopulator {
 
     }
 
-    public int[] getNearestFeature(TerraformWorld tw, int rawX, int rawZ) {
+    public int[] getNearestFeature(@NotNull TerraformWorld tw, int rawX, int rawZ) {
         MegaChunk mc = new MegaChunk(rawX, 0, rawZ);
 
         double minDistanceSquared = Integer.MAX_VALUE;
@@ -309,7 +306,7 @@ public class RuinedPortalPopulator extends MultiMegaChunkStructurePopulator {
         return min;
     }
 
-    private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
+    private boolean rollSpawnRatio(@NotNull TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 976123),
                 (int) (TConfig.STRUCTURES_RUINEDPORTAL_SPAWNRATIO
                         .getDouble() * 10000),
@@ -317,7 +314,7 @@ public class RuinedPortalPopulator extends MultiMegaChunkStructurePopulator {
     }
     
     @Override
-    public boolean canSpawn(TerraformWorld tw, int chunkX,
+    public boolean canSpawn(@NotNull TerraformWorld tw, int chunkX,
                             int chunkZ) {
         MegaChunk mc = new MegaChunk(chunkX, chunkZ);
         for (int[] coords : getCoordsFromMegaChunk(tw, mc)) {
@@ -329,7 +326,7 @@ public class RuinedPortalPopulator extends MultiMegaChunkStructurePopulator {
     }
 
     @Override
-    public Random getHashedRandom(TerraformWorld world, int chunkX, int chunkZ) {
+    public @NotNull Random getHashedRandom(@NotNull TerraformWorld world, int chunkX, int chunkZ) {
         return world.getHashedRand(729384234, chunkX, chunkZ);
     }
 

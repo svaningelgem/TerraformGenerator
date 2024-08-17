@@ -3,6 +3,7 @@ package org.terraform.structure.catacombs;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected.Half;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -30,7 +31,7 @@ public class CatacombsPathPopulator extends PathPopulatorAbstract {
     }
 
     @Override
-    public void populate(PathPopulatorData ppd) {
+    public void populate(@NotNull PathPopulatorData ppd) {
         Wall core = new Wall(ppd.base, ppd.dir);
         
         //Was populated before.
@@ -39,7 +40,7 @@ public class CatacombsPathPopulator extends PathPopulatorAbstract {
 
         Wall ceiling = core.findCeiling(10);
         if (ceiling != null) {
-            ceiling = ceiling.getRelative(0, -1, 0);
+            ceiling.getRelative(0, -1, 0);
         }
         Wall floor = core.getDown();
         if(!floor.isSolid()) return; //Don't populate a path if there's no floor
@@ -54,11 +55,7 @@ public class CatacombsPathPopulator extends PathPopulatorAbstract {
         boolean spawnSupports = true;
     	for(BlockFace dir:BlockUtils.getAdjacentFaces(core.getDirection())) {
     		Wall relPillar = core.getUp().findDir(dir, 2);
-            if(floor == null 
-            		|| relPillar == null
-            		|| !relPillar.getDown().isSolid() 
-            		|| !relPillar.getUp().isSolid() 
-            		|| !relPillar.getUp(3).getRelative(dir.getOppositeFace()).isSolid()) {
+            if(relPillar == null || !relPillar.getDown().isSolid() || !relPillar.getUp().isSolid() || !relPillar.getUp(3).getRelative(dir.getOppositeFace()).isSolid()) {
             	spawnSupports = false;
             }
             else
@@ -138,7 +135,7 @@ public class CatacombsPathPopulator extends PathPopulatorAbstract {
     }
     
     @Override
-    public boolean customCarve(SimpleBlock base, BlockFace dir, int pathWidth) {
+    public boolean customCarve(@NotNull SimpleBlock base, BlockFace dir, int pathWidth) {
         Wall core = new Wall(base.getRelative(0, 2, 0), dir);
         int seed = 2293 + 5471*core.getX() + 9817*core.getY() ^ 2 + 1049*core.getZ() ^ 3;
         BlockUtils.carveCaveAir(seed,
@@ -160,11 +157,11 @@ public class CatacombsPathPopulator extends PathPopulatorAbstract {
         Material.DRIPSTONE_BLOCK
     };
 
-    public Material getFenceMaterial() {
+    public @NotNull Material getFenceMaterial() {
         return Material.OAK_FENCE;
     }
     
-    public Material getSupportMaterial() {
+    public @NotNull Material getSupportMaterial() {
         return Material.OAK_LOG;
     }
     

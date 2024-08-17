@@ -2,18 +2,19 @@ package org.terraform.event;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Crappy event meant to allow another debug plugin to register structure locations
  * on plexmap.
- * 
+ * <p>
  * Does not accurately depict some structure's locations, not for production use.
  */
 public final class TerraformStructureSpawnEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
-    private String structureName;
-    private int x;
-    private int z;
+    private final String structureName;
+    private final int x;
+    private final int z;
     
     public TerraformStructureSpawnEvent(int x, int z, String structureName) {
     	this.structureName = structureName;
@@ -22,11 +23,11 @@ public final class TerraformStructureSpawnEvent extends Event {
     }
 
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    public static @NotNull HandlerList getHandlerList() {
         return handlers;
     }
 

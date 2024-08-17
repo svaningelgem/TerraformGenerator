@@ -3,7 +3,7 @@ package org.terraform.command;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.terraform.command.contants.InvalidArgumentException;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.command.contants.TerraCommand;
 import org.terraform.coregen.populatordata.PopulatorDataPostGen;
 import org.terraform.data.SimpleBlock;
@@ -20,7 +20,7 @@ public class MazeCommand extends TerraCommand {
     }
 
     @Override
-    public String getDefaultDescription() {
+    public @NotNull String getDefaultDescription() {
         return "Spawns a randomised Maze of width and length of 30 and height of 3";
     }
 
@@ -30,14 +30,13 @@ public class MazeCommand extends TerraCommand {
     }
 
     @Override
-    public boolean hasPermission(CommandSender sender) {
+    public boolean hasPermission(@NotNull CommandSender sender) {
 
         return sender.isOp();
     }
 
     @Override
-    public void execute(CommandSender sender, Stack<String> args)
-            throws InvalidArgumentException {
+    public void execute(CommandSender sender, Stack<String> args) {
 
         Player p = (Player) sender;
         PopulatorDataPostGen data = new PopulatorDataPostGen(p.getLocation().getChunk());

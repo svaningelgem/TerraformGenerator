@@ -1,6 +1,7 @@
 package org.terraform.structure.village.plains;
 
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
@@ -13,14 +14,14 @@ import java.util.Random;
 
 public class PlainsVillageForgePopulator extends PlainsVillageAbstractRoomPopulator {
 	
-	private PlainsVillagePopulator plainsVillagePopulator;
+	private final PlainsVillagePopulator plainsVillagePopulator;
     public PlainsVillageForgePopulator(PlainsVillagePopulator plainsVillagePopulator, Random rand, boolean forceSpawn, boolean unique) {
         super(rand, forceSpawn, unique);
         this.plainsVillagePopulator = plainsVillagePopulator;
     }
 
     @Override
-    public void populate(PopulatorDataAbstract data, CubeRoom room) {
+    public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
     	super.populate(data, room);
         int height = super.calculateRoomY(data, room);
         //GenUtils.getHighestGroundOrSeaLevel(data, room.getX(), room.getZ());
@@ -64,7 +65,7 @@ public class PlainsVillageForgePopulator extends PlainsVillageAbstractRoomPopula
     }
 
     @Override
-    public boolean canPopulate(CubeRoom room) {
+    public boolean canPopulate(@NotNull CubeRoom room) {
         return room.getWidthX() >= 15;
     }
 }
