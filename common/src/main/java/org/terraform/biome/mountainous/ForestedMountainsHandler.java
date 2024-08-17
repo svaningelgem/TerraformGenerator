@@ -10,7 +10,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.tree.FractalTreeBuilder;
 import org.terraform.tree.FractalTypes;
 import org.terraform.tree.TreeDB;
@@ -141,7 +141,7 @@ public class ForestedMountainsHandler extends AbstractMountainHandler {
 
         SimpleLocation[] bigTrees = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 20);
         
-        if(TConfigOption.TREES_JUNGLE_BIG_ENABLED.getBoolean())
+        if(config.getBoolean(TConfig.Option.TREES_JUNGLE_BIG_ENABLED))
 	        for (SimpleLocation sLoc : bigTrees) {
 	            int treeY = GenUtils.getHighestGround(data, sLoc.getX(),sLoc.getZ());
 	            sLoc.setY(treeY);

@@ -37,7 +37,7 @@ tasks.shadowJar {
 }
 
 tasks.register<Copy>("deploy") {
-    dependsOn(tasks.named("shadowJar"))
+    dependsOn(tasks.shadowJar)
 
     from(layout.buildDirectory.dir("libs"))
     include("*.jar")

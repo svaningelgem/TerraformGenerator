@@ -13,7 +13,7 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomLayout;
@@ -42,7 +42,7 @@ public class PyramidPopulator extends SingleMegaChunkStructurePopulator {
 
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 163456),
-                (int) (TConfigOption.STRUCTURES_PYRAMID_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_PYRAMID_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -402,8 +402,8 @@ public class PyramidPopulator extends SingleMegaChunkStructurePopulator {
     @Override
     public boolean isEnabled() {
         // TODO Auto-generated method stub
-        return BiomeBank.isBiomeEnabled(BiomeBank.DESERT) 
-        		&& TConfigOption.STRUCTURES_PYRAMID_ENABLED.getBoolean();
+        return BiomeBank.isBiomeEnabled(BiomeBank.DESERT)
+			   && config.getBoolean(TConfig.Option.STRUCTURES_PYRAMID_ENABLED);
     }
 
 

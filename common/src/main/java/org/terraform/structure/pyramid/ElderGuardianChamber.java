@@ -11,7 +11,7 @@ import org.bukkit.entity.EntityType;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.SchematicParser;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.structure.room.CubeRoom;
@@ -63,7 +63,7 @@ public class ElderGuardianChamber extends RoomPopulatorAbstract {
                     .setType(Material.ORANGE_TERRACOTTA);
 
         //Elder Guardian cage
-        if (TConfigOption.STRUCTURES_PYRAMID_SPAWN_ELDER_GUARDIAN.getBoolean()) {
+        if (config.getBoolean(TConfig.Option.STRUCTURES_PYRAMID_SPAWN_ELDER_GUARDIAN)) {
             SimpleBlock cageCenter = center.getRelative(0, 11, 0);
             placeElderGuardianCage(cageCenter);
         }

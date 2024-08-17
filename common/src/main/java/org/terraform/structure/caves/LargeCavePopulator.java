@@ -10,7 +10,7 @@ import org.terraform.data.SimpleChunkLocation;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.JigsawState;
 import org.terraform.structure.JigsawStructurePopulator;
 import org.terraform.structure.room.RoomLayout;
@@ -156,7 +156,7 @@ public class LargeCavePopulator extends JigsawStructurePopulator {
 
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 12345),
-                (int) (TConfigOption.STRUCTURES_LARGECAVE_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_LARGECAVE_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -175,7 +175,7 @@ public class LargeCavePopulator extends JigsawStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return TConfigOption.STRUCTURES_LARGECAVE_ENABLED.getBoolean();
+        return config.getBoolean(TConfig.Option.STRUCTURES_LARGECAVE_ENABLED);
     }
 
     @Override

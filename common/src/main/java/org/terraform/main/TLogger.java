@@ -13,7 +13,7 @@ import java.util.logging.SimpleFormatter;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 
 
 public class TLogger {
@@ -22,7 +22,7 @@ public class TLogger {
     private static boolean suppressConsoleLogs = false;
 	
 	public TLogger() {
-		suppressConsoleLogs = TConfigOption.DEVSTUFF_SUPPRESS_CONSOLE_LOGS.getBoolean();
+		suppressConsoleLogs = config.getBoolean(TConfig.Option.DEVSTUFF_SUPPRESS_CONSOLE_LOGS);
     	if(suppressConsoleLogs) {
             Handler consoleHandler = null;
             Handler fileHandler  = null;
@@ -95,7 +95,7 @@ public class TLogger {
     }
     
     public void debug(String message) {
-        if (TConfigOption.DEVSTUFF_DEBUG_MODE.getBoolean())
+        if (config.getBoolean(TConfig.Option.DEVSTUFF_DEBUG_MODE))
         	if(suppressConsoleLogs) {
         		LOGGER.log(Level.INFO,"[v] "+message);
         	}else

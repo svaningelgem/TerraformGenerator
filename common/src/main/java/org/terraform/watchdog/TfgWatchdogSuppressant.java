@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 
 public class TfgWatchdogSuppressant {
 	Field instanceField = null;
@@ -15,7 +15,7 @@ public class TfgWatchdogSuppressant {
 	Object watchdogThreadInstance = null;
 	
 	public TfgWatchdogSuppressant(){
-		if(TConfigOption.DEVSTUFF_SUPPRESS_WATCHDOG.getBoolean())
+		if(config.getBoolean(TConfig.Option.DEVSTUFF_SUPPRESS_WATCHDOG))
 			try {
 				TerraformGeneratorPlugin.logger.info("[NOTICE] TerraformGenerator will suppress the server's watchdog "
 						+ "while generating chunks to prevent unnecessary stacktrace warnings. Unless you specifically need the"

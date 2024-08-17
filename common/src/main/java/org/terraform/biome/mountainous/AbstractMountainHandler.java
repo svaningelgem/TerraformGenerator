@@ -11,7 +11,7 @@ import org.terraform.coregen.HeightMap;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.utils.GenUtils;
 
 public abstract class AbstractMountainHandler extends BiomeHandler {
@@ -25,8 +25,8 @@ public abstract class AbstractMountainHandler extends BiomeHandler {
 		
 		//boolean surroundedByMountains = true;
 		
-		float mt =  TConfigOption.BIOME_MOUNTAINOUS_THRESHOLD.getFloat();
-		//float hmt =  TConfigOption.BIOME_HIGH_MOUNTAINOUS_THRESHOLD.getFloat();
+		float mt =  config.getFloat(TConfig.Option.BIOME_MOUNTAINOUS_THRESHOLD);
+		//float hmt =  config.getFloat(TConfig.Option.ption.BIOME_HIGH_MOUNTAINOUS_THRESHOLD);
 		
 		//Check direct faces, not diagonals
 		for(int[] rel:new int[][] {{1,0},{-1,0},{0,1},{0,-1}}) {
@@ -76,7 +76,7 @@ public abstract class AbstractMountainHandler extends BiomeHandler {
         double minMultiplier = 1;
         BiomeSubSection subSect = sect.getSubSection(x, z);
 
-		float mt =  TConfigOption.BIOME_MOUNTAINOUS_THRESHOLD.getFloat();
+		float mt =  config.getFloat(TConfig.Option.BIOME_MOUNTAINOUS_THRESHOLD);
         switch(subSect) {
 		case NEGATIVE_X:
 			if(sect.getRelative(-1, 0).getOceanLevel() >= mt)

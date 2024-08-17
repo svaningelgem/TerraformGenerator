@@ -14,11 +14,10 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.SchematicParser;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.structure.MultiMegaChunkStructurePopulator;
-import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
 import org.terraform.utils.version.OneTwentyBlockHandler;
 import org.terraform.utils.version.Version;
@@ -89,7 +88,7 @@ public class DesertWellPopulator extends MultiMegaChunkStructurePopulator {
 
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 8291374),
-                (int) (TConfigOption.STRUCTURES_DESERTWELL_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_DESERTWELL_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -112,7 +111,7 @@ public class DesertWellPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public int[][] getCoordsFromMegaChunk(TerraformWorld tw, MegaChunk mc) {
-        int num = TConfigOption.STRUCTURES_DESERTWELL_COUNT_PER_MEGACHUNK.getInt();
+        int num = config.getInt(TConfig.Option.STRUCTURES_DESERTWELL_COUNT_PER_MEGACHUNK);
         int[][] coords = new int[num][2];
         for (int i = 0; i < num; i++)
             coords[i] = mc.getRandomCoords(tw.getHashedRand(mc.getX(), mc.getZ(), 819227*(1+i)));
@@ -141,9 +140,9 @@ public class DesertWellPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return TConfigOption.STRUCTURES_DESERTWELL_ENABLED.getBoolean()
-                && (TConfigOption.BIOME_DESERT_WEIGHT.getInt() > 0||
-                TConfigOption.BIOME_BADLANDS_WEIGHT.getInt() > 0);
+        return config.getBoolean(TConfig.Option.STRUCTURES_DESERTWELL_ENABLED)
+			   && (config.getInt(TConfig.Option.BIOME_DESERT_WEIGHT) > 0 ||
+				   config.getInt(TConfig.Option.BIOME_BADLANDS_WEIGHT) > 0);
     }
 
     @Override

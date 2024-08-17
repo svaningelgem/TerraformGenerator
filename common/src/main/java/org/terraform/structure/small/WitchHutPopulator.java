@@ -7,8 +7,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.EntityType;
 import org.terraform.biome.BiomeBank;
-import org.terraform.biome.BiomeClimate;
-import org.terraform.biome.BiomeType;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
@@ -17,7 +15,7 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.SchematicParser;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.structure.MultiMegaChunkStructurePopulator;
@@ -82,7 +80,7 @@ public class WitchHutPopulator extends MultiMegaChunkStructurePopulator {
 
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 8242112),
-                (int) (TConfigOption.STRUCTURES_SWAMPHUT_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_SWAMPHUT_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -105,7 +103,7 @@ public class WitchHutPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public int[][] getCoordsFromMegaChunk(TerraformWorld tw, MegaChunk mc) {
-        int num = TConfigOption.STRUCTURES_SWAMPHUT_COUNT_PER_MEGACHUNK.getInt();
+        int num = config.getInt(TConfig.Option.STRUCTURES_SWAMPHUT_COUNT_PER_MEGACHUNK);
         int[][] coords = new int[num][2];
         for (int i = 0; i < num; i++)
             coords[i] = mc.getRandomCoords(tw.getHashedRand(mc.getX(), mc.getZ(), 819227*(1+i)));
@@ -134,9 +132,9 @@ public class WitchHutPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return TConfigOption.STRUCTURES_SWAMPHUT_ENABLED.getBoolean()
-                && (TConfigOption.BIOME_SWAMP_WEIGHT.getInt() > 0||
-                TConfigOption.BIOME_MANGROVE_WEIGHT.getInt() > 0);
+        return config.getBoolean(TConfig.Option.STRUCTURES_SWAMPHUT_ENABLED)
+			   && (config.getInt(TConfig.Option.BIOME_SWAMP_WEIGHT) > 0 ||
+				   config.getInt(TConfig.Option.BIOME_MANGROVE_WEIGHT) > 0);
     }
 
     @Override

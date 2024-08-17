@@ -129,7 +129,7 @@ public class TerraformStructurePopulator extends BlockPopulator {
 
         //Use IChunkAccess to place blocks instead. Known to cause lighting problems.
         //Since people keep turning this on for fun, then reporting bugs, I'm removing it. 
-//        if (TConfigOption.DEVSTUFF_EXPERIMENTAL_STRUCTURE_PLACEMENT.getBoolean())
+//        if (config.getBoolean(TConfig.Option.ption.DEVSTUFF_EXPERIMENTAL_STRUCTURE_PLACEMENT))
 //            data = new PopulatorDataRecursiveICA(chunk);
 
         //Spawn large structures

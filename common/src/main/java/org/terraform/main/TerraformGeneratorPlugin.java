@@ -21,7 +21,7 @@ import org.terraform.coregen.populatordata.PopulatorDataPostGen;
 import org.terraform.data.SimpleChunkLocation;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.config.ConfigLoader;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.reflection.Post14PrivateFieldHandler;
 import org.terraform.reflection.Pre14PrivateFieldHandler;
 import org.terraform.reflection.PrivateFieldHandler;
@@ -34,6 +34,8 @@ import org.terraform.utils.bstats.TerraformGeneratorMetricsHandler;
 import org.terraform.utils.version.Version;
 import org.terraform.watchdog.TfgWatchdogSuppressant;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.EnumSet;
@@ -50,7 +52,7 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
     private static TerraformGeneratorPlugin instance;
     public static TfgWatchdogSuppressant watchdogSuppressant;
     
-    private ConfigLoader config;
+    private TConfig defaultConfig;
     private LanguageManager lang;
 
     static {
@@ -71,15 +73,21 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
 	@Override
     public void onEnable() {
         super.onEnable();
-		GenUtils.initGenUtils();
+
+        try {
+            defaultConfig = new TConfig().load(new File(getDataFolder(), "config.yml"));
+        } catch( IOException e ) {
+            throw new RuntimeException("Failed to load config.yml", e);
+        }
+
+        GenUtils.initGenUtils();
 		BlockUtils.initBlockUtils();
         instance = this;
-		config = new ConfigLoader(this);
+
 		lang = new LanguageManager(this);
-        TConfigOption.loadValues(config);
 
         //Initiate the height map flat radius value
-        HeightMap.spawnFlatRadiusSquared = TConfigOption.HEIGHT_MAP_SPAWN_FLAT_RADIUS.getInt();
+        HeightMap.spawnFlatRadiusSquared = defaultConfig.getInt(TConfig.Option.HEIGHT_MAP_SPAWN_FLAT_RADIUS);
         if(HeightMap.spawnFlatRadiusSquared > 0) HeightMap.spawnFlatRadiusSquared *= HeightMap.spawnFlatRadiusSquared;
 
         BiomeBank.initSinglesConfig(); //Initiates single biome modes.
@@ -87,11 +95,11 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
         //Initialize chunk cache based on config size
         TerraformGenerator.CHUNK_CACHE = 
         		CacheBuilder.newBuilder()
-        		.maximumSize(TConfigOption.DEVSTUFF_CHUNKCACHE_SIZE.getInt()).build(new ChunkCacheLoader());
+        		.maximumSize(defaultConfig.getInt(TConfig.Option.DEVSTUFF_CHUNKCACHE_SIZE)).build(new ChunkCacheLoader());
         
         //Initialize biome query cache based on config size
         GenUtils.biomeQueryCache = CacheBuilder.newBuilder()
-                .maximumSize(TConfigOption.DEVSTUFF_CHUNKBIOMES_SIZE.getInt())
+                .maximumSize(defaultConfig.getInt(TConfig.Option.DEVSTUFF_CHUNKBIOMES_SIZE))
                 .build(new CacheLoader<>() {
                     @Override
                     public @NotNull EnumSet<BiomeBank> load(@NotNull ChunkCache key) {
@@ -134,7 +142,7 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
         
         injector.startupTasks();
 
-        if (TConfigOption.MISC_SAPLING_CUSTOM_TREES_ENABLED.getBoolean()) {
+        if (config.getBoolean(TConfig.Option.MISC_SAPLING_CUSTOM_TREES_ENABLED)) {
             Bukkit.getPluginManager().registerEvents(new SaplingOverrider(), this);
         }
 
@@ -158,7 +166,7 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
         if (event.getWorld().getGenerator() instanceof TerraformGenerator) {
             logger.stdout(event.getWorld().getName() + " loaded.");
             if (!TerraformGenerator.preWorldInitGen.isEmpty()) {
-                if (!TConfigOption.DEVSTUFF_ATTEMPT_FIXING_PREMATURE.getBoolean()) {
+                if (!config.getBoolean(TConfig.Option.DEVSTUFF_ATTEMPT_FIXING_PREMATURE)) {
                     logger.stdout("&cIgnoring "
                             + TerraformGenerator.preWorldInitGen.size()
                             + " pre-maturely generated chunks."
@@ -208,7 +216,7 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
     }
 
 	public ConfigLoader getConfigLoader() {
-		return config;
+		return defaultConfig;
 	}
 
 	public LanguageManager getLang() {

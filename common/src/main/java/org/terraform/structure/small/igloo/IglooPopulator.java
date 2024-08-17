@@ -19,7 +19,7 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.MultiMegaChunkStructurePopulator;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.CylinderBuilder;
@@ -39,7 +39,7 @@ public class IglooPopulator extends MultiMegaChunkStructurePopulator {
     @Override
     public void populate(TerraformWorld tw, PopulatorDataAbstract data) {
 
-        if (!TConfigOption.STRUCTURES_IGLOO_ENABLED.getBoolean())
+        if (!config.getBoolean(TConfig.Option.STRUCTURES_IGLOO_ENABLED))
             return;
         Random random = this.getHashedRandom(tw, data.getChunkX(), data.getChunkZ());
         MegaChunk mc = new MegaChunk(data.getChunkX(), data.getChunkZ());
@@ -357,7 +357,7 @@ public class IglooPopulator extends MultiMegaChunkStructurePopulator {
     
     @Override
     public int[][] getCoordsFromMegaChunk(TerraformWorld tw, MegaChunk mc) {
-        int num = TConfigOption.STRUCTURES_IGLOO_COUNT_PER_MEGACHUNK.getInt();
+        int num = config.getInt(TConfig.Option.STRUCTURES_IGLOO_COUNT_PER_MEGACHUNK);
         int[][] coords = new int[num][2];
         for (int i = 0; i < num; i++)
             coords[i] = mc.getRandomCenterChunkBlockCoords(tw.getHashedRand(mc.getX(), mc.getZ(), 992722*(1+i)));
@@ -386,7 +386,7 @@ public class IglooPopulator extends MultiMegaChunkStructurePopulator {
 
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 976123),
-                (int) (TConfigOption.STRUCTURES_IGLOO_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_IGLOO_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -420,7 +420,7 @@ public class IglooPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return TConfigOption.STRUCTURES_IGLOO_ENABLED.getBoolean();
+        return config.getBoolean(TConfig.Option.STRUCTURES_IGLOO_ENABLED);
     }
     
     @Override

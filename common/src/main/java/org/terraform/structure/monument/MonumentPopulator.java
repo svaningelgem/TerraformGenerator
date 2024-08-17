@@ -17,7 +17,7 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.structure.room.RoomLayout;
 import org.terraform.structure.room.RoomLayoutGenerator;
@@ -143,7 +143,7 @@ public class MonumentPopulator extends SingleMegaChunkStructurePopulator {
 
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 92992),
-                (int) (TConfigOption.STRUCTURES_MONUMENT_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_MONUMENT_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -328,6 +328,6 @@ public class MonumentPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return TConfigOption.STRUCTURES_MONUMENT_ENABLED.getBoolean();
+        return config.getBoolean(TConfig.Option.STRUCTURES_MONUMENT_ENABLED);
     }
 }

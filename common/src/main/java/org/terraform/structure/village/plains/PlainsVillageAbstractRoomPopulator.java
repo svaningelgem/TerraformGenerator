@@ -9,7 +9,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomPopulatorAbstract;
 import org.terraform.utils.GenUtils;
@@ -32,7 +32,7 @@ public abstract class PlainsVillageAbstractRoomPopulator extends RoomPopulatorAb
     	for(int[] corner:room.getAllCorners(2)) {
     		SimpleBlock sb = new SimpleBlock(data,corner[0],roomY,corner[1]);
     		int lowSb = sb.findFloor(worldHeight).getY();
-    		if(Math.abs(lowSb - roomY) > TConfigOption.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE.getInt())
+    		if(Math.abs(lowSb - roomY) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
     		{
     			//place platform as uneven ground was detected.
     			this.placeFixerPlatform(roomY, data, room);
@@ -78,7 +78,7 @@ public abstract class PlainsVillageAbstractRoomPopulator extends RoomPopulatorAb
 		int centerHeight = GenUtils.getHighestGroundOrSeaLevel(data, room.getX(), room.getZ());
     	int pathHeight = getPathHeight(data, room);
     	
-    	if(Math.abs(centerHeight-pathHeight) > TConfigOption.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE.getInt()) {
+    	if(Math.abs(centerHeight-pathHeight) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE)) {
     		return pathHeight;
     	}else {
     		return centerHeight;
@@ -89,13 +89,13 @@ public abstract class PlainsVillageAbstractRoomPopulator extends RoomPopulatorAb
 //		int centerHeight = GenUtils.getHighestGroundOrSeaLevel(data, room.getX(), room.getZ());
 //    	int pathHeight = getPathHeight(data, room);
 //    	
-//    	return Math.abs(centerHeight-pathHeight) > TConfigOption.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE.getInt();
+//    	return Math.abs(centerHeight-pathHeight) > config.getInt(TConfig.Option.ption.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE);
 		int roomY = calculateRoomY(data,room);
 		int worldHeight = TerraformGeneratorPlugin.injector.getMaxY()-TerraformGeneratorPlugin.injector.getMinY() + 1;
     	for(int[] corner:room.getAllCorners(2)) {
     		SimpleBlock sb = new SimpleBlock(data,corner[0],roomY,corner[1]);
     		int lowSb = sb.findFloor(worldHeight).getY();
-    		if(Math.abs(lowSb - roomY) > TConfigOption.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE.getInt())
+    		if(Math.abs(lowSb - roomY) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
     		{
     			return true;
     		}

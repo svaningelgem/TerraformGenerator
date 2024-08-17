@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.tree.FractalTreeBuilder;
 import org.terraform.tree.FractalTypes;
 import org.terraform.utils.BlockUtils;
@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class GiantPumpkinPopulator {
     public void populate(TerraformWorld tw, Random random, PopulatorDataAbstract data) {
-        if (!TConfigOption.STRUCTURES_SWAMPHUT_ENABLED.getBoolean()) return;
+        if (!config.getBoolean(TConfig.Option.STRUCTURES_SWAMPHUT_ENABLED)) return;
         int x = data.getChunkX() * 16 + random.nextInt(16);
         int z = data.getChunkZ() * 16 + random.nextInt(16);
         int height = GenUtils.getHighestGround(data, x, z);

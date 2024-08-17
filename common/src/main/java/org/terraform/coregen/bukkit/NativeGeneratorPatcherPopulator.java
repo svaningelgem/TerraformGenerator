@@ -2,7 +2,6 @@ package org.terraform.coregen.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.event.EventHandler;
@@ -13,7 +12,7 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.terraform.data.SimpleChunkLocation;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +35,7 @@ public class NativeGeneratorPatcherPopulator extends BlockPopulator implements L
     
     public static void pushChange(String world, int x, int y, int z, BlockData data) {
     	
-    	if(!flushIsQueued && cache.size() > TConfigOption.DEVSTUFF_FLUSH_PATCHER_CACHE_FREQUENCY.getInt()) {
+    	if(!flushIsQueued && cache.size() > config.getInt(TConfig.Option.DEVSTUFF_FLUSH_PATCHER_CACHE_FREQUENCY)) {
 			flushIsQueued = true;
     		new BukkitRunnable() {
 	    		@Override

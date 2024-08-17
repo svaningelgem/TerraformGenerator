@@ -1,49 +1,49 @@
 package org.terraform.biome;
 
 import org.terraform.utils.Range;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 
 public enum BiomeClimate {
 
 	//Tree-Dense areas
 	HUMID_VEGETATION(Range.between(
-			TConfigOption.CLIMATE_HUMIDVEGETATION_MINTEMP.getDouble(),
-			TConfigOption.CLIMATE_HUMIDVEGETATION_MAXTEMP.getDouble()),
+			config.getDouble(TConfig.Option.CLIMATE_HUMIDVEGETATION_MINTEMP),
+			config.getDouble(TConfig.Option.CLIMATE_HUMIDVEGETATION_MAXTEMP)),
 			Range.between(
-					TConfigOption.CLIMATE_HUMIDVEGETATION_MINMOIST.getDouble(),
-					TConfigOption.CLIMATE_HUMIDVEGETATION_MAXMOIST.getDouble()),2), 
+					config.getDouble(TConfig.Option.CLIMATE_HUMIDVEGETATION_MINMOIST),
+					config.getDouble(TConfig.Option.CLIMATE_HUMIDVEGETATION_MAXMOIST)),2),
 	
 	//Savannas
 	DRY_VEGETATION(Range.between(
-			TConfigOption.CLIMATE_DRYVEGETATION_MINTEMP.getDouble(),
-			TConfigOption.CLIMATE_DRYVEGETATION_MAXTEMP.getDouble()),
+			config.getDouble(TConfig.Option.CLIMATE_DRYVEGETATION_MINTEMP),
+			config.getDouble(TConfig.Option.CLIMATE_DRYVEGETATION_MAXTEMP)),
 			Range.between(
-					TConfigOption.CLIMATE_DRYVEGETATION_MINMOIST.getDouble(),
-					TConfigOption.CLIMATE_DRYVEGETATION_MAXMOIST.getDouble()),1),
+					config.getDouble(TConfig.Option.CLIMATE_DRYVEGETATION_MINMOIST),
+					config.getDouble(TConfig.Option.CLIMATE_DRYVEGETATION_MAXMOIST)),1),
 	
 	//Deserts
 	HOT_BARREN(Range.between(
-			TConfigOption.CLIMATE_HOTBARREN_MINTEMP.getDouble(),
-			TConfigOption.CLIMATE_HOTBARREN_MAXTEMP.getDouble()),
+			config.getDouble(TConfig.Option.CLIMATE_HOTBARREN_MINTEMP),
+			config.getDouble(TConfig.Option.CLIMATE_HOTBARREN_MAXTEMP)),
 			Range.between(
-					TConfigOption.CLIMATE_HOTBARREN_MINMOIST.getDouble(),
-					TConfigOption.CLIMATE_HOTBARREN_MAXMOIST.getDouble()),2), 
+					config.getDouble(TConfig.Option.CLIMATE_HOTBARREN_MINMOIST),
+					config.getDouble(TConfig.Option.CLIMATE_HOTBARREN_MAXMOIST)),2),
 	
 	//Cold biomes - taigas, maybe eroded plains
 	COLD(Range.between(
-			TConfigOption.CLIMATE_COLD_MINTEMP.getDouble(),
-			TConfigOption.CLIMATE_COLD_MAXTEMP.getDouble()),
+			config.getDouble(TConfig.Option.CLIMATE_COLD_MINTEMP),
+			config.getDouble(TConfig.Option.CLIMATE_COLD_MAXTEMP)),
 			Range.between(
-					TConfigOption.CLIMATE_COLD_MINMOIST.getDouble(),
-					TConfigOption.CLIMATE_COLD_MAXMOIST.getDouble()),1), 
+					config.getDouble(TConfig.Option.CLIMATE_COLD_MINMOIST),
+					config.getDouble(TConfig.Option.CLIMATE_COLD_MAXMOIST)),1),
 	
 	//Any snowy biomes. 
 	SNOWY(Range.between(
-			TConfigOption.CLIMATE_SNOWY_MINTEMP.getDouble(),
-			TConfigOption.CLIMATE_SNOWY_MAXTEMP.getDouble()),
+			config.getDouble(TConfig.Option.CLIMATE_SNOWY_MINTEMP),
+			config.getDouble(TConfig.Option.CLIMATE_SNOWY_MAXTEMP)),
 			Range.between(
-					TConfigOption.CLIMATE_SNOWY_MINMOIST.getDouble(),
-					TConfigOption.CLIMATE_SNOWY_MAXMOIST.getDouble()),2), 	
+					config.getDouble(TConfig.Option.CLIMATE_SNOWY_MINMOIST),
+					config.getDouble(TConfig.Option.CLIMATE_SNOWY_MAXMOIST)),2),
 	
 	//Default climate.
 	TRANSITION(Range.between(-4.0,4.0),Range.between(-4.0,4.0),0), 

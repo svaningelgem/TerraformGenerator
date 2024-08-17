@@ -2,10 +2,8 @@ package org.terraform.structure.trialchamber;
 
 import org.terraform.biome.BiomeBank;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
-import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
-import org.terraform.structure.SingleMegaChunkStructurePopulator;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.VanillaStructurePopulator;
 import org.terraform.utils.GenUtils;
 
@@ -74,12 +72,12 @@ public class TrialChamberPopulator extends VanillaStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return TConfigOption.STRUCTURES_TRIALCHAMBER_ENABLED.getBoolean();
+        return config.getBoolean(TConfig.Option.STRUCTURES_TRIALCHAMBER_ENABLED);
     }
 
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 19650),
-                (int) (TConfigOption.STRUCTURES_TRIALCHAMBER_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_TRIALCHAMBER_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }

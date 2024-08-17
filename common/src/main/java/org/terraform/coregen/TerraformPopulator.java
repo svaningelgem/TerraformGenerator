@@ -9,14 +9,13 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.coregen.populatordata.PopulatorDataSpigotAPI;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.populators.AmethystGeodePopulator;
 import org.terraform.populators.OrePopulator;
 import org.terraform.structure.MultiMegaChunkStructurePopulator;
 import org.terraform.structure.StructureBufferDistanceHandler;
 import org.terraform.structure.StructureRegistry;
 import org.terraform.utils.GenUtils;
-import org.terraform.utils.version.Version;
 
 import java.util.EnumSet;
 import java.util.Random;
@@ -25,53 +24,53 @@ public class TerraformPopulator extends BlockPopulator {
 	
     private static final OrePopulator[] ORE_POPS = {
             // Ores
-            new OrePopulator(Material.DEEPSLATE, TConfigOption.ORE_DEEPSLATE_CHANCE.getInt(), TConfigOption.ORE_DEEPSLATE_VEINSIZE.getInt(),
-                    TConfigOption.ORE_DEEPSLATE_MAXVEINNUMBER.getInt(), TConfigOption.ORE_DEEPSLATE_MINSPAWNHEIGHT.getInt(), TConfigOption.ORE_DEEPSLATE_COMMONSPAWNHEIGHT.getInt(),
-                    TConfigOption.ORE_DEEPSLATE_MAXSPAWNHEIGHT.getInt(),
+            new OrePopulator(Material.DEEPSLATE, config.getInt(TConfig.Option.ORE_DEEPSLATE_CHANCE), config.getInt(TConfig.Option.ORE_DEEPSLATE_VEINSIZE),
+                    config.getInt(TConfig.Option.ORE_DEEPSLATE_MAXVEINNUMBER), config.getInt(TConfig.Option.ORE_DEEPSLATE_MINSPAWNHEIGHT), config.getInt(TConfig.Option.ORE_DEEPSLATE_COMMONSPAWNHEIGHT),
+                    config.getInt(TConfig.Option.ORE_DEEPSLATE_MAXSPAWNHEIGHT),
                     true),//deepslate
-            new OrePopulator(Material.TUFF, TConfigOption.ORE_TUFF_CHANCE.getInt(), TConfigOption.ORE_TUFF_VEINSIZE.getInt(),
-                    TConfigOption.ORE_TUFF_MAXVEINNUMBER.getInt(), TConfigOption.ORE_TUFF_MINSPAWNHEIGHT.getInt(), TConfigOption.ORE_TUFF_COMMONSPAWNHEIGHT.getInt(),
-                    TConfigOption.ORE_TUFF_MAXSPAWNHEIGHT.getInt(),
+            new OrePopulator(Material.TUFF, config.getInt(TConfig.Option.ORE_TUFF_CHANCE), config.getInt(TConfig.Option.ORE_TUFF_VEINSIZE),
+                    config.getInt(TConfig.Option.ORE_TUFF_MAXVEINNUMBER), config.getInt(TConfig.Option.ORE_TUFF_MINSPAWNHEIGHT), config.getInt(TConfig.Option.ORE_TUFF_COMMONSPAWNHEIGHT),
+                    config.getInt(TConfig.Option.ORE_TUFF_MAXSPAWNHEIGHT),
                     true),//tuff
-            new OrePopulator(Material.COPPER_ORE, TConfigOption.ORE_COPPER_CHANCE.getInt(), TConfigOption.ORE_COPPER_VEINSIZE.getInt(),
-                    TConfigOption.ORE_COPPER_MAXVEINNUMBER.getInt(), TConfigOption.ORE_COPPER_MINSPAWNHEIGHT.getInt(), TConfigOption.ORE_COPPER_COMMONSPAWNHEIGHT.getInt(),
-                    TConfigOption.ORE_COPPER_MAXSPAWNHEIGHT.getInt(),
+            new OrePopulator(Material.COPPER_ORE, config.getInt(TConfig.Option.ORE_COPPER_CHANCE), config.getInt(TConfig.Option.ORE_COPPER_VEINSIZE),
+                    config.getInt(TConfig.Option.ORE_COPPER_MAXVEINNUMBER), config.getInt(TConfig.Option.ORE_COPPER_MINSPAWNHEIGHT), config.getInt(TConfig.Option.ORE_COPPER_COMMONSPAWNHEIGHT),
+                    config.getInt(TConfig.Option.ORE_COPPER_MAXSPAWNHEIGHT),
                     false),//Space for copper
             new OrePopulator(Material.COAL_ORE,
-             TConfigOption.ORE_COAL_CHANCE.getInt(),
-             TConfigOption.ORE_COAL_VEINSIZE.getInt(),
-             TConfigOption.ORE_COAL_MAXVEINNUMBER.getInt(),
-			 TConfigOption.ORE_COAL_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_COAL_COMMONSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_COAL_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_COAL_CHANCE),
+             config.getInt(TConfig.Option.ORE_COAL_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_COAL_MAXVEINNUMBER),
+			 config.getInt(TConfig.Option.ORE_COAL_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_COAL_COMMONSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_COAL_MAXSPAWNHEIGHT),
              false),
             
             new OrePopulator(Material.IRON_ORE,
-             TConfigOption.ORE_IRON_CHANCE.getInt(),
-             TConfigOption.ORE_IRON_VEINSIZE.getInt(),
-             TConfigOption.ORE_IRON_MAXVEINNUMBER.getInt(),
-             TConfigOption.ORE_IRON_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_IRON_COMMONSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_IRON_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_IRON_CHANCE),
+             config.getInt(TConfig.Option.ORE_IRON_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_IRON_MAXVEINNUMBER),
+             config.getInt(TConfig.Option.ORE_IRON_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_IRON_COMMONSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_IRON_MAXSPAWNHEIGHT),
              false),
             
             new OrePopulator(Material.GOLD_ORE,
-             TConfigOption.ORE_GOLD_CHANCE.getInt(),
-             TConfigOption.ORE_GOLD_VEINSIZE.getInt(),
-             TConfigOption.ORE_GOLD_MAXVEINNUMBER.getInt(),
-             TConfigOption.ORE_GOLD_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_GOLD_COMMONSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_GOLD_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_GOLD_CHANCE),
+             config.getInt(TConfig.Option.ORE_GOLD_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_GOLD_MAXVEINNUMBER),
+             config.getInt(TConfig.Option.ORE_GOLD_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_GOLD_COMMONSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_GOLD_MAXSPAWNHEIGHT),
              false),
 
             //BADLANDS SPAWNRATE
             new OrePopulator(Material.GOLD_ORE,
-                    TConfigOption.ORE_BADLANDSGOLD_CHANCE.getInt(),
-                    TConfigOption.ORE_BADLANDSGOLD_VEINSIZE.getInt(),
-                    TConfigOption.ORE_BADLANDSGOLD_MAXVEINNUMBER.getInt(),
-                    TConfigOption.ORE_BADLANDSGOLD_MINSPAWNHEIGHT.getInt(),
-                    TConfigOption.ORE_BADLANDSGOLD_COMMONSPAWNHEIGHT.getInt(),
-                    TConfigOption.ORE_BADLANDSGOLD_MAXSPAWNHEIGHT.getInt(),
+                    config.getInt(TConfig.Option.ORE_BADLANDSGOLD_CHANCE),
+                    config.getInt(TConfig.Option.ORE_BADLANDSGOLD_VEINSIZE),
+                    config.getInt(TConfig.Option.ORE_BADLANDSGOLD_MAXVEINNUMBER),
+                    config.getInt(TConfig.Option.ORE_BADLANDSGOLD_MINSPAWNHEIGHT),
+                    config.getInt(TConfig.Option.ORE_BADLANDSGOLD_COMMONSPAWNHEIGHT),
+                    config.getInt(TConfig.Option.ORE_BADLANDSGOLD_MAXSPAWNHEIGHT),
                     false,
                     BiomeBank.BADLANDS,
                     BiomeBank.BADLANDS_CANYON,
@@ -80,23 +79,23 @@ public class TerraformPopulator extends BlockPopulator {
                     BiomeBank.BADLANDS_RIVER),
             
             new OrePopulator(Material.DIAMOND_ORE,
-             TConfigOption.ORE_DIAMOND_CHANCE.getInt(),
-             TConfigOption.ORE_DIAMOND_VEINSIZE.getInt(),
-             TConfigOption.ORE_DIAMOND_MAXVEINNUMBER.getInt(),
-             TConfigOption.ORE_DIAMOND_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_DIAMOND_COMMONSPAWNHEIGHT.getInt(),
-			 TConfigOption.ORE_DIAMOND_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_DIAMOND_CHANCE),
+             config.getInt(TConfig.Option.ORE_DIAMOND_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_DIAMOND_MAXVEINNUMBER),
+             config.getInt(TConfig.Option.ORE_DIAMOND_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_DIAMOND_COMMONSPAWNHEIGHT),
+			 config.getInt(TConfig.Option.ORE_DIAMOND_MAXSPAWNHEIGHT),
              false),
             
             
             //Emeralds only spawn in mountainous biomes (except deserts)
             new OrePopulator(Material.EMERALD_ORE,
-             TConfigOption.ORE_EMERALD_CHANCE.getInt(),
-             TConfigOption.ORE_EMERALD_VEINSIZE.getInt(),
-             TConfigOption.ORE_EMERALD_MAXVEINNUMBER.getInt(),
-             TConfigOption.ORE_EMERALD_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_EMERALD_COMMONSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_EMERALD_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_EMERALD_CHANCE),
+             config.getInt(TConfig.Option.ORE_EMERALD_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_EMERALD_MAXVEINNUMBER),
+             config.getInt(TConfig.Option.ORE_EMERALD_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_EMERALD_COMMONSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_EMERALD_MAXSPAWNHEIGHT),
              false,
              BiomeBank.BIRCH_MOUNTAINS,
              BiomeBank.ROCKY_MOUNTAINS,
@@ -108,67 +107,67 @@ public class TerraformPopulator extends BlockPopulator {
             
             
             new OrePopulator(Material.LAPIS_ORE,
-             TConfigOption.ORE_LAPIS_CHANCE.getInt(),
-             TConfigOption.ORE_LAPIS_VEINSIZE.getInt(),
-             TConfigOption.ORE_LAPIS_MAXVEINNUMBER.getInt(),
-             TConfigOption.ORE_LAPIS_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_LAPIS_COMMONSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_LAPIS_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_LAPIS_CHANCE),
+             config.getInt(TConfig.Option.ORE_LAPIS_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_LAPIS_MAXVEINNUMBER),
+             config.getInt(TConfig.Option.ORE_LAPIS_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_LAPIS_COMMONSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_LAPIS_MAXSPAWNHEIGHT),
              false),
             
             new OrePopulator(Material.REDSTONE_ORE,
-             TConfigOption.ORE_REDSTONE_CHANCE.getInt(),
-             TConfigOption.ORE_REDSTONE_VEINSIZE.getInt(),
-             TConfigOption.ORE_REDSTONE_MAXVEINNUMBER.getInt(),
-             TConfigOption.ORE_REDSTONE_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_REDSTONE_COMMONSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_REDSTONE_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_REDSTONE_CHANCE),
+             config.getInt(TConfig.Option.ORE_REDSTONE_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_REDSTONE_MAXVEINNUMBER),
+             config.getInt(TConfig.Option.ORE_REDSTONE_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_REDSTONE_COMMONSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_REDSTONE_MAXSPAWNHEIGHT),
              false),
             
             
             //Non-ores
             new OrePopulator(Material.GRAVEL,
-             TConfigOption.ORE_GRAVEL_CHANCE.getInt(),
-             TConfigOption.ORE_GRAVEL_VEINSIZE.getInt(),
-             TConfigOption.ORE_GRAVEL_MAXVEINNUMBER.getInt(),
-             TConfigOption.ORE_GRAVEL_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_GRAVEL_COMMONSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_GRAVEL_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_GRAVEL_CHANCE),
+             config.getInt(TConfig.Option.ORE_GRAVEL_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_GRAVEL_MAXVEINNUMBER),
+             config.getInt(TConfig.Option.ORE_GRAVEL_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_GRAVEL_COMMONSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_GRAVEL_MAXSPAWNHEIGHT),
              true),
             
             new OrePopulator(Material.ANDESITE,
-             TConfigOption.ORE_ANDESITE_CHANCE.getInt(),
-             TConfigOption.ORE_ANDESITE_VEINSIZE.getInt(),
-             TConfigOption.ORE_ANDESITE_MAXVEINNUMBER.getInt(),
-             TConfigOption.ORE_ANDESITE_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_ANDESITE_COMMONSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_ANDESITE_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_ANDESITE_CHANCE),
+             config.getInt(TConfig.Option.ORE_ANDESITE_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_ANDESITE_MAXVEINNUMBER),
+             config.getInt(TConfig.Option.ORE_ANDESITE_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_ANDESITE_COMMONSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_ANDESITE_MAXSPAWNHEIGHT),
              true),
             
             new OrePopulator(Material.DIORITE,
-             TConfigOption.ORE_DIORITE_CHANCE.getInt(),
-             TConfigOption.ORE_DIORITE_VEINSIZE.getInt(),
-             TConfigOption.ORE_DIORITE_MAXVEINNUMBER.getInt(),
-             TConfigOption.ORE_DIORITE_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_DIORITE_COMMONSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_DIORITE_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_DIORITE_CHANCE),
+             config.getInt(TConfig.Option.ORE_DIORITE_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_DIORITE_MAXVEINNUMBER),
+             config.getInt(TConfig.Option.ORE_DIORITE_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_DIORITE_COMMONSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_DIORITE_MAXSPAWNHEIGHT),
              true),
             
             new OrePopulator(Material.GRANITE,
-             TConfigOption.ORE_GRANITE_CHANCE.getInt(),
-             TConfigOption.ORE_GRANITE_VEINSIZE.getInt(),
-             TConfigOption.ORE_GRANITE_MAXVEINNUMBER.getInt(),
-             TConfigOption.ORE_GRANITE_MINSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_GRANITE_COMMONSPAWNHEIGHT.getInt(),
-             TConfigOption.ORE_GRANITE_MAXSPAWNHEIGHT.getInt(),
+             config.getInt(TConfig.Option.ORE_GRANITE_CHANCE),
+             config.getInt(TConfig.Option.ORE_GRANITE_VEINSIZE),
+             config.getInt(TConfig.Option.ORE_GRANITE_MAXVEINNUMBER),
+             config.getInt(TConfig.Option.ORE_GRANITE_MINSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_GRANITE_COMMONSPAWNHEIGHT),
+             config.getInt(TConfig.Option.ORE_GRANITE_MAXSPAWNHEIGHT),
              true)
     }; 
 
     private final AmethystGeodePopulator amethystGeodePopulator = new AmethystGeodePopulator(
-            TConfigOption.ORE_AMETHYST_GEODE_SIZE.getInt(),
-            TConfigOption.ORE_AMETHYST_CHANCE.getDouble(),
-            TConfigOption.ORE_AMETHYST_MIN_DEPTH.getInt(),
-            TConfigOption.ORE_AMETHYST_MIN_DEPTH_BELOW_SURFACE.getInt());
+            config.getInt(TConfig.Option.ORE_AMETHYST_GEODE_SIZE),
+            config.getDouble(TConfig.Option.ORE_AMETHYST_CHANCE),
+            config.getInt(TConfig.Option.ORE_AMETHYST_MIN_DEPTH),
+            config.getInt(TConfig.Option.ORE_AMETHYST_MIN_DEPTH_BELOW_SURFACE));
     public TerraformPopulator(TerraformWorld tw) {
     }
     

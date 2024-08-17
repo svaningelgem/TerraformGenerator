@@ -7,7 +7,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.tree.FractalTreeBuilder;
 import org.terraform.tree.FractalTypes;
 import org.terraform.utils.BlockUtils;
@@ -87,7 +87,7 @@ public class SavannaHandler extends BiomeHandler {
 		//large trees
         SimpleLocation[] trees = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 112, 0.6f);
         
-        if(TConfigOption.TREES_SAVANNA_BIG_ENABLED.getBoolean())
+        if(config.getBoolean(TConfig.Option.TREES_SAVANNA_BIG_ENABLED))
 	        for (SimpleLocation sLoc : trees) {
 	            int treeY = GenUtils.getHighestGround(data, sLoc.getX(),sLoc.getZ());
 	            sLoc.setY(treeY);

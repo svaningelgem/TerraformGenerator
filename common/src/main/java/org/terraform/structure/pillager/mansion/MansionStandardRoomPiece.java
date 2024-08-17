@@ -9,7 +9,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.Wall;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.jigsaw.JigsawStructurePiece;
 import org.terraform.structure.room.jigsaw.JigsawType;
 import org.terraform.utils.BlockUtils;
@@ -224,7 +224,7 @@ public abstract class MansionStandardRoomPiece extends JigsawStructurePiece {
 			spawnedGuards++;
 			if(!this.roomPopulator.getSize().equals(new MansionRoomSize(1,1))) 
 			{
-				for(int i = 0; i < TConfigOption.STRUCTURES_MANSION_SPAWNAGGRESSION.getInt(); i++) {
+				for(int i = 0; i < config.getInt(TConfig.Option.STRUCTURES_MANSION_SPAWNAGGRESSION); i++) {
 					if(rand.nextBoolean()) {
 						target.addEntity(EntityType.VINDICATOR);
 						spawnedGuards++;

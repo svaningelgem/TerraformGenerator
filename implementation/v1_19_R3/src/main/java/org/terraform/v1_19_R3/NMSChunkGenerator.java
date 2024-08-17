@@ -31,7 +31,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.StructureLocator;
 import org.terraform.structure.monument.MonumentPopulator;
 import org.terraform.structure.pillager.mansion.MansionPopulator;
@@ -93,23 +93,23 @@ public class NMSChunkGenerator extends ChunkGenerator {
                 return new Pair<BlockPosition, Holder<Structure>>
                 (new BlockPosition(coords[0], 20, coords[1]), holder);
             } 
-            else if(!TConfigOption.DEVSTUFF_VANILLA_LOCATE_DISABLE.getBoolean())
+            else if(!config.getBoolean(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_DISABLE))
             {
             	if (holder.a().getClass() == OceanMonumentStructure.class) { //Monument
                     
-            		int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MonumentPopulator(), TConfigOption.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS.getInt());
+            		int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MonumentPopulator(), config.getInt(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
 
                     return new Pair<BlockPosition, Holder<Structure>>
                     (new BlockPosition(coords[0], 50, coords[1]), holder);
                 } else if (holder.a().getClass() == WoodlandMansionStructure.class) { //Mansion
                         
-            		int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MansionPopulator(), TConfigOption.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS.getInt());
+            		int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MansionPopulator(), config.getInt(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
 
                     return new Pair<BlockPosition, Holder<Structure>>
                     (new BlockPosition(coords[0], 50, coords[1]), holder);
                 } else if (holder.a().getClass() == BuriedTreasureStructure.class) { 
                 	//Buried Treasure
-                	int[] coords = StructureLocator.locateMultiMegaChunkStructure(tw, new MegaChunk(pX, 0, pZ), new BuriedTreasurePopulator(), TConfigOption.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS.getInt());
+                	int[] coords = StructureLocator.locateMultiMegaChunkStructure(tw, new MegaChunk(pX, 0, pZ), new BuriedTreasurePopulator(), config.getInt(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
                     if(coords == null) return null;
                     return new Pair<BlockPosition, Holder<Structure>>
                     (new BlockPosition(coords[0], 50, coords[1]), holder);

@@ -7,7 +7,7 @@ import org.terraform.coregen.HeightMap;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.JigsawState;
 import org.terraform.structure.JigsawStructurePopulator;
 import org.terraform.structure.room.CubeRoom;
@@ -38,7 +38,7 @@ public class MineshaftPopulator extends JigsawStructurePopulator {
 		//Do height and space checks
 		//In the interest of optimisation, this check will not be performed.
 //        int height = HeightMap.getBlockHeight(tw, coords[0], coords[1]);
-//        if (height < TConfigOption.STRUCTURES_MINESHAFT_MAX_Y.getInt() + 15) {
+//        if (height < config.getInt(TConfig.Option.ption.STRUCTURES_MINESHAFT_MAX_Y) + 15) {
 //            //Way too little space. Abort generation.
 //            //TerraformGeneratorPlugin.logger.info("Aborting Mineshaft generation: Not enough space (Y=" + height + ")");
 //            return false;
@@ -48,7 +48,7 @@ public class MineshaftPopulator extends JigsawStructurePopulator {
     }
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 12222),
-                (int) (TConfigOption.STRUCTURES_MINESHAFT_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_MINESHAFT_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -67,7 +67,7 @@ public class MineshaftPopulator extends JigsawStructurePopulator {
         int y;
         if(!badlandsMineshaft)
         {
-            y = GenUtils.randInt(TConfigOption.STRUCTURES_MINESHAFT_MIN_Y.getInt(), TConfigOption.STRUCTURES_MINESHAFT_MAX_Y.getInt());
+            y = GenUtils.randInt(config.getInt(TConfig.Option.STRUCTURES_MINESHAFT_MIN_Y), config.getInt(TConfig.Option.STRUCTURES_MINESHAFT_MAX_Y));
             if(y < TerraformGeneratorPlugin.injector.getMinY())
                 y = TerraformGeneratorPlugin.injector.getMinY() + 15;
         }
@@ -162,7 +162,7 @@ public class MineshaftPopulator extends JigsawStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return TConfigOption.STRUCTURES_MINESHAFT_ENABLED.getBoolean();
+        return config.getBoolean(TConfig.Option.STRUCTURES_MINESHAFT_ENABLED);
     }
     
     @Override

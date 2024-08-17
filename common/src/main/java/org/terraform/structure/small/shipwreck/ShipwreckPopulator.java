@@ -8,7 +8,7 @@ import org.terraform.data.MegaChunk;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.structure.MultiMegaChunkStructurePopulator;
 import org.terraform.utils.BlockUtils;
@@ -40,7 +40,7 @@ public class ShipwreckPopulator extends MultiMegaChunkStructurePopulator {
     @Override
     public void populate(TerraformWorld tw, PopulatorDataAbstract data) {
 
-        if (!TConfigOption.STRUCTURES_SHIPWRECK_ENABLED.getBoolean())
+        if (!config.getBoolean(TConfig.Option.STRUCTURES_SHIPWRECK_ENABLED))
             return;
         Random random = this.getHashedRandom(tw, data.getChunkX(), data.getChunkZ());
         MegaChunk mc = new MegaChunk(data.getChunkX(), data.getChunkZ());
@@ -97,7 +97,7 @@ public class ShipwreckPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public int[][] getCoordsFromMegaChunk(TerraformWorld tw, MegaChunk mc) {
-        int num = TConfigOption.STRUCTURES_SHIPWRECK_COUNT_PER_MEGACHUNK.getInt();
+        int num = config.getInt(TConfig.Option.STRUCTURES_SHIPWRECK_COUNT_PER_MEGACHUNK);
         int[][] coords = new int[num][2];
         for (int i = 0; i < num; i++)
             coords[i] = mc.getRandomCoords(tw.getHashedRand(mc.getX(), mc.getZ(), 191921*(1+i)));
@@ -127,7 +127,7 @@ public class ShipwreckPopulator extends MultiMegaChunkStructurePopulator {
 
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 12422),
-                (int) (TConfigOption.STRUCTURES_SHIPWRECK_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_SHIPWRECK_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -162,7 +162,7 @@ public class ShipwreckPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return TConfigOption.STRUCTURES_SHIPWRECK_ENABLED.getBoolean();
+        return config.getBoolean(TConfig.Option.STRUCTURES_SHIPWRECK_ENABLED);
     }
     
     @Override

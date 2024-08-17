@@ -2,7 +2,6 @@ package org.terraform.v1_21_R1;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
-import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.SystemUtils;
 import net.minecraft.core.BlockPosition;
 import net.minecraft.core.Holder;
@@ -11,7 +10,6 @@ import net.minecraft.core.IRegistryCustom;
 import net.minecraft.core.SectionPosition;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.MinecraftKey;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.RegionLimitedWorldAccess;
 import net.minecraft.server.level.WorldServer;
@@ -29,7 +27,6 @@ import net.minecraft.world.level.levelgen.HeightMap;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.WorldGenStage;
 import net.minecraft.world.level.levelgen.blending.Blender;
-import net.minecraft.world.level.levelgen.structure.BuiltinStructureSets;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
@@ -43,7 +40,7 @@ import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.structure.StructureLocator;
 import org.terraform.structure.StructurePopulator;
@@ -54,13 +51,10 @@ import org.terraform.structure.pillager.mansion.MansionPopulator;
 import org.terraform.structure.small.buriedtreasure.BuriedTreasurePopulator;
 import org.terraform.structure.stronghold.StrongholdPopulator;
 import org.terraform.structure.trialchamber.TrialChamberPopulator;
-import org.terraform.tree.VanillaMushroomBuilder;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class NMSChunkGenerator extends ChunkGenerator {
@@ -144,17 +138,17 @@ public class NMSChunkGenerator extends ChunkGenerator {
                 int[] coords = new StrongholdPopulator().getNearestFeature(tw, pX, pZ);
                 return new Pair<>(new BlockPosition(coords[0], 20, coords[1]), holder);
             }
-            else if(!TConfigOption.DEVSTUFF_VANILLA_LOCATE_DISABLE.getBoolean())
+            else if(!config.getBoolean(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_DISABLE))
             {
                 if (holder.a().getClass() == OceanMonumentStructure.class) { //Monument
 
-                    int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MonumentPopulator(), TConfigOption.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS.getInt());
+                    int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MonumentPopulator(), config.getInt(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
 
                     return new Pair<BlockPosition, Holder<Structure>>
                             (new BlockPosition(coords[0], 50, coords[1]), holder);
                 } else if (holder.a().getClass() == WoodlandMansionStructure.class) { //Mansion
 
-                    int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MansionPopulator(), TConfigOption.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS.getInt());
+                    int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MansionPopulator(), config.getInt(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
 
                     return new Pair<BlockPosition, Holder<Structure>>
                             (new BlockPosition(coords[0], 50, coords[1]), holder);
@@ -162,13 +156,13 @@ public class NMSChunkGenerator extends ChunkGenerator {
                         && MinecraftServer.getServer().bc().d(Registries.aR).a(MinecraftKey.a("trial_chambers")) == holder.a()
                 ) { //Trial Chamber
 
-                    int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new TrialChamberPopulator(), TConfigOption.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS.getInt());
+                    int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new TrialChamberPopulator(), config.getInt(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
 
                     return new Pair<BlockPosition, Holder<Structure>>
                             (new BlockPosition(coords[0], 50, coords[1]), holder);
                 } else if (holder.a().getClass() == BuriedTreasureStructure.class) {
                     //Buried Treasure
-                    int[] coords = StructureLocator.locateMultiMegaChunkStructure(tw, new MegaChunk(pX, 0, pZ), new BuriedTreasurePopulator(), TConfigOption.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS.getInt());
+                    int[] coords = StructureLocator.locateMultiMegaChunkStructure(tw, new MegaChunk(pX, 0, pZ), new BuriedTreasurePopulator(), config.getInt(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
                     if(coords == null) return null;
                     return new Pair<BlockPosition, Holder<Structure>>
                             (new BlockPosition(coords[0], 50, coords[1]), holder);

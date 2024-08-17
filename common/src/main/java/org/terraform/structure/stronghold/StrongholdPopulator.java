@@ -6,7 +6,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomLayout;
@@ -93,7 +93,7 @@ public class StrongholdPopulator extends SingleMegaChunkStructurePopulator {
     @Override
     public void populate(TerraformWorld tw, PopulatorDataAbstract data) {
         //TerraformGeneratorPlugin.logger.debug("s-populate");
-        if (!TConfigOption.STRUCTURES_STRONGHOLD_ENABLED.getBoolean()) return;
+        if (!config.getBoolean(TConfig.Option.STRUCTURES_STRONGHOLD_ENABLED)) return;
         int[][] positions = strongholdPositions(tw);
         for (int x = data.getChunkX() * 16; x < data.getChunkX() * 16 + 16; x++) {
             for (int z = data.getChunkZ() * 16; z < data.getChunkZ() * 16 + 16; z++) {
@@ -102,12 +102,12 @@ public class StrongholdPopulator extends SingleMegaChunkStructurePopulator {
                         
                     	//Strongholds no longer calculate from the surface.
                     	//Just pick a directly underground location.
-                        int y = GenUtils.randInt(TConfigOption.STRUCTURES_STRONGHOLD_MIN_Y.getInt(), TConfigOption.STRUCTURES_STRONGHOLD_MAX_Y.getInt());
+                        int y = GenUtils.randInt(config.getInt(TConfig.Option.STRUCTURES_STRONGHOLD_MIN_Y), config.getInt(TConfig.Option.STRUCTURES_STRONGHOLD_MAX_Y));
                         
                         //Attempt to force strongholds further underground if
                         //they're above the surface.
                         if(y + 18 > GenUtils.getHighestGround(data, x, z)) {
-                        	if(y > TConfigOption.STRUCTURES_STRONGHOLD_FAILSAFE_Y.getInt()) y = TConfigOption.STRUCTURES_STRONGHOLD_FAILSAFE_Y.getInt();
+                        	if(y > config.getInt(TConfig.Option.STRUCTURES_STRONGHOLD_FAILSAFE_Y)) y = config.getInt(TConfig.Option.STRUCTURES_STRONGHOLD_FAILSAFE_Y);
                         }
                         
                         spawnStronghold(tw, this.getHashedRandom(tw, data.getChunkX(), data.getChunkZ()), data, x, y, z);
@@ -220,7 +220,7 @@ public class StrongholdPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return TConfigOption.STRUCTURES_STRONGHOLD_ENABLED.getBoolean();
+        return config.getBoolean(TConfig.Option.STRUCTURES_STRONGHOLD_ENABLED);
     }
     
     @Override

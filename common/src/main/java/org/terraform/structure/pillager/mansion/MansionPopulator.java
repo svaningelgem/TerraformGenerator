@@ -7,7 +7,7 @@ import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.utils.GenUtils;
 
@@ -20,7 +20,7 @@ public class MansionPopulator extends SingleMegaChunkStructurePopulator {
     
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 99572),
-                (int) (TConfigOption.STRUCTURES_MANSION_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_MANSION_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -28,7 +28,7 @@ public class MansionPopulator extends SingleMegaChunkStructurePopulator {
     @Override
     public boolean canSpawn(TerraformWorld tw, int chunkX, int chunkZ, BiomeBank biome) {
     	//Enforce minimum distance
-        if(Math.pow(chunkX*16,2) + Math.pow(chunkZ*16,2) < Math.pow(TConfigOption.STRUCTURES_MANSION_MINDISTANCE.getInt(),2))
+        if(Math.pow(chunkX*16,2) + Math.pow(chunkZ*16,2) < Math.pow(config.getInt(TConfig.Option.STRUCTURES_MANSION_MINDISTANCE),2))
             return false;
 
         //Mansions must spawn. Dark forests are rare enough. Ignore ground height.
@@ -50,8 +50,8 @@ public class MansionPopulator extends SingleMegaChunkStructurePopulator {
     	
 
         MansionJigsawBuilder builder = new MansionJigsawBuilder(
-        		TConfigOption.STRUCTURES_MANSION_SIZE.getInt(), 
-        		TConfigOption.STRUCTURES_MANSION_SIZE.getInt(), 
+        		config.getInt(TConfig.Option.STRUCTURES_MANSION_SIZE),
+        		config.getInt(TConfig.Option.STRUCTURES_MANSION_SIZE),
         		data, coords[0], y, coords[1]
         );
         builder.generate(new Random());
@@ -61,12 +61,12 @@ public class MansionPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public int getChunkBufferDistance() {
-    	return TConfigOption.STRUCTURES_MANSION_CHUNK_EXCLUSION_ZONE.getInt();
+    	return config.getInt(TConfig.Option.STRUCTURES_MANSION_CHUNK_EXCLUSION_ZONE);
     }
 
     @Override
     public boolean isEnabled() {
-        return BiomeBank.isBiomeEnabled(BiomeBank.DARK_FOREST) 
-        		&& TConfigOption.STRUCTURES_MANSION_ENABLED.getBoolean();
+        return BiomeBank.isBiomeEnabled(BiomeBank.DARK_FOREST)
+			   && config.getBoolean(TConfig.Option.STRUCTURES_MANSION_ENABLED);
     }
 }

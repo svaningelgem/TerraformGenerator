@@ -11,7 +11,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.tree.FractalTreeBuilder;
 import org.terraform.tree.FractalTypes;
 import org.terraform.utils.BlockUtils;
@@ -75,7 +75,7 @@ public class PaintedHillsHandler extends AbstractMountainHandler {
 
 
         if(HeightMap.getTrueHeightGradient(data, rawX, rawZ, 3)
-                < TConfigOption.MISC_TREES_GRADIENT_LIMIT.getDouble()) {
+		   < config.getDouble(TConfig.Option.MISC_TREES_GRADIENT_LIMIT)) {
             data.setType(rawX, surfaceY, rawZ, Material.GRASS_BLOCK);
 
             if (random.nextBoolean())

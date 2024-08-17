@@ -2,13 +2,13 @@ package org.terraform.data;
 
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeSection;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.utils.GenUtils;
 
 import java.util.Random;
 
 public class MegaChunk {
-	public static final int megaChunkBlockWidth = BiomeSection.sectionWidth*TConfigOption.STRUCTURES_MEGACHUNK_NUMBIOMESECTIONS.getInt(); 
+	public static final int megaChunkBlockWidth = BiomeSection.sectionWidth* config.getInt(TConfig.Option.STRUCTURES_MEGACHUNK_NUMBIOMESECTIONS);
     private int x, z;
 
     public MegaChunk(SimpleChunkLocation sLoc) {
@@ -26,8 +26,8 @@ public class MegaChunk {
         this(chunkX*16,0,chunkZ*16);
     	//this((chunkX << 4) | 15, 0, (chunkZ << 4) | 15);
     	
-    	//this.x = chunkX >> TConfigOption.STRUCTURES_MEGACHUNK_BITSHIFTS.getInt();
-        //this.z = chunkZ >> TConfigOption.STRUCTURES_MEGACHUNK_BITSHIFTS.getInt();
+    	//this.x = chunkX >> config.getInt(TConfig.Option.ption.STRUCTURES_MEGACHUNK_BITSHIFTS);
+        //this.z = chunkZ >> config.getInt(TConfig.Option.ption.STRUCTURES_MEGACHUNK_BITSHIFTS);
     }
 
     public MegaChunk getRelative(int x, int z) {

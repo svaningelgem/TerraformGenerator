@@ -5,7 +5,7 @@ import org.terraform.biome.BiomeBank;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.structure.room.RoomLayout;
 import org.terraform.structure.room.RoomLayoutGenerator;
@@ -22,7 +22,7 @@ public class WarmOceanRuinsPopulator extends SingleMegaChunkStructurePopulator {
     
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 65732),
-                (int) (TConfigOption.STRUCTURES_WARMOCEANRUINS_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_WARMOCEANRUINS_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -102,6 +102,6 @@ public class WarmOceanRuinsPopulator extends SingleMegaChunkStructurePopulator {
                 || BiomeBank.isBiomeEnabled(BiomeBank.DEEP_COLD_OCEAN)
                 || BiomeBank.isBiomeEnabled(BiomeBank.FROZEN_OCEAN)
                 || BiomeBank.isBiomeEnabled(BiomeBank.DEEP_FROZEN_OCEAN))
-        		&& TConfigOption.STRUCTURES_WARMOCEANRUINS_ENABLED.getBoolean();
+			   && config.getBoolean(TConfig.Option.STRUCTURES_WARMOCEANRUINS_ENABLED);
     }
 }

@@ -11,7 +11,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.SchematicParser;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.tree.FractalTreeBuilder;
@@ -139,7 +139,7 @@ public class JungleHandler extends BiomeHandler {
 
         SimpleLocation[] bigTrees = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 20);
         
-        if(TConfigOption.TREES_JUNGLE_BIG_ENABLED.getBoolean())
+        if(config.getBoolean(TConfig.Option.TREES_JUNGLE_BIG_ENABLED))
 	        for (SimpleLocation sLoc : bigTrees) {
 	            int treeY = GenUtils.getHighestGround(data, sLoc.getX(),sLoc.getZ());
 	            sLoc.setY(treeY);
@@ -159,7 +159,7 @@ public class JungleHandler extends BiomeHandler {
             
             if (data.getBiome(sLoc.getX(),sLoc.getZ()) == getBiome() &&
                     BlockUtils.isDirtLike(data.getType(sLoc.getX(),sLoc.getY(),sLoc.getZ()))) {
-            	if(GenUtils.chance(random, 1000-TConfigOption.BIOME_JUNGLE_STATUE_CHANCE.getInt(), 1000)) {
+            	if(GenUtils.chance(random, 1000 - config.getInt(TConfig.Option.BIOME_JUNGLE_STATUE_CHANCE), 1000)) {
                     TreeDB.spawnSmallJungleTree(false, tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
             	}else {
             		spawnStatue(random, data, sLoc);

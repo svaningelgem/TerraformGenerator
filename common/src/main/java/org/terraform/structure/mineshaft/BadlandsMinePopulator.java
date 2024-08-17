@@ -16,11 +16,10 @@ import org.terraform.data.MegaChunk;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.structure.JigsawState;
 import org.terraform.structure.JigsawStructurePopulator;
-import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.structure.room.LegacyPathGenerator;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
@@ -31,7 +30,7 @@ import java.util.EnumSet;
 import java.util.Random;
 
 public class BadlandsMinePopulator extends JigsawStructurePopulator {
-    static int shaftDepth = TConfigOption.STRUCTURES_BADLANDS_MINE_DEPTH.getInt();
+    static int shaftDepth = config.getInt(TConfig.Option.STRUCTURES_BADLANDS_MINE_DEPTH);
 
     @Override
     public boolean canSpawn(TerraformWorld tw, int chunkX, int chunkZ, BiomeBank biome) {
@@ -52,7 +51,7 @@ public class BadlandsMinePopulator extends JigsawStructurePopulator {
     
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 12222),
-                (int) (TConfigOption.STRUCTURES_MINESHAFT_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_MINESHAFT_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -64,8 +63,8 @@ public class BadlandsMinePopulator extends JigsawStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return BiomeBank.isBiomeEnabled(BiomeBank.BADLANDS_CANYON) 
-        		&& TConfigOption.STRUCTURES_BADLANDS_MINE_ENABLED.getBoolean();
+        return BiomeBank.isBiomeEnabled(BiomeBank.BADLANDS_CANYON)
+			   && config.getBoolean(TConfig.Option.STRUCTURES_BADLANDS_MINE_ENABLED);
     }
 
     @Override

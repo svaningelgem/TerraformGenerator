@@ -10,11 +10,9 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
-import org.terraform.tree.FractalTreeBuilder;
+import org.terraform.main.config.TConfig;
 import org.terraform.tree.FractalTypes;
 import org.terraform.tree.MushroomBuilder;
-import org.terraform.tree.TreeDB;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
 
@@ -46,8 +44,8 @@ public class DarkForestHandler extends BiomeHandler {
     @Override
     public void populateSmallItems(TerraformWorld tw, Random random, int rawX, int surfaceY, int rawZ, PopulatorDataAbstract data) {
       
-        boolean spawnHeads = TConfigOption.BIOME_DARK_FOREST_SPAWN_HEADS.getBoolean() 
-        		&& GenUtils.chance(random, 1, 100);
+        boolean spawnHeads = config.getBoolean(TConfig.Option.BIOME_DARK_FOREST_SPAWN_HEADS)
+							 && GenUtils.chance(random, 1, 100);
 
         if (data.getType(rawX, surfaceY, rawZ) == Material.GRASS_BLOCK) {
             if (GenUtils.chance(random, 1, 10)) {
@@ -96,7 +94,7 @@ public class DarkForestHandler extends BiomeHandler {
                         default -> FractalTypes.Mushroom.GIANT_BROWN_FUNNEL_MUSHROOM;
                     };
                     new MushroomBuilder(type).build(tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
-                } else if (TConfigOption.TREES_DARK_FOREST_BIG_ENABLED.getBoolean()) {
+                } else if (config.getBoolean(TConfig.Option.TREES_DARK_FOREST_BIG_ENABLED)) {
                     FractalTypes.Tree.DARK_OAK_BIG_TOP.build(tw, new SimpleBlock(data,sLoc));
                 }
             }

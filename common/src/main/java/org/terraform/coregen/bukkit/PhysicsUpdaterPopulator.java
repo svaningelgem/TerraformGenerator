@@ -14,7 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.terraform.data.SimpleChunkLocation;
 import org.terraform.data.SimpleLocation;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +36,7 @@ public class PhysicsUpdaterPopulator extends BlockPopulator implements Listener{
     
     public static void pushChange(String world, SimpleLocation loc) {
     	
-    	if(!flushIsQueued && cache.size() > TConfigOption.DEVSTUFF_FLUSH_PATCHER_CACHE_FREQUENCY.getInt()) {
+    	if(!flushIsQueued && cache.size() > config.getInt(TConfig.Option.DEVSTUFF_FLUSH_PATCHER_CACHE_FREQUENCY)) {
 			flushIsQueued = true;
     		new BukkitRunnable() {
 	    		@Override

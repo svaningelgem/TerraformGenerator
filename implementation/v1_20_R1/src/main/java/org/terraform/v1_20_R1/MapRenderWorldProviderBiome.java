@@ -1,27 +1,21 @@
 package org.terraform.v1_20_R1;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_20_R1.block.CraftBlock;
-import org.terraform.biome.custombiomes.CustomBiomeType;
 import org.terraform.coregen.HeightMap;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.TerraformGeneratorPlugin;
 
 import com.mojang.serialization.Codec;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.IRegistry;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.biome.Climate.Sampler;
 import net.minecraft.world.level.biome.WorldChunkManager;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 
 public class MapRenderWorldProviderBiome extends WorldChunkManager {
     private final TerraformWorld tw;
@@ -69,7 +63,7 @@ public class MapRenderWorldProviderBiome extends WorldChunkManager {
         //This will return river or plains depending on whether or not
         //the area is submerged.
 
-        return HeightMap.getBlockHeight(tw, x,z) <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt() ?
+        return HeightMap.getBlockHeight(tw, x,z) <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL) ?
                 river : plains;
 	}
 

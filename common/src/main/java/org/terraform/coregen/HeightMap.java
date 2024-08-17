@@ -1,14 +1,12 @@
 package org.terraform.coregen;
 
-import java.util.ArrayList;
-
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeSection;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.utils.GenUtils;
 import org.terraform.utils.noise.FastNoise;
 import org.terraform.utils.noise.NoiseCacheHandler;
@@ -25,7 +23,7 @@ public enum HeightMap {
             FastNoise noise = NoiseCacheHandler.getNoise(tw, NoiseCacheEntry.HEIGHTMAP_RIVER, world -> {
                 FastNoise n = new FastNoise((int) world.getSeed());
                 n.SetNoiseType(NoiseType.PerlinFractal);
-                n.SetFrequency(TConfigOption.HEIGHT_MAP_RIVER_FREQUENCY.getFloat());
+                n.SetFrequency(config.getFloat(TConfig.Option.HEIGHT_MAP_RIVER_FREQUENCY));
                 n.SetFractalOctaves(5);
                 return n;
             });
@@ -39,7 +37,7 @@ public enum HeightMap {
                 FastNoise n = new FastNoise((int) world.getSeed());
                 n.SetNoiseType(NoiseType.SimplexFractal);
                 n.SetFractalOctaves(2); //Poor detail after blurs. Rely on Attrition for detail
-                n.SetFrequency(TConfigOption.HEIGHT_MAP_CORE_FREQUENCY.getFloat());
+                n.SetFrequency(config.getFloat(TConfig.Option.HEIGHT_MAP_CORE_FREQUENCY));
                 return n;
             });
 
@@ -77,7 +75,7 @@ public enum HeightMap {
     };
 
     public static final int defaultSeaLevel = 62;
-    public static final float heightAmplifier = TConfigOption.HEIGHT_MAP_LAND_HEIGHT_AMPLIFIER.getFloat();
+    public static final float heightAmplifier = config.getFloat(TConfig.Option.HEIGHT_MAP_LAND_HEIGHT_AMPLIFIER);
 
     /**
      * Returns the average increase or decrease in height for surrounding blocks compared to the provided height at those coords.

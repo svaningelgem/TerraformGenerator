@@ -10,14 +10,13 @@ import org.bukkit.block.data.type.Lantern;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
 import org.terraform.utils.blockdata.AgeableBuilder;
 import org.terraform.utils.blockdata.DirectionalBuilder;
 import org.terraform.utils.blockdata.TrapdoorBuilder;
-import org.terraform.utils.version.Version;
 
 import java.util.Map.Entry;
 import java.util.Random;
@@ -65,7 +64,7 @@ public class PlainsVillageCropFarmPopulator extends PlainsVillageAbstractRoomPop
             
             for (int i = 0; i < entry.getValue(); i++) {
             	//Added height tolerance check. Don't place anything on areas that deviate too far off.
-            	if(Math.abs(w.getY()-roomY) <= TConfigOption.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE.getInt())
+            	if(Math.abs(w.getY()-roomY) <= config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
 	                if (w.getDirection().getOppositeFace() == dir) { //Entrance
 	
 	                    if (i <= 1 || i >= entry.getValue() - 1) {
@@ -148,7 +147,7 @@ public class PlainsVillageCropFarmPopulator extends PlainsVillageAbstractRoomPop
             	height = GenUtils.getHighestGroundOrSeaLevel(data, x, z);
                 	
             	//Forget populating areas that are too far up/down
-            	if(Math.abs(height-roomY) > TConfigOption.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE.getInt())
+            	if(Math.abs(height-roomY) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
             		continue;
 //                } else
 //                	height = roomY;

@@ -9,8 +9,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
-import org.terraform.tree.FractalTreeBuilder;
+import org.terraform.main.config.TConfig;
 import org.terraform.tree.FractalTypes;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
@@ -99,7 +98,7 @@ public class TaigaHandler extends BiomeHandler {
                 int treeY = GenUtils.getHighestGround(data, sLoc.getX(),sLoc.getZ());
                 sLoc.setY(treeY);
                 // Rarely spawn huge taiga trees
-                if (TConfigOption.TREES_TAIGA_BIG_ENABLED.getBoolean() && GenUtils.chance(random, 1, 20)) {
+                if (config.getBoolean(TConfig.Option.TREES_TAIGA_BIG_ENABLED) && GenUtils.chance(random, 1, 20)) {
                     if(FractalTypes.Tree.TAIGA_BIG.build(tw, new SimpleBlock(data, sLoc.getX(),sLoc.getY(),sLoc.getZ())))
 	                    replacePodzol(
 	                    		tw.getHashedRand(sLoc.getX(),sLoc.getY(),sLoc.getZ()).nextInt(9999),

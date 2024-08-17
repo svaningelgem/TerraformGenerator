@@ -6,7 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
@@ -102,7 +102,7 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
 //                else
 //                	highest = roomY;
                 
-                if(Math.abs(highest-roomY) > TConfigOption.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE.getInt())
+                if(Math.abs(highest-roomY) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
                 	continue;
                 
 				BlockUtils.setDownUntilSolid(x, highest, z, data, Material.DIRT);
@@ -133,7 +133,7 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
 //    		            else
 //    		            	core.getAtY(roomY+1);
 
-    	                if(Math.abs(core.getY()-roomY) > TConfigOption.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE.getInt())
+    	                if(Math.abs(core.getY()-roomY) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
     	                	continue;
     	                
     					new StairBuilder(Material.COBBLESTONE_STAIRS)
@@ -188,7 +188,7 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
         	highest++;
         }
         if(threshold < 6) {
-            if(Math.abs(highest-roomY) <= TConfigOption.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE.getInt())
+            if(Math.abs(highest-roomY) <= config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
             {
                 for (int i = 0; i < GenUtils.randInt(3, 7); i++) 
                 	data.addEntity(coords[0], highest + 1, coords[2], animal);

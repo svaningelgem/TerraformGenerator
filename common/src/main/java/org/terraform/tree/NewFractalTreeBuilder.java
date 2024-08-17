@@ -6,7 +6,7 @@ import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
 import org.terraform.utils.noise.FastNoise;
@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Random;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * This class isn't designed to run in a multithreaded environment
@@ -137,7 +136,7 @@ public class NewFractalTreeBuilder implements Cloneable {
 
     public boolean checkGradient(PopulatorDataAbstract data, int x, int z) {
         return !checkGradient || (HeightMap.getTrueHeightGradient(data, x, z, 3)
-                <= TConfigOption.MISC_TREES_GRADIENT_LIMIT.getDouble());
+								  <= config.getDouble(TConfig.Option.MISC_TREES_GRADIENT_LIMIT));
     }
 
     public NewFractalTreeBuilder setCheckGradient(boolean checkGradient)

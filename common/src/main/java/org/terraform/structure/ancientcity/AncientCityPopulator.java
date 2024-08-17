@@ -12,7 +12,7 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomLayout;
@@ -33,7 +33,7 @@ public class AncientCityPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public boolean canSpawn(TerraformWorld tw, int chunkX, int chunkZ, BiomeBank biome) {
-        if (!TConfigOption.STRUCTURES_ANCIENTCITY_ENABLED.getBoolean())
+        if (!config.getBoolean(TConfig.Option.STRUCTURES_ANCIENTCITY_ENABLED))
             return false;
         
         //MegaChunk mc = new MegaChunk(chunkX, chunkZ);
@@ -49,14 +49,14 @@ public class AncientCityPopulator extends SingleMegaChunkStructurePopulator {
     }
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 123122),
-                (int) (TConfigOption.STRUCTURES_ANCIENTCITY_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_ANCIENTCITY_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
 
     @Override
     public void populate(TerraformWorld tw, PopulatorDataAbstract data) {
-        if (!TConfigOption.STRUCTURES_ANCIENTCITY_ENABLED.getBoolean())
+        if (!config.getBoolean(TConfig.Option.STRUCTURES_ANCIENTCITY_ENABLED))
             return;
 
         MegaChunk mc = new MegaChunk(data.getChunkX(), data.getChunkZ());
@@ -64,9 +64,9 @@ public class AncientCityPopulator extends SingleMegaChunkStructurePopulator {
         int x = coords[0];
         int z = coords[1];
         //int height = HeightMap.getBlockHeight(tw, x, z);
-        int minY = TConfigOption.STRUCTURES_ANCIENTCITY_MIN_Y.getInt();
+        int minY = config.getInt(TConfig.Option.STRUCTURES_ANCIENTCITY_MIN_Y);
         //if(!Version.isAtLeast(18) && minY < 0) minY = 8;
-        int y = GenUtils.randInt(minY, TConfigOption.STRUCTURES_ANCIENTCITY_MAX_Y.getInt());
+        int y = GenUtils.randInt(minY, config.getInt(TConfig.Option.STRUCTURES_ANCIENTCITY_MAX_Y));
 
         
         spawnAncientCity(tw,
@@ -196,7 +196,7 @@ public class AncientCityPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return TConfigOption.STRUCTURES_ANCIENTCITY_ENABLED.getBoolean();
+        return config.getBoolean(TConfig.Option.STRUCTURES_ANCIENTCITY_ENABLED);
     }
     
     //Underground structures don't need a decorative buffer

@@ -11,7 +11,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.tree.FractalTreeBuilder;
 import org.terraform.tree.FractalTypes;
 import org.terraform.utils.BlockUtils;
@@ -69,11 +69,11 @@ public class BirchMountainsHandler extends AbstractMountainHandler {
      * Replace steep areas with various rocks.
      */
     private void setRock(SimpleBlock target) {
-    	if(HeightMap.getTrueHeightGradient(target.getPopData(), target.getX(), target.getZ(), 3) 
-    			> TConfigOption.MISC_TREES_GRADIENT_LIMIT.getDouble()) {
+    	if(HeightMap.getTrueHeightGradient(target.getPopData(), target.getX(), target.getZ(), 3)
+		   > config.getDouble(TConfig.Option.MISC_TREES_GRADIENT_LIMIT)) {
     		Material rock = Material.ANDESITE;
-    		if(HeightMap.getTrueHeightGradient(target.getPopData(), target.getX(), target.getZ(), 3) 
-        			> TConfigOption.MISC_TREES_GRADIENT_LIMIT.getDouble()*2) 
+    		if(HeightMap.getTrueHeightGradient(target.getPopData(), target.getX(), target.getZ(), 3)
+			   > config.getDouble(TConfig.Option.MISC_TREES_GRADIENT_LIMIT) * 2)
     			rock = Material.DIORITE;
     		while(BlockUtils.isExposedToNonSolid(target)) {
     			target.setType(rock);
@@ -91,7 +91,7 @@ public class BirchMountainsHandler extends AbstractMountainHandler {
                 int treeY = GenUtils.getHighestGround(data, sLoc.getX(),sLoc.getZ());
                 sLoc.setY(treeY);
                 // Rarely spawn huge taiga trees
-                if (TConfigOption.TREES_BIRCH_BIG_ENABLED.getBoolean() && GenUtils.chance(random, 1, 20)) {
+                if (config.getBoolean(TConfig.Option.TREES_BIRCH_BIG_ENABLED) && GenUtils.chance(random, 1, 20)) {
                     new FractalTreeBuilder(FractalTypes.Tree.BIRCH_BIG).build(tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
                     
                 }else { // Normal trees

@@ -5,7 +5,7 @@ import java.util.Random;
 import org.terraform.biome.BiomeBank;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.structure.village.plains.PlainsVillagePopulator;
 import org.terraform.utils.GenUtils;
@@ -19,7 +19,7 @@ public class VillagePopulator extends SingleMegaChunkStructurePopulator {
     
     private boolean rollSpawnRatio(TerraformWorld tw, int chunkX, int chunkZ) {
         return GenUtils.chance(tw.getHashedRand(chunkX, chunkZ, 12422),
-                (int) (TConfigOption.STRUCTURES_VILLAGE_SPAWNRATIO
+                (int) (TConfig.STRUCTURES_VILLAGE_SPAWNRATIO
                         .getDouble() * 10000),
                 10000);
     }
@@ -66,7 +66,7 @@ public class VillagePopulator extends SingleMegaChunkStructurePopulator {
 //       		|| banks.contains(BiomeBank.SCARLET_FOREST)
 //       		|| banks.contains(BiomeBank.CHERRY_GROVE)) {
 
-            if (!TConfigOption.STRUCTURES_PLAINSVILLAGE_ENABLED.getBoolean())
+            if (!config.getBoolean(TConfig.Option.STRUCTURES_PLAINSVILLAGE_ENABLED))
             	return;
 
             new PlainsVillagePopulator().populate(tw, data);
@@ -77,7 +77,7 @@ public class VillagePopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public int getChunkBufferDistance() {
-    	return TConfigOption.STRUCTURES_VILLAGE_CHUNK_EXCLUSION_ZONE.getInt();
+    	return config.getInt(TConfig.Option.STRUCTURES_VILLAGE_CHUNK_EXCLUSION_ZONE);
     }
 
     @Override
@@ -88,6 +88,6 @@ public class VillagePopulator extends SingleMegaChunkStructurePopulator {
         		|| BiomeBank.isBiomeEnabled(BiomeBank.TAIGA) 
            		|| BiomeBank.isBiomeEnabled(BiomeBank.SCARLET_FOREST)
            		|| BiomeBank.isBiomeEnabled(BiomeBank.CHERRY_GROVE))
-        		&& TConfigOption.STRUCTURES_PLAINSVILLAGE_ENABLED.getBoolean();
+			   && config.getBoolean(TConfig.Option.STRUCTURES_PLAINSVILLAGE_ENABLED);
     }
 }

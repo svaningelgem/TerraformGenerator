@@ -14,8 +14,7 @@ import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfigOption;
-import org.terraform.structure.small.DesertWellPopulator;
+import org.terraform.main.config.TConfig;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
 import org.terraform.utils.noise.FastNoise;
@@ -29,11 +28,11 @@ public class BadlandsHandler extends BiomeHandler {
     static private BiomeBlender riversBlender;
     static private BiomeBlender plateauBlender;
 
-    static int sandRadius = TConfigOption.BIOME_BADLANDS_PLATEAU_SAND_RADIUS.getInt();
-    static int plateauHeight = TConfigOption.BIOME_BADLANDS_PLATEAU_HEIGHT.getInt();
-    static float plateauFrequency = TConfigOption.BIOME_BADLANDS_PLATEAU_FREQUENCY.getFloat();
-    static double plateauThreshold = TConfigOption.BIOME_BADLANDS_PLATEAU_THRESHOLD.getDouble();
-    static double plateauCommonness = TConfigOption.BIOME_BADLANDS_PLATEAU_COMMONNESS.getDouble();
+    static int sandRadius = config.getInt(TConfig.Option.BIOME_BADLANDS_PLATEAU_SAND_RADIUS);
+    static int plateauHeight = config.getInt(TConfig.Option.BIOME_BADLANDS_PLATEAU_HEIGHT);
+    static float plateauFrequency = config.getFloat(TConfig.Option.BIOME_BADLANDS_PLATEAU_FREQUENCY);
+    static double plateauThreshold = config.getDouble(TConfig.Option.BIOME_BADLANDS_PLATEAU_THRESHOLD);
+    static double plateauCommonness = config.getDouble(TConfig.Option.BIOME_BADLANDS_PLATEAU_COMMONNESS);
 
     private static BiomeBlender getRiversBlender(TerraformWorld tw) {
         // Only one blender needed!

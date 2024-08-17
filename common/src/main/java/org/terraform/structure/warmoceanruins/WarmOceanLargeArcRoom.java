@@ -11,7 +11,7 @@ import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
-import org.terraform.main.config.TConfigOption;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
@@ -41,7 +41,7 @@ public class WarmOceanLargeArcRoom extends WarmOceanBaseRoom {
         new ChestBuilder(Material.CHEST)
                 .setFacing(BlockUtils.getDirectBlockFace(rand))
                 .setLootTable(TerraLootTable.UNDERWATER_RUIN_BIG)
-                .setWaterlogged(chestTarget.getY() <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                .setWaterlogged(chestTarget.getY() <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                 .apply(chestTarget);
 
         //Create a 3x3 pattern to use in the arc's walls
@@ -80,11 +80,11 @@ public class WarmOceanLargeArcRoom extends WarmOceanBaseRoom {
                 new StairBuilder(Material.SANDSTONE_STAIRS)
                         .setHalf(Bisected.Half.TOP)
                         .setFacing(pillarDir)
-                        .setWaterlogged(pillarCore.getY()+6 <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                        .setWaterlogged(pillarCore.getY()+6 <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                         .apply(pillarCore.getUp(6)
                                 .getRelative(face,2)
                                 .getRelative(pillarDir.getOppositeFace(), 3))
-                        .setWaterlogged(pillarCore.getY()+7 <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                        .setWaterlogged(pillarCore.getY()+7 <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                         .apply(pillarCore.getUp(7)
                                 .getRelative(face,2)
                                 .getRelative(pillarDir.getOppositeFace(), 4));
@@ -120,12 +120,12 @@ public class WarmOceanLargeArcRoom extends WarmOceanBaseRoom {
 
                     new StairBuilder(Material.SANDSTONE_STAIRS)
                             .setFacing(dir)
-                            .setWaterlogged(pillarCore.getY() <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                            .setWaterlogged(pillarCore.getY() <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                             .apply(pillarCore.getRelative(face, 3).getRelative(dir, 2));
                 }
                 new StairBuilder(Material.SANDSTONE_STAIRS)
                         .setFacing(face.getOppositeFace())
-                        .setWaterlogged(pillarCore.getY() <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                        .setWaterlogged(pillarCore.getY() <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                         .apply(pillarCore.getRelative(face,3));
 
                 //Place the patterns
@@ -160,12 +160,12 @@ public class WarmOceanLargeArcRoom extends WarmOceanBaseRoom {
                     else
                         new SlabBuilder(Material.CUT_SANDSTONE_SLAB)
                                 .setType(Slab.Type.TOP)
-                                .setWaterlogged(core.getY()+4 <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                                .setWaterlogged(core.getY()+4 <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                                 .apply(core.getLeft(lr).getFront(fb).getUp(4));
                 }else
                     new SlabBuilder(Material.CUT_SANDSTONE_SLAB)
                             .setType(Slab.Type.TOP)
-                            .setWaterlogged(core.getY() <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                            .setWaterlogged(core.getY() <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                             .apply(core.getLeft(lr).getFront(fb));
             }
 
@@ -199,7 +199,7 @@ public class WarmOceanLargeArcRoom extends WarmOceanBaseRoom {
                     new StairBuilder(Material.SANDSTONE_STAIRS).setFacing(BlockUtils.getRight(w.getDirection()))
                             .apply(w.getLeft())
                             .setHalf(Bisected.Half.TOP)
-                            .setWaterlogged(w.getY()+2 <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                            .setWaterlogged(w.getY()+2 <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                             .apply(w.getLeft().getUp(2));
                 }
                 else if(i == entry.getValue()-1)
@@ -208,7 +208,7 @@ public class WarmOceanLargeArcRoom extends WarmOceanBaseRoom {
                     new StairBuilder(Material.SANDSTONE_STAIRS).setFacing(BlockUtils.getLeft(w.getDirection()))
                             .apply(w.getRight())
                             .setHalf(Bisected.Half.TOP)
-                            .setWaterlogged(w.getY() + 2 <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                            .setWaterlogged(w.getY() + 2 <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                             .apply(w.getRight().getUp(2));
                 }
                 else if(i == 4 || i == 10)
@@ -217,12 +217,12 @@ public class WarmOceanLargeArcRoom extends WarmOceanBaseRoom {
                     new StairBuilder(Material.SANDSTONE_STAIRS).setFacing(BlockUtils.getLeft(w.getDirection()))
                             .apply(w.getRight())
                             .setHalf(Bisected.Half.TOP)
-                            .setWaterlogged(w.getY() + 2 <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                            .setWaterlogged(w.getY() + 2 <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                             .apply(w.getRight().getUp(2));
                     new StairBuilder(Material.SANDSTONE_STAIRS).setFacing(BlockUtils.getRight(w.getDirection()))
                             .apply(w.getLeft())
                             .setHalf(Bisected.Half.TOP)
-                            .setWaterlogged(w.getY() + 2 <= TConfigOption.HEIGHT_MAP_SEA_LEVEL.getInt())
+                            .setWaterlogged(w.getY() + 2 <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
                             .apply(w.getLeft().getUp(2));
                 }
                 w = w.getLeft();
