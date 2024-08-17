@@ -49,8 +49,6 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
     public static TfgWatchdogSuppressant watchdogSuppressant;
     private final HashMap<String, TerraformGenerator> generators = new HashMap<>();
 
-    private LanguageManager lang;
-
     static {
         PrivateFieldHandler handler;
         try {
@@ -71,7 +69,6 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
         instance = this;
 
         LanguageManager.init(new File(getDataFolder(), getTConfig().LANGUAGE_FILE));
-        lang = new LanguageManager(this);
 
         //Initiate the height map flat radius value
         HeightMap.spawnFlatRadiusSquared = defaultConfig.getInt(TConfig.HEIGHT_MAP_SPAWN_FLAT_RADIUS);
@@ -103,7 +100,6 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
                     }
                 });
 
-        LangOpt.init(this);
         logger = new TLogger();
         watchdogSuppressant = new TfgWatchdogSuppressant();
         new TerraformGeneratorMetricsHandler(this); //bStats
@@ -175,13 +171,4 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
                 k -> new TerraformGenerator(this, getTConfig())
         );
     }
-
-    public String translate(@NotNull final String text, @Nullable final String def) {
-        return lang.translate(text, def);
-    }
-
-    public String translate(@NotNull final String text) {
-        return lang.translate(text);
-    }
-
 }
