@@ -10,23 +10,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InjectableObject {
-    private final Map<Class<?>, Object> registry = new HashMap<>();
+public interface InjectableObject {
+    Map<Class<?>, Object> registry = new HashMap<>();
 
-    protected void postInit() {
+    default void postInit() {
         // Override if you need to do something special.
     }
 
-    protected <T extends InjectableObject> T create(Class<? extends InjectableObject> clazz, Object... args) {
+    default <T extends InjectableObject> T create(Class<? extends InjectableObject> clazz, Object... args) {
         T instance = createInstance(clazz, args);
-        register(clazz, instance);
+        register(instance);
         inject(instance);
         instance.postInit();
         return instance;
     }
 
-    private void register(Class<?> clazz, Object instance) {
-        registry.put(clazz, instance);
+    default <T> T register(T instance) {
+        registry.put(instance.getClass(), instance);
+        return instance;
     }
 
     private void inject(@NotNull Object target) {

@@ -70,7 +70,6 @@ public class GenUtils {
     		}
     	}
     }
-    public static LoadingCache<ChunkCache, EnumSet<BiomeBank>> biomeQueryCache;
 
     public static int getSign(@NotNull Random rand) {
         return rand.nextBoolean() ? 1 : -1;

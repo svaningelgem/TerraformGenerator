@@ -3,11 +3,12 @@ package org.terraform.main.config;
 import org.avarion.yaml.YamlFileInterface;
 import org.avarion.yaml.YamlKey;
 import org.jetbrains.annotations.NotNull;
+import org.terraform.utils.injection.InjectableObject;
 
 import java.io.File;
 
 @SuppressWarnings("unused") // TODO: remove when done
-public class TConfig extends YamlFileInterface {
+public class TConfig extends YamlFileInterface implements InjectableObject {
     @YamlKey("heightmap.core-frequency")
     public float HEIGHT_MAP_CORE_FREQUENCY = 0.003f;
     @YamlKey("heightmap.river-frequency")

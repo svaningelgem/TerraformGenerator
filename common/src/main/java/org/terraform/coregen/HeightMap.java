@@ -13,7 +13,7 @@ import org.terraform.utils.injection.InjectableObject;
 import org.terraform.utils.noise.FastNoise;
 import org.terraform.utils.noise.NoiseCacheHandler;
 
-public class HeightMap extends InjectableObject {
+public class HeightMap implements InjectableObject {
     @Inject
     private TConfig config;
 
@@ -25,10 +25,7 @@ public class HeightMap extends InjectableObject {
 
     private static final int upscaleSize = 3;
 
-    @Override
-    protected void postInit() {
-        super.postInit();
-
+    public void postInit() {
         heightAmplifier = config.HEIGHT_MAP_LAND_HEIGHT_AMPLIFIER;
 
         //Initiate the height map flat radius value
@@ -100,17 +97,17 @@ public class HeightMap extends InjectableObject {
         double depth = getRawRiverDepth(tw, x, z);
 
         //Normal scenario: Shallow area
-        if(height - depth >= generator.seaLevel - 15) {
+        if(height - depth >= generator.getSeaLevel() - 15) {
             height -= depth;
 
             //Fix for underwater river carving: Don't carve deeply
-        } else if(height > generator.seaLevel - 15
-                && height - depth < generator.seaLevel - 15) {
-            height = generator.seaLevel - 15;
+        } else if(height > generator.getSeaLevel() - 15
+                && height - depth < generator.getSeaLevel() - 15) {
+            height = generator.getSeaLevel() - 15;
         }
 
-        if(heightAmplifier != 1f && height > generator.seaLevel)
-            height += heightAmplifier * (height - generator.seaLevel);
+        if(heightAmplifier != 1f && height > generator.getSeaLevel())
+            height += heightAmplifier * (height - generator.getSeaLevel());
 
         cache.cacheHeightMap(x, z, height);
         return height;
@@ -226,11 +223,11 @@ public class HeightMap extends InjectableObject {
         });
 
         //7 blocks elevated from the sea level
-        double height = 10 * noise.GetNoise(x, z) + 7 + generator.seaLevel;
+        double height = 10 * noise.GetNoise(x, z) + 7 + generator.getSeaLevel();
 
         //Plateau-out height to make it flat-ish
-        if(height > generator.seaLevel + 10) {
-            height = (height - generator.seaLevel - 10) * 0.1 + generator.seaLevel + 10;
+        if(height > generator.getSeaLevel() + 10) {
+            height = (height - generator.getSeaLevel() - 10) * 0.1 + generator.getSeaLevel() + 10;
         }
 
         //This is fucking nonsense

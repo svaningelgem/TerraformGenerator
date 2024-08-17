@@ -66,39 +66,13 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
         BlockUtils.initBlockUtils();
 
         LanguageManager.init(new File(getDataFolder(), getTConfig().LANGUAGE_FILE));
-
+        new TerraformGeneratorMetricsHandler(this); // bStats
 
         BiomeBank.initSinglesConfig(); //Initiates single biome modes.
 
-        //Initialize chunk cache based on config size
-        TerraformGenerator.CHUNK_CACHE =
-                CacheBuilder.newBuilder()
-                        .maximumSize(defaultConfig.getInt(TConfig.DEVSTUFF_CHUNKCACHE_SIZE)).build(new ChunkCacheLoader());
-
-        //Initialize biome query cache based on config size
-        GenUtils.biomeQueryCache = CacheBuilder.newBuilder()
-                .maximumSize(defaultConfig.getInt(TConfig.DEVSTUFF_CHUNKBIOMES_SIZE))
-                .build(new CacheLoader<>() {
-                    @Override
-                    public @NotNull EnumSet<BiomeBank> load(@NotNull ChunkCache key) {
-                        EnumSet<BiomeBank> banks = EnumSet.noneOf(BiomeBank.class);
-                        int gridX = key.chunkX * 16;
-                        int gridZ = key.chunkZ * 16;
-                        for(int x = gridX; x < gridX + 16; x++) {
-                            for(int z = gridZ; z < gridZ + 16; z++) {
-                                BiomeBank bank = key.tw.getBiomeBank(x, z);
-                                if(!banks.contains(bank)) banks.add(bank);
-                            }
-                        }
-                        return banks;
-                    }
-                });
-
         logger = new TLogger();
         watchdogSuppressant = new TfgWatchdogSuppressant();
-        new TerraformGeneratorMetricsHandler(this); //bStats
 
-        TerraformGenerator.updateSeaLevelFromConfig();
         new TerraformCommandManager(this, "terraform", "terra");
         Bukkit.getPluginManager().registerEvents(this, this);
         Bukkit.getPluginManager().registerEvents(new SchematicListener(), this);
@@ -146,7 +120,7 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
         }
     }
 
-    private TConfig getTConfig() {
+    public TConfig getTConfig() {
         TConfig config = new TConfig();
         try {
             config = config.load(new File(getDataFolder(), "config.yml"));

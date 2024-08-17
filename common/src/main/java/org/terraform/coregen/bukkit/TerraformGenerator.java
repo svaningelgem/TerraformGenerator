@@ -1,5 +1,7 @@
 package org.terraform.coregen.bukkit;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,36 +13,68 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.coregen.ChunkCache;
-import org.terraform.coregen.TerraformPopulator;
+import org.terraform.coregen.ChunkCacheLoader;
 import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.TerraformPopulator;
 import org.terraform.data.DudChunkData;
-import org.terraform.data.SimpleChunkLocation;
 import org.terraform.data.TerraformWorld;
+import org.terraform.main.TLogger;
 import org.terraform.main.TerraformGeneratorPlugin;
 import org.terraform.main.config.TConfig;
 import org.terraform.utils.GenUtils;
+import org.terraform.utils.injection.InjectableObject;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-public class TerraformGenerator extends ChunkGenerator {
-    public final List<SimpleChunkLocation> preWorldInitGen = new ArrayList<>();
-
-    public LoadingCache<ChunkCache, ChunkCache> CHUNK_CACHE;
-    public int seaLevel = 62;
+public class TerraformGenerator extends ChunkGenerator implements InjectableObject {
+    private final LoadingCache<ChunkCache, ChunkCache> CHUNK_CACHE;
+    private final LoadingCache<ChunkCache, EnumSet<BiomeBank>> biomeQueryCache;
 
     private final @NotNull TConfig config;
     private final @NotNull TerraformGeneratorPlugin plugin;
+    private final @NotNull TLogger logger;
+    private final @NotNull HeightMap heightMap;
 
-    //Explode if a read is attempted. Transform Handlers are not supposed to read.
+    // Explode if a read is attempted. Transform Handlers are not supposed to read.
     private final DudChunkData DUD = new DudChunkData();
 
-    public TerraformGenerator( @NotNull TerraformGeneratorPlugin plugin, @NotNull TConfig config) {
-        this.plugin = plugin;
-        this.config = config;
-        seaLevel = config.HEIGHT_MAP_SEA_LEVEL;
+    public TerraformGenerator(@NotNull TerraformGeneratorPlugin plugin) {
+        this(plugin, plugin.getTConfig());
+    }
+
+    public TerraformGenerator(@NotNull TerraformGeneratorPlugin plugin, @NotNull TConfig config) {
+        this.plugin = register(plugin);
+        this.config = register(config);
+        register(this);
+        this.logger = create(TLogger.class);
+        this.heightMap = create(HeightMap.class);
+
+        //Initialize chunk cache based on config size
+        CHUNK_CACHE = CacheBuilder.newBuilder()
+                .maximumSize(config.DEVSTUFF_CHUNKCACHE_SIZE).build(new ChunkCacheLoader());
+
+        //Initialize biome query cache based on config size
+        biomeQueryCache = CacheBuilder.newBuilder()
+                .maximumSize(config.DEVSTUFF_CHUNKBIOMES_SIZE)
+                .build(new CacheLoader<>() {
+                    @Override
+                    public @NotNull EnumSet<BiomeBank> load(@NotNull ChunkCache key) {
+                        EnumSet<BiomeBank> banks = EnumSet.noneOf(BiomeBank.class);
+                        int gridX = key.chunkX * 16;
+                        int gridZ = key.chunkZ * 16;
+                        for(int x = gridX; x < gridX + 16; x++) {
+                            for(int z = gridZ; z < gridZ + 16; z++) {
+                                BiomeBank bank = key.tw.getBiomeBank(x, z);
+                                if(!banks.contains(bank)) banks.add(bank);
+                            }
+                        }
+                        return banks;
+                    }
+                });
     }
 
     /**
@@ -94,7 +128,7 @@ public class TerraformGenerator extends ChunkGenerator {
                 int rawX = chunkX * 16 + x;
                 int rawZ = chunkZ * 16 + z;
 
-                double height = HeightMap.getPreciseHeight(tw, rawX, rawZ); //bank.getHandler().calculateHeight(tw, rawX, rawZ);
+                double height = heightMap.getPreciseHeight(tw, rawX, rawZ); //bank.getHandler().calculateHeight(tw, rawX, rawZ);
                 cache.writeTransformedHeight(x, z, (short) height);
 
                 //Fill stone up to the world height. Differentiate between deepslate or not.
@@ -120,7 +154,7 @@ public class TerraformGenerator extends ChunkGenerator {
                     index++;
                 }
                 //Water for below certain heights
-                for(int y = (int) (height + 1); y <= seaLevel; y++) {
+                for(int y = (int) (height + 1); y <= getSeaLevel(); y++) {
                     chunkData.setBlock(x, y, z, Material.WATER);
                 }
 
@@ -183,7 +217,7 @@ public class TerraformGenerator extends ChunkGenerator {
                 int rawX = chunkX * 16 + x;
                 int rawZ = chunkZ * 16 + z;
 
-                double preciseHeight = HeightMap.getPreciseHeight(tw, rawX, rawZ); //bank.getHandler().calculateHeight(tw, rawX, rawZ);
+                double preciseHeight = heightMap.getPreciseHeight(tw, rawX, rawZ); //bank.getHandler().calculateHeight(tw, rawX, rawZ);
                 cache.writeTransformedHeight(x, z, (short) preciseHeight);
 
                 //Carve caves
@@ -208,7 +242,7 @@ public class TerraformGenerator extends ChunkGenerator {
 
     @Override
     public Location getFixedSpawnLocation(@NotNull World world, @NotNull Random random) {
-        return new Location(world, 0, HeightMap.getBlockHeight(TerraformWorld.get(world), 0, 0), 0);
+        return new Location(world, 0, heightMap.getBlockHeight(TerraformWorld.get(world), 0, 0), 0);
     }
 
     @Override
@@ -248,5 +282,9 @@ public class TerraformGenerator extends ChunkGenerator {
     //This is true as StructureManager is now being overridden.
     public boolean shouldGenerateStructures() {
         return true;
+    }
+
+    public int getSeaLevel() {
+        return config.HEIGHT_MAP_SEA_LEVEL;
     }
 }
