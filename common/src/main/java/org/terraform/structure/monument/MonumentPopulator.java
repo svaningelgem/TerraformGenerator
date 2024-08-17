@@ -316,6 +316,6 @@ public class MonumentPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean(TConfig.Option.STRUCTURES_MONUMENT_ENABLED);
+        return config.getBoolean(TConfig.STRUCTURES_MONUMENT_ENABLED);
     }
 }

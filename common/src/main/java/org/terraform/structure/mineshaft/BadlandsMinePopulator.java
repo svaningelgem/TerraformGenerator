@@ -10,7 +10,7 @@ import org.bukkit.block.data.type.Slab;
 import org.bukkit.block.data.type.Stairs;
 import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.MegaChunk;
@@ -31,7 +31,7 @@ import java.util.EnumSet;
 import java.util.Random;
 
 public class BadlandsMinePopulator extends JigsawStructurePopulator {
-    static final int shaftDepth = config.getInt(TConfig.Option.STRUCTURES_BADLANDS_MINE_DEPTH);
+    static final int shaftDepth = config.getInt(TConfig.STRUCTURES_BADLANDS_MINE_DEPTH);
 
     @Override
     public boolean canSpawn(@NotNull TerraformWorld tw, int chunkX, int chunkZ, BiomeBank biome) {
@@ -65,7 +65,7 @@ public class BadlandsMinePopulator extends JigsawStructurePopulator {
     @Override
     public boolean isEnabled() {
         return BiomeBank.isBiomeEnabled(BiomeBank.BADLANDS_CANYON)
-			   && config.getBoolean(TConfig.Option.STRUCTURES_BADLANDS_MINE_ENABLED);
+			   && config.getBoolean(TConfig.STRUCTURES_BADLANDS_MINE_ENABLED);
     }
 
     @Override

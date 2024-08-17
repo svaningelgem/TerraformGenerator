@@ -9,18 +9,18 @@ import org.terraform.utils.GenUtils;
 public enum CaveClusterRegistry {
 	LUSH(
 			9527213,
-			config.getInt(TConfig.Option.BIOME_CAVE_LUSHCLUSTER_SEPARATION),
-			config.getFloat(TConfig.Option.BIOME_CAVE_LUSHCLUSTER_MAXPERTUB)
+			config.getInt(TConfig.BIOME_CAVE_LUSHCLUSTER_SEPARATION),
+			config.getFloat(TConfig.BIOME_CAVE_LUSHCLUSTER_MAXPERTUB)
 			),
 	DRIPSTONE(
 			5902907,
-			config.getInt(TConfig.Option.BIOME_CAVE_DRIPSTONECLUSTER_SEPARATION),
-			config.getFloat(TConfig.Option.BIOME_CAVE_DRIPSTONECLUSTER_MAXPERTUB)
+			config.getInt(TConfig.BIOME_CAVE_DRIPSTONECLUSTER_SEPARATION),
+			config.getFloat(TConfig.BIOME_CAVE_DRIPSTONECLUSTER_MAXPERTUB)
 			),
 	CRYSTALLINE(
 			4427781,
-			config.getInt(TConfig.Option.BIOME_CAVE_CRYSTALLINECLUSTER_SEPARATION),
-			config.getFloat(TConfig.Option.BIOME_CAVE_CRYSTALLINECLUSTER_MAXPERTUB)
+			config.getInt(TConfig.BIOME_CAVE_CRYSTALLINECLUSTER_SEPARATION),
+			config.getFloat(TConfig.BIOME_CAVE_CRYSTALLINECLUSTER_MAXPERTUB)
 			),
     FLUID(
             79183628,
@@ -42,21 +42,21 @@ public enum CaveClusterRegistry {
         return switch(this) {
             case LUSH -> new LushClusterCavePopulator(
                     GenUtils.randInt(random,
-                            config.getInt(TConfig.Option.BIOME_CAVE_LUSHCLUSTER_MINSIZE),
-                            config.getInt(TConfig.Option.BIOME_CAVE_LUSHCLUSTER_MAXSIZE)),
+                            config.getInt(TConfig.BIOME_CAVE_LUSHCLUSTER_MINSIZE),
+                            config.getInt(TConfig.BIOME_CAVE_LUSHCLUSTER_MAXSIZE)),
                     false);
             case DRIPSTONE -> new DripstoneClusterCavePopulator(
                     GenUtils.randInt(random,
-                            config.getInt(TConfig.Option.BIOME_CAVE_DRIPSTONECLUSTER_MINSIZE),
-                            config.getInt(TConfig.Option.BIOME_CAVE_DRIPSTONECLUSTER_MAXSIZE)));
+                            config.getInt(TConfig.BIOME_CAVE_DRIPSTONECLUSTER_MINSIZE),
+                            config.getInt(TConfig.BIOME_CAVE_DRIPSTONECLUSTER_MAXSIZE)));
             case CRYSTALLINE -> new CrystallineClusterCavePopulator(
                     GenUtils.randInt(random,
-                            config.getInt(TConfig.Option.BIOME_CAVE_CRYSTALLINECLUSTER_MINSIZE),
-                            config.getInt(TConfig.Option.BIOME_CAVE_CRYSTALLINECLUSTER_MAXSIZE)));
+                            config.getInt(TConfig.BIOME_CAVE_CRYSTALLINECLUSTER_MINSIZE),
+                            config.getInt(TConfig.BIOME_CAVE_CRYSTALLINECLUSTER_MAXSIZE)));
             case FLUID -> new CaveFluidClusterPopulator(
                     GenUtils.randInt(random,
-                            config.getInt(TConfig.Option.BIOME_CAVE_CRYSTALLINECLUSTER_MINSIZE),
-                            config.getInt(TConfig.Option.BIOME_CAVE_CRYSTALLINECLUSTER_MAXSIZE)));
+                            config.getInt(TConfig.BIOME_CAVE_CRYSTALLINECLUSTER_MINSIZE),
+                            config.getInt(TConfig.BIOME_CAVE_CRYSTALLINECLUSTER_MAXSIZE)));
         };
 
     }

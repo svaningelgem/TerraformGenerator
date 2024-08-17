@@ -9,7 +9,7 @@ import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeBlender;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.coregen.ChunkCache;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
@@ -27,7 +27,7 @@ import java.util.Random;
 public class GorgeHandler extends BiomeHandler {
     static BiomeBlender biomeBlender;
     static final BiomeHandler plainsHandler = BiomeBank.PLAINS.getHandler();
-    static final boolean slabs = config.getBoolean(TConfig.Option.MISC_USE_SLABS_TO_SMOOTH);
+    static final boolean slabs = config.getBoolean(TConfig.MISC_USE_SLABS_TO_SMOOTH);
 
     @Override
     public boolean isOcean() {

@@ -107,7 +107,7 @@ public class StructureRegistry {
             return queryCache.get(key);
 
         Random structRand = tw.getHashedRand(9, mc.getX(), mc.getZ());
-        int maxStructures = 3; //GenUtils.randInt(structRand, 1, config.getInt(TConfig.Option.ption.STRUCTURES_MEGACHUNK_MAXSTRUCTURES));
+        int maxStructures = 3; //GenUtils.randInt(structRand, 1, config.getInt(TConfig.ption.STRUCTURES_MEGACHUNK_MAXSTRUCTURES));
         SingleMegaChunkStructurePopulator[] pops = new SingleMegaChunkStructurePopulator[maxStructures];
         int size = 0;
 

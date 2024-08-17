@@ -94,7 +94,7 @@ public class StrongholdPopulator extends SingleMegaChunkStructurePopulator {
     @Override
     public void populate(@NotNull TerraformWorld tw, @NotNull PopulatorDataAbstract data) {
         //TerraformGeneratorPlugin.logger.debug("s-populate");
-        if (!config.getBoolean(TConfig.Option.STRUCTURES_STRONGHOLD_ENABLED)) return;
+        if (!config.getBoolean(TConfig.STRUCTURES_STRONGHOLD_ENABLED)) return;
         int[][] positions = strongholdPositions(tw);
         for (int x = data.getChunkX() * 16; x < data.getChunkX() * 16 + 16; x++) {
             for (int z = data.getChunkZ() * 16; z < data.getChunkZ() * 16 + 16; z++) {
@@ -103,12 +103,12 @@ public class StrongholdPopulator extends SingleMegaChunkStructurePopulator {
                         
                     	//Strongholds no longer calculate from the surface.
                     	//Just pick a directly underground location.
-                        int y = GenUtils.randInt(config.getInt(TConfig.Option.STRUCTURES_STRONGHOLD_MIN_Y), config.getInt(TConfig.Option.STRUCTURES_STRONGHOLD_MAX_Y));
+                        int y = GenUtils.randInt(config.getInt(TConfig.STRUCTURES_STRONGHOLD_MIN_Y), config.getInt(TConfig.STRUCTURES_STRONGHOLD_MAX_Y));
                         
                         //Attempt to force strongholds further underground if
                         //they're above the surface.
                         if(y + 18 > GenUtils.getHighestGround(data, x, z)) {
-                        	if(y > config.getInt(TConfig.Option.STRUCTURES_STRONGHOLD_FAILSAFE_Y)) y = config.getInt(TConfig.Option.STRUCTURES_STRONGHOLD_FAILSAFE_Y);
+                        	if(y > config.getInt(TConfig.STRUCTURES_STRONGHOLD_FAILSAFE_Y)) y = config.getInt(TConfig.STRUCTURES_STRONGHOLD_FAILSAFE_Y);
                         }
                         
                         spawnStronghold(tw, this.getHashedRandom(tw, data.getChunkX(), data.getChunkZ()), data, x, y, z);
@@ -221,7 +221,7 @@ public class StrongholdPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean(TConfig.Option.STRUCTURES_STRONGHOLD_ENABLED);
+        return config.getBoolean(TConfig.STRUCTURES_STRONGHOLD_ENABLED);
     }
     
     @Override

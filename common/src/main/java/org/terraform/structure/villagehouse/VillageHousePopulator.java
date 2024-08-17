@@ -2,7 +2,7 @@ package org.terraform.structure.villagehouse;
 
 import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.MegaChunk;
@@ -45,15 +45,15 @@ public class VillageHousePopulator extends SingleMegaChunkStructurePopulator {
                 if (biome == (BiomeBank.DESERT)
                         || biome == (BiomeBank.BADLANDS)
                         || biome == (BiomeBank.ICE_SPIKES)) {
-                    return config.getBoolean(TConfig.Option.STRUCTURES_ANIMALFARM_ENABLED) && rollSpawnRatio(tw,chunkX,chunkZ);
+                    return config.getBoolean(TConfig.STRUCTURES_ANIMALFARM_ENABLED) && rollSpawnRatio(tw,chunkX,chunkZ);
                 } else if (biome == (BiomeBank.SNOWY_TAIGA)
                         || biome == (BiomeBank.SNOWY_WASTELAND)
                         || biome == (BiomeBank.JUNGLE)) {
 
-                    return config.getBoolean(TConfig.Option.STRUCTURES_FARMHOUSE_ENABLED) && rollSpawnRatio(tw,chunkX,chunkZ);
+                    return config.getBoolean(TConfig.STRUCTURES_FARMHOUSE_ENABLED) && rollSpawnRatio(tw,chunkX,chunkZ);
                 }else if (biome == (BiomeBank.ROCKY_MOUNTAINS)) {
 
-                    return config.getBoolean(TConfig.Option.STRUCTURES_MOUNTAINHOUSE_ENABLED) && rollSpawnRatio(tw,chunkX,chunkZ);
+                    return config.getBoolean(TConfig.STRUCTURES_MOUNTAINHOUSE_ENABLED) && rollSpawnRatio(tw,chunkX,chunkZ);
                 }
             }
         }
@@ -71,7 +71,7 @@ public class VillageHousePopulator extends SingleMegaChunkStructurePopulator {
         if (biome == (BiomeBank.DESERT)
                 || biome == (BiomeBank.BADLANDS)
                 || biome == (BiomeBank.ICE_SPIKES)) {
-            if (!config.getBoolean(TConfig.Option.STRUCTURES_ANIMALFARM_ENABLED))
+            if (!config.getBoolean(TConfig.STRUCTURES_ANIMALFARM_ENABLED))
                 return;
 
             new AnimalFarmPopulator().populate(tw, data);
@@ -79,13 +79,13 @@ public class VillageHousePopulator extends SingleMegaChunkStructurePopulator {
                 || biome == (BiomeBank.SNOWY_WASTELAND)
                 || biome == (BiomeBank.JUNGLE)) {
 
-            if (!config.getBoolean(TConfig.Option.STRUCTURES_FARMHOUSE_ENABLED))
+            if (!config.getBoolean(TConfig.STRUCTURES_FARMHOUSE_ENABLED))
                 return;
 
             new FarmhousePopulator().populate(tw, data);
         } else if (biome == (BiomeBank.ROCKY_MOUNTAINS)) {
 
-            if (!config.getBoolean(TConfig.Option.STRUCTURES_MOUNTAINHOUSE_ENABLED))
+            if (!config.getBoolean(TConfig.STRUCTURES_MOUNTAINHOUSE_ENABLED))
                 return;
 
             new MountainhousePopulator().populate(tw, data);
@@ -102,8 +102,8 @@ public class VillageHousePopulator extends SingleMegaChunkStructurePopulator {
         		|| BiomeBank.isBiomeEnabled(BiomeBank.SNOWY_WASTELAND) 
         		|| BiomeBank.isBiomeEnabled(BiomeBank.JUNGLE) 
         		|| BiomeBank.isBiomeEnabled(BiomeBank.ROCKY_MOUNTAINS) )
-        		&& (config.getBoolean(TConfig.Option.STRUCTURES_ANIMALFARM_ENABLED)
-					|| config.getBoolean(TConfig.Option.STRUCTURES_FARMHOUSE_ENABLED)
-					|| config.getBoolean(TConfig.Option.STRUCTURES_MOUNTAINHOUSE_ENABLED));
+        		&& (config.getBoolean(TConfig.STRUCTURES_ANIMALFARM_ENABLED)
+					|| config.getBoolean(TConfig.STRUCTURES_FARMHOUSE_ENABLED)
+					|| config.getBoolean(TConfig.STRUCTURES_MOUNTAINHOUSE_ENABLED));
     }
 }

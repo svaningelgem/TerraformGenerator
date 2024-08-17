@@ -48,7 +48,7 @@ public class WarmOceanAltarRoom extends WarmOceanBaseRoom{
                     new ChestBuilder(Material.CHEST)
                             .setFacing(w.getDirection())
                             .setLootTable(TerraLootTable.UNDERWATER_RUIN_SMALL)
-                            .setWaterlogged(w.getUp().getY() <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL))
+                            .setWaterlogged(w.getUp().getY() <= config.getInt(TConfig.HEIGHT_MAP_SEA_LEVEL))
                             .apply(w.getFront().getRight().getUp());
                 w = w.getLeft().getGround();
             }

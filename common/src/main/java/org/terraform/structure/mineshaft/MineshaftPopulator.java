@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeType;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.TerraformGeneratorPlugin;
@@ -62,7 +62,7 @@ public class MineshaftPopulator extends JigsawStructurePopulator {
         int y;
         if(!badlandsMineshaft)
         {
-            y = GenUtils.randInt(config.getInt(TConfig.Option.STRUCTURES_MINESHAFT_MIN_Y), config.getInt(TConfig.Option.STRUCTURES_MINESHAFT_MAX_Y));
+            y = GenUtils.randInt(config.getInt(TConfig.STRUCTURES_MINESHAFT_MIN_Y), config.getInt(TConfig.STRUCTURES_MINESHAFT_MAX_Y));
             if(y < TerraformGeneratorPlugin.injector.getMinY())
                 y = TerraformGeneratorPlugin.injector.getMinY() + 15;
         }
@@ -157,7 +157,7 @@ public class MineshaftPopulator extends JigsawStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean(TConfig.Option.STRUCTURES_MINESHAFT_ENABLED);
+        return config.getBoolean(TConfig.STRUCTURES_MINESHAFT_ENABLED);
     }
     
     @Override

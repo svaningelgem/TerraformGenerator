@@ -1,7 +1,9 @@
-package org.terraform.coregen;
+package org.terraform.coregen.heights;
 
+import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeSection;
+import org.terraform.coregen.ChunkCache;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.TerraformWorld;
@@ -19,11 +21,11 @@ public enum HeightMap {
      */
     RIVER {
         @Override
-        public double getHeight(TerraformWorld tw, int x, int z) {
+        public double getHeight(@NotNull TConfig config, TerraformWorld tw, int x, int z) {
             FastNoise noise = NoiseCacheHandler.getNoise(tw, NoiseCacheEntry.HEIGHTMAP_RIVER, world -> {
                 FastNoise n = new FastNoise((int) world.getSeed());
                 n.SetNoiseType(NoiseType.PerlinFractal);
-                n.SetFrequency(config.getFloat(TConfig.Option.HEIGHT_MAP_RIVER_FREQUENCY));
+                n.SetFrequency(config.HEIGHT_MAP_RIVER_FREQUENCY);
                 n.SetFractalOctaves(5);
                 return n;
             });
@@ -32,12 +34,12 @@ public enum HeightMap {
     },
     CORE {
         @Override
-        public double getHeight(TerraformWorld tw, int x, int z) {
+        public double getHeight(@NotNull TConfig config, TerraformWorld tw, int x, int z) {
             FastNoise noise = NoiseCacheHandler.getNoise(tw, NoiseCacheEntry.HEIGHTMAP_CORE, world -> {
                 FastNoise n = new FastNoise((int) world.getSeed());
                 n.SetNoiseType(NoiseType.SimplexFractal);
                 n.SetFractalOctaves(2); //Poor detail after blurs. Rely on Attrition for detail
-                n.SetFrequency(config.getFloat(TConfig.Option.HEIGHT_MAP_CORE_FREQUENCY));
+                n.SetFrequency(config.HEIGHT_MAP_CORE_FREQUENCY);
                 return n;
             });
 
@@ -56,7 +58,7 @@ public enum HeightMap {
     },
     ATTRITION {
         @Override
-        public double getHeight(TerraformWorld tw, int x, int z) {
+        public double getHeight(@NotNull TConfig config, TerraformWorld tw, int x, int z) {
             FastNoise perlin = NoiseCacheHandler.getNoise(tw, NoiseCacheEntry.HEIGHTMAP_ATTRITION, world -> {
                 FastNoise n = new FastNoise((int) world.getSeed()+113);
                 n.SetNoiseType(NoiseType.PerlinFractal);
@@ -71,7 +73,7 @@ public enum HeightMap {
     };
 
     public static final int defaultSeaLevel = 62;
-    public static final float heightAmplifier = config.getFloat(TConfig.Option.HEIGHT_MAP_LAND_HEIGHT_AMPLIFIER);
+    public static final float heightAmplifier = config.getFloat(TConfig.HEIGHT_MAP_LAND_HEIGHT_AMPLIFIER);
 
     /**
      * Returns the average increase or decrease in height for surrounding blocks compared to the provided height at those coords.
@@ -244,5 +246,5 @@ public enum HeightMap {
         return (int) getPreciseHeight(tw, x, z);
     }
 
-    public abstract double getHeight(TerraformWorld tw, int x, int z);
+    public abstract double getHeight(@NotNull TConfig config, TerraformWorld tw, int x, int z);
 }

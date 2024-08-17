@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.flat.JungleHandler;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
@@ -133,7 +133,7 @@ public class ForestedMountainsHandler extends AbstractMountainHandler {
 
         SimpleLocation[] bigTrees = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 20);
         
-        if(config.getBoolean(TConfig.Option.TREES_JUNGLE_BIG_ENABLED))
+        if(config.getBoolean(TConfig.TREES_JUNGLE_BIG_ENABLED))
 	        for (SimpleLocation sLoc : bigTrees) {
 	            int treeY = GenUtils.getHighestGround(data, sLoc.getX(),sLoc.getZ());
 	            sLoc.setY(treeY);

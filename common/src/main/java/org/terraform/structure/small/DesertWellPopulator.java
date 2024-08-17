@@ -112,7 +112,7 @@ public class DesertWellPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public int[][] getCoordsFromMegaChunk(@NotNull TerraformWorld tw, @NotNull MegaChunk mc) {
-        int num = config.getInt(TConfig.Option.STRUCTURES_DESERTWELL_COUNT_PER_MEGACHUNK);
+        int num = config.getInt(TConfig.STRUCTURES_DESERTWELL_COUNT_PER_MEGACHUNK);
         int[][] coords = new int[num][2];
         for (int i = 0; i < num; i++)
             coords[i] = mc.getRandomCoords(tw.getHashedRand(mc.getX(), mc.getZ(), 819227*(1+i)));
@@ -141,9 +141,9 @@ public class DesertWellPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean(TConfig.Option.STRUCTURES_DESERTWELL_ENABLED)
-			   && (config.getInt(TConfig.Option.BIOME_DESERT_WEIGHT) > 0 ||
-				   config.getInt(TConfig.Option.BIOME_BADLANDS_WEIGHT) > 0);
+        return config.getBoolean(TConfig.STRUCTURES_DESERTWELL_ENABLED)
+			   && (config.getInt(TConfig.BIOME_DESERT_WEIGHT) > 0 ||
+				   config.getInt(TConfig.BIOME_BADLANDS_WEIGHT) > 0);
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_20_R1.block.CraftBlock;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.data.TerraformWorld;
 
 import com.mojang.serialization.Codec;
@@ -58,7 +58,7 @@ public class MapRenderWorldProviderBiome extends WorldChunkManager {
         //This will return river or plains depending on whether or not
         //the area is submerged.
 
-        return HeightMap.getBlockHeight(tw, x,z) <= config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL) ?
+        return HeightMap.getBlockHeight(tw, x,z) <= config.getInt(TConfig.HEIGHT_MAP_SEA_LEVEL) ?
                 river : plains;
 	}
 

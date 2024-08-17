@@ -80,7 +80,7 @@ public class SavannaHandler extends BiomeHandler {
 		//large trees
         SimpleLocation[] trees = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 112, 0.6f);
         
-        if(config.getBoolean(TConfig.Option.TREES_SAVANNA_BIG_ENABLED))
+        if(config.getBoolean(TConfig.TREES_SAVANNA_BIG_ENABLED))
 	        for (SimpleLocation sLoc : trees) {
 	            int treeY = GenUtils.getHighestGround(data, sLoc.getX(),sLoc.getZ());
 	            sLoc.setY(treeY);

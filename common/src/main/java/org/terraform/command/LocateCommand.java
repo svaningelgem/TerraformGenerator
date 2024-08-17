@@ -17,6 +17,7 @@ import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.LangOpt;
+import org.terraform.main.LanguageManager;
 import org.terraform.main.TerraformGeneratorPlugin;
 import org.terraform.structure.MultiMegaChunkStructurePopulator;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
@@ -42,7 +43,7 @@ public class LocateCommand extends TerraCommand implements Listener {
     public void onLocateCommand(@NotNull PlayerCommandPreprocessEvent event) {
         if (event.getPlayer().getWorld().getGenerator() instanceof TerraformGenerator) {
             if (event.getMessage().startsWith("/locate")) {
-                event.getPlayer().sendMessage(LangOpt.COMMAND_LOCATE_NOVANILLA.parse());
+                event.getPlayer().sendMessage(LanguageManager.translate("command.locate.novanilla"));
                 event.getPlayer().sendMessage("");
             }
         }
@@ -68,28 +69,28 @@ public class LocateCommand extends TerraCommand implements Listener {
             throws InvalidArgumentException {
         ArrayList<Object> params = this.parseArguments(sender, args);
         if (params.isEmpty()) {
-            sender.sendMessage(LangOpt.COMMAND_LOCATE_LIST_HEADER.parse());
+            sender.sendMessage(LanguageManager.translate("command.locate.list.header"));
             for (StructurePopulator spop : StructureRegistry.getAllPopulators()) {
-                sender.sendMessage(LangOpt.COMMAND_LOCATE_LIST_ENTRY.parse("%entry%", spop.getClass().getSimpleName().replace("Populator", "")));
+                sender.sendMessage(LanguageManager.parse("command.locate.list.entry", "%entry%", spop.getClass().getSimpleName().replace("Populator", "")));
             }
-            sender.sendMessage(LangOpt.COMMAND_LOCATE_LIST_ENTRY.parse("%entry%", "Stronghold"));
+            sender.sendMessage(LanguageManager.parse("command.locate.list.entry", "%entry%", "Stronghold"));
             return;
         }
         if (!(sender instanceof Player p)) {
-            sender.sendMessage(LangOpt.fetchLang("permissions.console-cannot-exec"));
+            sender.sendMessage(LanguageManager.translate("permissions.console-cannot-exec"));
             return;
         }
         StructurePopulator spop = (StructurePopulator) params.get(0); //TODO: Get populator by name
 
         if (!spop.isEnabled() && !(spop instanceof StrongholdPopulator)) {
-            p.sendMessage(LangOpt.COMMAND_LOCATE_STRUCTURE_NOT_ENABLED.parse());
+            p.sendMessage(LanguageManager.translate("command.locate.structure.not.enabled"));
             return;
         }
         
         //Stronghold Special Case
         if (spop instanceof StrongholdPopulator) {
             int[] coords = ((StrongholdPopulator)spop).getNearestFeature(TerraformWorld.get(p.getWorld()), p.getLocation().getBlockX(), p.getLocation().getBlockZ());
-            syncSendMessage(p.getUniqueId(), LangOpt.COMMAND_LOCATE_LOCATE_COORDS.parse("%x%", coords[0] + "", "%z%", coords[1] + ""));
+            syncSendMessage(p.getUniqueId(), LanguageManager.parse("command.locate.locate.coords", "%x%", coords[0], "%z%", coords[1]));
             return;
         }
 
@@ -107,7 +108,7 @@ public class LocateCommand extends TerraCommand implements Listener {
                 p.getLocation().getBlockY(),
                 p.getLocation().getBlockZ());
         TerraformWorld tw = TerraformWorld.get(p.getWorld());
-        p.sendMessage(LangOpt.COMMAND_LOCATE_SEARCHING.parse());
+        p.sendMessage(LanguageManager.translate("command.locate.searching"));
         UUID uuid = p.getUniqueId();
         
         long startTime = System.currentTimeMillis();
@@ -117,11 +118,11 @@ public class LocateCommand extends TerraCommand implements Listener {
             	int[] loc = StructureLocator.locateMultiMegaChunkStructure(tw, center, populator, -1);
             	long timeTaken = System.currentTimeMillis() - startTime;
             	
-                syncSendMessage(uuid, LangOpt.COMMAND_LOCATE_COMPLETED_TASK.parse("%time%", timeTaken + ""));
+                syncSendMessage(uuid, LanguageManager.parse("command.locate.completed.task", "%time%", timeTaken));
 
                 if (loc != null)
-                    syncSendMessage(uuid, ChatColor.GREEN + "[" + populator.getClass().getSimpleName() + "] " + LangOpt.COMMAND_LOCATE_LOCATE_COORDS.parse("%x%", loc[0] + "",
-                            "%z%", loc[1] + ""));
+                    syncSendMessage(uuid, ChatColor.GREEN + "[" + populator.getClass().getSimpleName() + "] " + LanguageManager.parse("command.locate.locate.coords", "%x%", loc[0],
+                            "%z%", loc[1]));
                 else
                     syncSendMessage(uuid, ChatColor.RED + "Failed to find structure. Somehow.");
             }
@@ -136,7 +137,7 @@ public class LocateCommand extends TerraCommand implements Listener {
                 p.getLocation().getBlockY(),
                 p.getLocation().getBlockZ());
         TerraformWorld tw = TerraformWorld.get(p.getWorld());
-        p.sendMessage(LangOpt.COMMAND_LOCATE_SEARCHING.parse());
+        p.sendMessage(LanguageManager.translate("command.locate.searching"));
         UUID uuid = p.getUniqueId();
 
 
@@ -147,11 +148,11 @@ public class LocateCommand extends TerraCommand implements Listener {
             	int[] loc = StructureLocator.locateSingleMegaChunkStructure(tw, center, populator, -1);
             	long timeTaken = System.currentTimeMillis() - startTime;
             	
-                syncSendMessage(uuid, LangOpt.COMMAND_LOCATE_COMPLETED_TASK.parse("%time%", timeTaken + ""));
+                syncSendMessage(uuid, LanguageManager.parse("command.locate.completed.task", "%time%", timeTaken));
 
                 if (loc != null)
-                    syncSendMessage(uuid, ChatColor.GREEN + "[" + populator.getClass().getSimpleName() + "] " + LangOpt.COMMAND_LOCATE_LOCATE_COORDS.parse("%x%", loc[0] + "",
-                            "%z%", loc[1] + ""));
+                    syncSendMessage(uuid, ChatColor.GREEN + "[" + populator.getClass().getSimpleName() + "] " + LanguageManager.parse("command.locate.locate.coords", "%x%", loc[0],
+                            "%z%", loc[1]));
                 else
                     syncSendMessage(uuid, ChatColor.RED + "Failed to find structure. Somehow.");
             }

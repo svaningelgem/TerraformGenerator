@@ -9,7 +9,7 @@ import org.terraform.utils.GenUtils;
 import java.util.Random;
 
 public class MegaChunk {
-	public static final int megaChunkBlockWidth = BiomeSection.sectionWidth* config.getInt(TConfig.Option.STRUCTURES_MEGACHUNK_NUMBIOMESECTIONS);
+	public static final int megaChunkBlockWidth = BiomeSection.sectionWidth* config.getInt(TConfig.STRUCTURES_MEGACHUNK_NUMBIOMESECTIONS);
     private int x, z;
 
     public MegaChunk(@NotNull SimpleChunkLocation sLoc) {

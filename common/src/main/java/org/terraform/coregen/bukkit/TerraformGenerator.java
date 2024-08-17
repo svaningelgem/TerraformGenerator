@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.coregen.ChunkCache;
-import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.TerraformPopulator;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.data.DudChunkData;
 import org.terraform.data.SimpleChunkLocation;
 import org.terraform.data.TerraformWorld;
@@ -26,34 +26,43 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 public class TerraformGenerator extends ChunkGenerator {
-    public static final List<SimpleChunkLocation> preWorldInitGen = new ArrayList<>();
+    public final List<SimpleChunkLocation> preWorldInitGen = new ArrayList<>();
 
-    public static LoadingCache<ChunkCache, ChunkCache> CHUNK_CACHE;
-    public static int seaLevel = 62;
+    public LoadingCache<ChunkCache, ChunkCache> CHUNK_CACHE;
+    public int seaLevel = 62;
 
-    public static void updateSeaLevelFromConfig() {
-        seaLevel = config.getInt(TConfig.Option.HEIGHT_MAP_SEA_LEVEL);
+    private final @NotNull TConfig config;
+    private final @NotNull TerraformGeneratorPlugin plugin;
+
+    //Explode if a read is attempted. Transform Handlers are not supposed to read.
+    private final DudChunkData DUD = new DudChunkData();
+
+    public TerraformGenerator( @NotNull TerraformGeneratorPlugin plugin, @NotNull TConfig config) {
+        this.plugin = plugin;
+        this.config = config;
+        seaLevel = config.HEIGHT_MAP_SEA_LEVEL;
     }
 
     /**
      * Refers to raw X and raw Z (block coords). NOT chunk coords.
      */
-    public static @NotNull ChunkCache getCache(TerraformWorld tw, int x, int z) {
+    public @NotNull ChunkCache getCache(TerraformWorld tw, int x, int z) {
         ChunkCache cache = new ChunkCache(tw, x, 0, z);
-		//Note how it DOES NOT initInternalCache here
+        //Note how it DOES NOT initInternalCache here
         //Cos this is the damn key
         //Don't fucking run calculations here
         try {
-			return CHUNK_CACHE.get(cache);
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-			e.getCause().printStackTrace();
-			cache.initInternalCache();
-			return cache;
-		}
+            return CHUNK_CACHE.get(cache);
+        } catch(ExecutionException e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+            cache.initInternalCache();
+            return cache;
+        }
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean isParallelCapable() {
         return true;
     }
@@ -64,7 +73,7 @@ public class TerraformGenerator extends ChunkGenerator {
      * bother splitting it up.
      * <br>
      * It was originally split into 4 phases for readability's sake,
-     * but there's really no point - its faster to iterate x/z ONCE here,
+     * but there's really no point - it's faster to iterate x/z ONCE here,
      * and avoid all the cache and other nonsense issues.
      * <br>
      * It's that or throw ChunkCaches into ConcurrentHashMaps and
@@ -74,23 +83,22 @@ public class TerraformGenerator extends ChunkGenerator {
     public void generateNoise(@NotNull WorldInfo worldInfo, @NotNull Random dontCareRandom, int chunkX, int chunkZ, @NotNull ChunkData chunkData) {
         TerraformGeneratorPlugin.watchdogSuppressant.tickWatchdog();
 
-        TerraformWorld tw = TerraformWorld.get(worldInfo.getName(),worldInfo.getSeed());
-        ChunkCache cache = getCache(tw, chunkX*16,chunkZ*16);
+        TerraformWorld tw = TerraformWorld.get(worldInfo.getName(), worldInfo.getSeed());
+        ChunkCache cache = getCache(tw, chunkX * 16, chunkZ * 16);
 
         //For transformation ONLY
         Random transformRandom = tw.getHashedRand(chunkX, chunkZ, 31278);
 
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
+        for(int x = 0; x < 16; x++) {
+            for(int z = 0; z < 16; z++) {
                 int rawX = chunkX * 16 + x;
                 int rawZ = chunkZ * 16 + z;
 
                 double height = HeightMap.getPreciseHeight(tw, rawX, rawZ); //bank.getHandler().calculateHeight(tw, rawX, rawZ);
-                cache.writeTransformedHeight(x,z, (short) height);
+                cache.writeTransformedHeight(x, z, (short) height);
 
                 //Fill stone up to the world height. Differentiate between deepslate or not.
-                for(int y = (int) height; y >= TerraformGeneratorPlugin.injector.getMinY(); y--)
-                {
+                for(int y = (int) height; y >= TerraformGeneratorPlugin.injector.getMinY(); y--) {
                     Material stoneType = Material.STONE;
                     if(y < 0)
                         stoneType = Material.DEEPSLATE;
@@ -98,7 +106,7 @@ public class TerraformGenerator extends ChunkGenerator {
                         stoneType = GenUtils.randMaterial(Material.DEEPSLATE, Material.STONE);
 
                     //Set stone if a cave CANNOT be carved here
-                    if(!tw.noiseCaveRegistry.canNoiseCarve(rawX,y,rawZ,height))
+                    if(!tw.noiseCaveRegistry.canNoiseCarve(rawX, y, rawZ, height))
                         chunkData.setBlock(x, y, z, stoneType);
 
                 }
@@ -107,42 +115,39 @@ public class TerraformGenerator extends ChunkGenerator {
                 BiomeBank bank = tw.getBiomeBank(rawX, (int) height, rawZ);
                 int index = 0;
                 Material[] crust = bank.getHandler().getSurfaceCrust(dontCareRandom);
-                while (index < crust.length) {
-                    chunkData.setBlock(x, (int) (height-index), z, crust[index]);
+                while(index < crust.length) {
+                    chunkData.setBlock(x, (int) (height - index), z, crust[index]);
                     index++;
                 }
                 //Water for below certain heights
-                for(int y = (int) (height+1); y <= seaLevel; y++)
-                {
-                    chunkData.setBlock(x,y,z,Material.WATER);
+                for(int y = (int) (height + 1); y <= seaLevel; y++) {
+                    chunkData.setBlock(x, y, z, Material.WATER);
                 }
 
                 //Carve caves HERE.
                 boolean mustUpdateHeight = true;
-                for(int y = (int) height; y > TerraformGeneratorPlugin.injector.getMinY(); y--)
-                {
-                    if(tw.noiseCaveRegistry.canGenerateCarve(rawX,y,rawZ,height)
-                            || !chunkData.getType(x,y,z).isSolid())
-                    {
+                for(int y = (int) height; y > TerraformGeneratorPlugin.injector.getMinY(); y--) {
+                    if(tw.noiseCaveRegistry.canGenerateCarve(rawX, y, rawZ, height)
+                            || !chunkData.getType(x, y, z).isSolid()) {
                         chunkData.setBlock(x, y, z, Material.CAVE_AIR);
                         if(mustUpdateHeight)
-                            cache.writeTransformedHeight (x,z, (short) (y-1));
-                    }else mustUpdateHeight = false;
+                            cache.writeTransformedHeight(x, z, (short) (y - 1));
+                    } else mustUpdateHeight = false;
                 }
 
                 //Transform height AFTER sea level is written.
                 //Transformed below-sea areas are not supposed to be water.
                 BiomeHandler transformHandler = bank.getHandler().getTransformHandler();
                 if(transformHandler != null)
-                    transformHandler.transformTerrain(cache, tw, transformRandom, chunkData, x, z,chunkX, chunkZ);
+                    transformHandler.transformTerrain(cache, tw, transformRandom, chunkData, x, z, chunkX, chunkZ);
 
                 //After this whole song and dance, place bedrock
                 chunkData.setBlock(x, TerraformGeneratorPlugin.injector.getMinY(), z, Material.BEDROCK);
 
                 //Up till y = minY+HEIGHT_MAP_BEDROCK_HEIGHT
-                for(int i = 1; i < config.getInt(TConfig.Option.HEIGHT_MAP_BEDROCK_HEIGHT); i++) {
-                    if(GenUtils.chance(dontCareRandom, config.getInt(TConfig.Option.HEIGHT_MAP_BEDROCK_DENSITY), 100))
-                        chunkData.setBlock(x, TerraformGeneratorPlugin.injector.getMinY()+i, z, Material.BEDROCK);
+                for(int i = 1; i < config.HEIGHT_MAP_BEDROCK_HEIGHT; i++) {
+                    if(GenUtils.chance(dontCareRandom, config.HEIGHT_MAP_BEDROCK_DENSITY, 100))
+                        chunkData.setBlock(x, TerraformGeneratorPlugin.injector.getMinY() + i, z, Material.BEDROCK);
                     else
                         break;
                 }
@@ -166,40 +171,37 @@ public class TerraformGenerator extends ChunkGenerator {
 
     }
 
-    //Explode if a read is attempted. Transform Handlers are not supposed to read.
-    private static final DudChunkData DUD = new DudChunkData();
-
     //This method ONLY fills transformedHeight with meaningful values,
     // and writes nothing.
-    public static void buildFilledCache(@NotNull TerraformWorld tw, int chunkX, int chunkZ, @NotNull ChunkCache cache){
+    public void buildFilledCache(@NotNull TerraformWorld tw, int chunkX, int chunkZ, @NotNull ChunkCache cache) {
         //TerraformGeneratorPlugin.watchdogSuppressant.tickWatchdog(); don't unnecessarily tick this shit
 
         //Ensure that this shit is the same as the one in generateSurface
         Random random = tw.getHashedRand(chunkX, chunkZ, 31278);
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
+        for(int x = 0; x < 16; x++) {
+            for(int z = 0; z < 16; z++) {
                 int rawX = chunkX * 16 + x;
                 int rawZ = chunkZ * 16 + z;
 
                 double preciseHeight = HeightMap.getPreciseHeight(tw, rawX, rawZ); //bank.getHandler().calculateHeight(tw, rawX, rawZ);
-                cache.writeTransformedHeight(x,z, (short) preciseHeight);
+                cache.writeTransformedHeight(x, z, (short) preciseHeight);
 
                 //Carve caves
                 for(int y = (int) preciseHeight; y >= TerraformGeneratorPlugin.injector.getMinY(); y--)
                     //Set stone if a cave CANNOT be carved here
                     //Check canNoiseCarve because carver caves may expose
                     //noise caves below, which contribute to height changes
-                    if(tw.noiseCaveRegistry.canGenerateCarve(rawX,y,rawZ,preciseHeight)
-                       || tw.noiseCaveRegistry.canNoiseCarve(rawX,y,rawZ,preciseHeight))
-                        cache.writeTransformedHeight(x,z, (short) (y-1));
+                    if(tw.noiseCaveRegistry.canGenerateCarve(rawX, y, rawZ, preciseHeight)
+                            || tw.noiseCaveRegistry.canNoiseCarve(rawX, y, rawZ, preciseHeight))
+                        cache.writeTransformedHeight(x, z, (short) (y - 1));
                     else break;
 
                 //Apply biome transforms to get real height
-                BiomeBank bank = tw.getBiomeBank(rawX, (int) preciseHeight,rawZ);
+                BiomeBank bank = tw.getBiomeBank(rawX, (int) preciseHeight, rawZ);
                 BiomeHandler transformHandler = bank.getHandler().getTransformHandler();
 
                 if(transformHandler != null)
-                    transformHandler.transformTerrain(cache, tw, random, DUD, x, z,chunkX, chunkZ);
+                    transformHandler.transformTerrain(cache, tw, random, DUD, x, z, chunkX, chunkZ);
             }
         }
     }
@@ -212,7 +214,7 @@ public class TerraformGenerator extends ChunkGenerator {
     @Override
     public @NotNull List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
         TerraformWorld tw = TerraformWorld.get(world);
-        return new ArrayList<>(){{
+        return new ArrayList<>() {{
             add(new TerraformPopulator(tw));
             add(new TerraformBukkitBlockPopulator(tw));
         }};

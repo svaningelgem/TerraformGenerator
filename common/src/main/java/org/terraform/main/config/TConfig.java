@@ -2,13 +2,16 @@ package org.terraform.main.config;
 
 import org.avarion.yaml.YamlFileInterface;
 import org.avarion.yaml.YamlKey;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
 
 @SuppressWarnings("unused") // TODO: remove when done
 public class TConfig extends YamlFileInterface {
     @YamlKey("heightmap.core-frequency")
-    public double HEIGHT_MAP_CORE_FREQUENCY = 0.003d;
+    public float HEIGHT_MAP_CORE_FREQUENCY = 0.003f;
     @YamlKey("heightmap.river-frequency")
-    public double HEIGHT_MAP_RIVER_FREQUENCY = 0.005d;
+    public float HEIGHT_MAP_RIVER_FREQUENCY = 0.005f;
     @YamlKey("heightmap.land-height-amplifier")
     public double HEIGHT_MAP_LAND_HEIGHT_AMPLIFIER = 1d;
     @YamlKey("heightmap.sea-level")
@@ -879,6 +882,11 @@ public class TConfig extends YamlFileInterface {
     public int ORE_DEEPSLATE_MAXSPAWNHEIGHT = 15;
     @YamlKey("ore.deepslate.min-spawn-height")
     public int ORE_DEEPSLATE_MINSPAWNHEIGHT = 0;
+
+    // Others
+    @YamlKey("lang")
+    public String LANGUAGE_FILE = "eng.yml";
+
 //
 //    private final Map<Option, Object> values = new EnumMap<>(Option.class);
 //

@@ -3,7 +3,7 @@ package org.terraform.tree;
 import org.bukkit.Material;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
@@ -121,7 +121,7 @@ public class NewFractalTreeBuilder implements Cloneable {
 
     public boolean checkGradient(PopulatorDataAbstract data, int x, int z) {
         return !checkGradient || (HeightMap.getTrueHeightGradient(data, x, z, 3)
-								  <= config.getDouble(TConfig.Option.MISC_TREES_GRADIENT_LIMIT));
+								  <= config.getDouble(TConfig.MISC_TREES_GRADIENT_LIMIT));
     }
 
     public @NotNull NewFractalTreeBuilder setCheckGradient(boolean checkGradient)

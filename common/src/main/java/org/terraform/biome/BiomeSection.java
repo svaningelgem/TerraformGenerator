@@ -19,7 +19,7 @@ public class BiomeSection {
 	private final int x;
     private final int z;
 	// A BiomeSection is 128 blocks wide (Default of bitshift 7).
-	public static final int bitshifts = config.getInt(TConfig.Option.BIOME_SECTION_BITSHIFTS);
+	public static final int bitshifts = config.getInt(TConfig.BIOME_SECTION_BITSHIFTS);
 	private final TerraformWorld tw;
 	public static final int sectionWidth = (int) (1 << bitshifts);
 	public static final int minSize = sectionWidth;
@@ -194,7 +194,7 @@ public class BiomeSection {
 	
 	public static @NotNull BiomeSection getMostDominantSection(@NotNull TerraformWorld tw, int x, int z) {
 
-        double dither = config.getDouble(TConfig.Option.BIOME_DITHER);
+        double dither = config.getDouble(TConfig.BIOME_DITHER);
     	Random locationBasedRandom  = new Random(Objects.hash(tw.getSeed(),x,z));
     	SimpleLocation target  = new SimpleLocation(x,0,z);
     	BiomeSection homeSection = BiomeBank.getBiomeSectionFromBlockCoords(tw, x,z);

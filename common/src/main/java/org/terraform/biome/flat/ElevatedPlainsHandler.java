@@ -8,7 +8,7 @@ import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeBlender;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.coregen.ChunkCache;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
@@ -42,7 +42,7 @@ public class ElevatedPlainsHandler extends BiomeHandler {
     @Override
     public void populateSmallItems(TerraformWorld world, @NotNull Random random, int rawX, int surfaceY, int rawZ, @NotNull PopulatorDataAbstract data) {
         boolean gradient = HeightMap.getTrueHeightGradient(data, rawX, rawZ, 3)
-						   <= config.getDouble(TConfig.Option.MISC_TREES_GRADIENT_LIMIT);
+						   <= config.getDouble(TConfig.MISC_TREES_GRADIENT_LIMIT);
         if(gradient) {
             data.setType(rawX, surfaceY, rawZ, Material.GRASS_BLOCK);
             if(random.nextBoolean())

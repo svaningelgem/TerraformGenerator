@@ -3,7 +3,7 @@ package org.terraform.biome.beach;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeBank;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.TerraformWorld;
@@ -19,8 +19,8 @@ import java.util.Random;
  * This class contains functions for oases, it's not a biome handler.
  */
 public class OasisBeach {
-    public static final double oasisThreshold = (2 - config.getDouble(TConfig.Option.BIOME_OASIS_COMMONNESS)) * 0.31;
-    private static final float oasisFrequency = config.getFloat(TConfig.Option.BIOME_OASIS_FREQUENCY);
+    public static final double oasisThreshold = (2 - config.getDouble(TConfig.BIOME_OASIS_COMMONNESS)) * 0.31;
+    private static final float oasisFrequency = config.getFloat(TConfig.BIOME_OASIS_FREQUENCY);
 
     public static float getOasisNoise(TerraformWorld world, int x, int z) {
         FastNoise lushRiversNoise = NoiseCacheHandler.getNoise(

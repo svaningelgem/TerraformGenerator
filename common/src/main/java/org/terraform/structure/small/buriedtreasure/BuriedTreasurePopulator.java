@@ -23,7 +23,7 @@ public class BuriedTreasurePopulator extends MultiMegaChunkStructurePopulator{
 	@Override
 	public void populate(@NotNull TerraformWorld tw, @NotNull PopulatorDataAbstract data) {
 	
-		if (!config.getBoolean(TConfig.Option.STRUCTURES_BURIEDTREASURE_ENABLED))
+		if (!config.getBoolean(TConfig.STRUCTURES_BURIEDTREASURE_ENABLED))
 		    return;
 		Random random = this.getHashedRandom(tw, data.getChunkX(), data.getChunkZ());
 		MegaChunk mc = new MegaChunk(data.getChunkX(), data.getChunkZ());
@@ -46,7 +46,7 @@ public class BuriedTreasurePopulator extends MultiMegaChunkStructurePopulator{
 	
 	@Override
 	public int[][] getCoordsFromMegaChunk(@NotNull TerraformWorld tw, @NotNull MegaChunk mc) {
-		int num = config.getInt(TConfig.Option.STRUCTURES_BURIEDTREASURE_COUNT_PER_MEGACHUNK);
+		int num = config.getInt(TConfig.STRUCTURES_BURIEDTREASURE_COUNT_PER_MEGACHUNK);
 		int[][] coords = new int[num][2];
 		for (int i = 0; i < num; i++)
 		    coords[i] = mc.getRandomCoords(tw.getHashedRand(mc.getX(), mc.getZ(), 87464*(1+i)));
@@ -105,7 +105,7 @@ public class BuriedTreasurePopulator extends MultiMegaChunkStructurePopulator{
 	
 	@Override
 	public boolean isEnabled() {
-		return config.getBoolean(TConfig.Option.STRUCTURES_BURIEDTREASURE_ENABLED);
+		return config.getBoolean(TConfig.STRUCTURES_BURIEDTREASURE_ENABLED);
 	}
 	
 	@Override

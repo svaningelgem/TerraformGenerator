@@ -14,6 +14,7 @@ import org.terraform.command.contants.TerraCommandArgument;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.LangOpt;
+import org.terraform.main.LanguageManager;
 import org.terraform.main.TerraformGeneratorPlugin;
 import org.terraform.structure.MultiMegaChunkStructurePopulator;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
@@ -55,18 +56,18 @@ public class SeekCommand extends TerraCommand implements Listener {
             throws InvalidArgumentException {
         ArrayList<Object> params = this.parseArguments(sender, args);
         if (params.isEmpty()) {
-            sender.sendMessage(LangOpt.COMMAND_LOCATE_LIST_HEADER.parse());
+            sender.sendMessage(LanguageManager.translate("command.locate.list.header"));
             for (StructurePopulator spop : StructureRegistry.getAllPopulators()) {
-                sender.sendMessage(LangOpt.COMMAND_LOCATE_LIST_ENTRY.parse("%entry%", spop.getClass().getSimpleName().replace("Populator", "")));
+                sender.sendMessage(LanguageManager.parse("command.locate.list.entry", "%entry%", spop.getClass().getSimpleName().replace("Populator", "")));
             }
-            sender.sendMessage(LangOpt.COMMAND_LOCATE_LIST_ENTRY.parse("%entry%", "Stronghold"));
+            sender.sendMessage(LanguageManager.parse("command.locate.list.entry", "%entry%", "Stronghold"));
             return;
         }
         
         StructurePopulator spop = (StructurePopulator) params.get(0); //TODO: Get populator by name
 
         if (!spop.isEnabled() && !(spop instanceof StrongholdPopulator)) {
-            sender.sendMessage(LangOpt.COMMAND_LOCATE_STRUCTURE_NOT_ENABLED.parse());
+            sender.sendMessage(LanguageManager.translate("command.locate.structure.not.enabled"));
             return;
         }
 
@@ -75,7 +76,7 @@ public class SeekCommand extends TerraCommand implements Listener {
         //Stronghold Special Case
         if (spop instanceof StrongholdPopulator) {
             int[] coords = ((StrongholdPopulator)spop).getNearestFeature(TerraformWorld.get(Objects.requireNonNull(Bukkit.getWorld("world"))), 0,0);
-            syncSendMessage(LangOpt.COMMAND_LOCATE_LOCATE_COORDS.parse("%x%", coords[0] + "", "%z%", coords[1] + ""));
+            syncSendMessage(LanguageManager.parse("command.locate.locate.coords", "%x%", coords[0], "%z%", coords[1]));
             return;
         }
 
@@ -90,7 +91,7 @@ public class SeekCommand extends TerraCommand implements Listener {
 
         MegaChunk center = new MegaChunk(0,0,0);
         TerraformWorld tw = TerraformWorld.get(w);
-        Bukkit.getConsoleSender().sendMessage(LangOpt.COMMAND_LOCATE_SEARCHING.parse());
+        Bukkit.getConsoleSender().sendMessage(LanguageManager.translate("command.locate.searching"));
 
         long startTime = System.currentTimeMillis();
 
@@ -99,11 +100,11 @@ public class SeekCommand extends TerraCommand implements Listener {
             	int[] loc = StructureLocator.locateMultiMegaChunkStructure(tw, center, populator, -1);
             	long timeTaken = System.currentTimeMillis() - startTime;
             	
-                syncSendMessage(LangOpt.COMMAND_LOCATE_COMPLETED_TASK.parse("%time%", timeTaken + ""));
+                syncSendMessage(LanguageManager.parse("command.locate.completed.task", "%time%", timeTaken));
 
                 if (loc != null) {
-                    syncSendMessage(ChatColor.GREEN + "[" + populator.getClass().getSimpleName() + "] " + LangOpt.COMMAND_LOCATE_LOCATE_COORDS.parse("%x%", loc[0] + "",
-                            "%z%", loc[1] + ""));
+                    syncSendMessage(ChatColor.GREEN + "[" + populator.getClass().getSimpleName() + "] " + LanguageManager.parse("command.locate.locate.coords", "%x%", loc[0],
+                            "%z%", loc[1]));
                     w.getChunkAt(new Location(w, loc[0], 0, loc[1]));
                 }
                 else
@@ -117,7 +118,7 @@ public class SeekCommand extends TerraCommand implements Listener {
 
         MegaChunk center = new MegaChunk(0,0,0);
         TerraformWorld tw = TerraformWorld.get(w);
-        Bukkit.getConsoleSender().sendMessage(LangOpt.COMMAND_LOCATE_SEARCHING.parse());
+        Bukkit.getConsoleSender().sendMessage(LanguageManager.translate("command.locate.searching"));
 
         long startTime = System.currentTimeMillis();
 
@@ -126,11 +127,11 @@ public class SeekCommand extends TerraCommand implements Listener {
             	int[] loc = StructureLocator.locateSingleMegaChunkStructure(tw, center, populator, -1);
             	long timeTaken = System.currentTimeMillis() - startTime;
             	
-                syncSendMessage(LangOpt.COMMAND_LOCATE_COMPLETED_TASK.parse("%time%", timeTaken + ""));
+                syncSendMessage(LanguageManager.parse("command.locate.completed.task", "%time%", timeTaken));
 
                 if (loc != null) {
-                    syncSendMessage(ChatColor.GREEN + "[" + populator.getClass().getSimpleName() + "] " + LangOpt.COMMAND_LOCATE_LOCATE_COORDS.parse("%x%", loc[0] + "",
-                            "%z%", loc[1] + ""));
+                    syncSendMessage(ChatColor.GREEN + "[" + populator.getClass().getSimpleName() + "] " + LanguageManager.parse("command.locate.locate.coords", "%x%", loc[0],
+                            "%z%", loc[1]));
                     w.getChunkAt(new Location(w, loc[0], 0, loc[1]));
                 }
                 else

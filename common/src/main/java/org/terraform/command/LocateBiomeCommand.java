@@ -13,6 +13,7 @@ import org.terraform.command.contants.TerraCommand;
 import org.terraform.command.contants.TerraCommandArgument;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.LangOpt;
+import org.terraform.main.LanguageManager;
 import org.terraform.main.TerraformGeneratorPlugin;
 import org.terraform.utils.GenUtils;
 import org.terraform.utils.Vector2f;
@@ -60,7 +61,7 @@ public class LocateBiomeCommand extends TerraCommand {
                         (BiomeBank) this.parseArguments(sender, args).get(0))
                         .runTaskAsynchronously(TerraformGeneratorPlugin.get());
             } catch (IllegalArgumentException e) {
-                sender.sendMessage(LangOpt.COMMAND_LOCATEBIOME_INVALIDBIOME.parse());
+                sender.sendMessage(LanguageManager.translate("command.locatebiome.invalidbiome"));
 
                 StringBuilder types = new StringBuilder();
                 boolean b = true;
@@ -145,15 +146,15 @@ public class LocateBiomeCommand extends TerraCommand {
                 location = GenUtils.locateHeightDependentBiome(tw, b,
                         new Vector2f(x, z), 5000, 25);
                 if (location == null)
-                    syncSendMessage(p, LangOpt.COMMAND_LOCATEBIOME_NOT_IN_5000.parse());
+                    syncSendMessage(p, LanguageManager.translate("command.locatebiome.not.in.5000"));
         	}else {
         		location = GenUtils.locateHeightIndependentBiome(tw, b, new Vector2f(x, z));
         	}
         	
         	if(location != null)
-        		syncSendMessage(p, LangOpt.COMMAND_LOCATE_LOCATE_COORDS.parse("%x%", location.x + "", "%z%", location.y + ""));
+        		syncSendMessage(p, LanguageManager.parse("command.locate.locate.coords", "%x%", location.x, "%z%", location.y));
         	else
-        		syncSendMessage(p, LangOpt.COMMAND_LOCATEBIOME_DISABLED.parse());
+        		syncSendMessage(p, LanguageManager.translate("command.locatebiome.disabled"));
 
         }
     }

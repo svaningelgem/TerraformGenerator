@@ -101,7 +101,7 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
 //                else
 //                	highest = roomY;
                 
-                if(Math.abs(highest-roomY) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
+                if(Math.abs(highest-roomY) > config.getInt(TConfig.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
                 	continue;
                 
 				BlockUtils.setDownUntilSolid(x, highest, z, data, Material.DIRT);
@@ -132,7 +132,7 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
 //    		            else
 //    		            	core.getAtY(roomY+1);
 
-    	                if(Math.abs(core.getY()-roomY) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
+    	                if(Math.abs(core.getY()-roomY) > config.getInt(TConfig.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
     	                	continue;
     	                
     					new StairBuilder(Material.COBBLESTONE_STAIRS)
@@ -187,7 +187,7 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
         	highest++;
         }
         if(threshold < 6) {
-            if(Math.abs(highest-roomY) <= config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
+            if(Math.abs(highest-roomY) <= config.getInt(TConfig.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
             {
                 for (int i = 0; i < GenUtils.randInt(3, 7); i++) 
                 	data.addEntity(coords[0], highest + 1, coords[2], animal);

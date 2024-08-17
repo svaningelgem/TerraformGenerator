@@ -8,7 +8,7 @@ import org.terraform.biome.BiomeBank;
 import org.terraform.biome.BiomeBlender;
 import org.terraform.biome.BiomeHandler;
 import org.terraform.coregen.ChunkCache;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.TerraformWorld;
 import org.terraform.main.config.TConfig;
@@ -22,7 +22,7 @@ import java.util.Random;
 public class ErodedPlainsHandler extends BiomeHandler {
     static BiomeBlender biomeBlender;
     static final BiomeHandler plainsHandler = BiomeBank.PLAINS.getHandler();
-    static final boolean slabs = config.getBoolean(TConfig.Option.MISC_USE_SLABS_TO_SMOOTH);
+    static final boolean slabs = config.getBoolean(TConfig.MISC_USE_SLABS_TO_SMOOTH);
 
     @Override
     public boolean isOcean() {

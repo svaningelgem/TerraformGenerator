@@ -76,7 +76,7 @@ public class ScarletForestHandler extends BiomeHandler {
             if(tw.getBiomeBank(sLoc.getX(),sLoc.getZ()) == BiomeBank.SCARLET_FOREST &&
                     BlockUtils.isDirtLike(data.getType(sLoc.getX(),sLoc.getY(),sLoc.getZ())))
             {
-                if(config.getBoolean(TConfig.Option.TREES_SCARLET_BIG_ENABLED))
+                if(config.getBoolean(TConfig.TREES_SCARLET_BIG_ENABLED))
                     new FractalTreeBuilder(FractalTypes.Tree.SCARLET_BIG).build(tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
                 else
                     new FractalTreeBuilder(FractalTypes.Tree.SCARLET_SMALL).build(tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());

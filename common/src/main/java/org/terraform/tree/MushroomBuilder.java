@@ -223,7 +223,7 @@ public class MushroomBuilder {
     }
 
     public void build(@NotNull TerraformWorld tw, @NotNull PopulatorDataAbstract data, int x, int y, int z) {
-        if(config.getBoolean(TConfig.Option.DEVSTUFF_VANILLA_MUSHROOMS)) {
+        if(config.getBoolean(TConfig.DEVSTUFF_VANILLA_MUSHROOMS)) {
         	String schemName;
         	if(this.type.toString().contains("RED"))
         		schemName = VanillaMushroomBuilder.RED_MUSHROOM_CAP;

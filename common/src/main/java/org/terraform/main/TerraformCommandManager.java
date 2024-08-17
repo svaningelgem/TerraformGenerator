@@ -29,7 +29,7 @@ public class TerraformCommandManager implements TabExecutor {
 		}
 		registerCommand(new HelpCommand(plugin,this,"help","h","?"));
     	
-    	if (config.getBoolean(TConfig.Option.DEVSTUFF_EXTENDED_COMMANDS)) {
+    	if (config.getBoolean(TConfig.DEVSTUFF_EXTENDED_COMMANDS)) {
             this.registerCommand(new PreviewCommand(plugin, "preview"));
             this.registerCommand(new TimingsCommand(plugin, "timings", "lag"));
             this.registerCommand(new CoconutCommand(plugin, "coconut"));
@@ -109,14 +109,14 @@ public class TerraformCommandManager implements TabExecutor {
 	
 	public void registerCommand(@NotNull TerraCommand cmd){
 		this.commands.add(cmd);
-		plugin.getLang().fetchLang("command." + cmd.aliases.get(0) + ".desc",cmd.getDefaultDescription());
+		LanguageManager.translate("command." + cmd.aliases.get(0) + ".desc",cmd.getDefaultDescription());
 	}
 	
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg2,
                              String @NotNull [] args) {
 		if(args.length == 0){
-			sender.sendMessage(plugin.getLang().fetchLang("command.unknown"));
+			sender.sendMessage(LanguageManager.translate("command.unknown"));
             new HelpCommand(plugin, this).execute(sender, new Stack<>());
             return false;
 		}
@@ -128,15 +128,15 @@ public class TerraformCommandManager implements TabExecutor {
 					stack.push(args[i]);
 				}
 				if(!command.hasPermission(sender)){
-					sender.sendMessage(plugin.getLang().fetchLang("permissions.insufficient"));
+					sender.sendMessage(LanguageManager.translate("permissions.insufficient"));
 					return false;
 				}
 				if(!command.canConsoleExec() && !(sender instanceof Player)){
-					sender.sendMessage(plugin.getLang().fetchLang("permissions.console-cannot-exec"));
+					sender.sendMessage(LanguageManager.translate("permissions.console-cannot-exec"));
 					return false;
 				}
 				if(!command.isInAcceptedParamRange(stack)){
-					sender.sendMessage(plugin.getLang().fetchLang("command.wrong-arg-length"));
+					sender.sendMessage(LanguageManager.translate("command.wrong-arg-length"));
 					return false;
 				}
 				try{
@@ -148,7 +148,7 @@ public class TerraformCommandManager implements TabExecutor {
 				}
 			}
 		}
-		sender.sendMessage(plugin.getLang().fetchLang("command.unknown"));
+		sender.sendMessage(LanguageManager.translate("command.unknown"));
 		return false;
 	}
 

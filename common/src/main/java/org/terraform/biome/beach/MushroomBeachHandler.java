@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.jetbrains.annotations.NotNull;
 import org.terraform.biome.BiomeHandler;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
@@ -71,7 +71,7 @@ public class MushroomBeachHandler extends BiomeHandler {
                 };
 
                 if(HeightMap.getTrueHeightGradient(data, sLoc.getX(), sLoc.getZ(), 3) <=
-				   config.getDouble(TConfig.Option.MISC_TREES_GRADIENT_LIMIT))
+				   config.getDouble(TConfig.MISC_TREES_GRADIENT_LIMIT))
             		new MushroomBuilder(type).build(tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
             }
         }

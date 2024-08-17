@@ -34,7 +34,7 @@ public class NativeGeneratorPatcherPopulator extends BlockPopulator implements L
     
     public static void pushChange(String world, int x, int y, int z, BlockData data) {
     	
-    	if(!flushIsQueued && cache.size() > config.getInt(TConfig.Option.DEVSTUFF_FLUSH_PATCHER_CACHE_FREQUENCY)) {
+    	if(!flushIsQueued && cache.size() > config.getInt(TConfig.DEVSTUFF_FLUSH_PATCHER_CACHE_FREQUENCY)) {
 			flushIsQueued = true;
     		new BukkitRunnable() {
 	    		@Override

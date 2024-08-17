@@ -82,7 +82,7 @@ public class TrailRuinsPopulator extends SingleMegaChunkStructurePopulator {
         return (BiomeBank.isBiomeEnabled(BiomeBank.TAIGA)
                 || BiomeBank.isBiomeEnabled(BiomeBank.SNOWY_TAIGA)
                 || BiomeBank.isBiomeEnabled(BiomeBank.JUNGLE))
-			   && config.getBoolean(TConfig.Option.STRUCTURES_TRAILRUINS_ENABLED);
+			   && config.getBoolean(TConfig.STRUCTURES_TRAILRUINS_ENABLED);
     }
 
     private boolean rollSpawnRatio(@NotNull TerraformWorld tw, int chunkX, int chunkZ) {

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import org.terraform.biome.BiomeBank;
 import org.terraform.cave.NoiseCaveRegistry;
 import org.terraform.coregen.ChunkCache;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.bukkit.TerraformBukkitBlockPopulator;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.main.TerraformGeneratorPlugin;
@@ -72,7 +72,7 @@ public class TerraformWorld {
         		tw -> {
                     FastNoise n = new FastNoise((int) (tw.getSeed() * 2));
                     n.SetNoiseType(NoiseType.Simplex);
-                    n.SetFrequency(config.getFloat(TConfig.Option.BIOME_TEMPERATURE_FREQUENCY)); //Default 0.03f
+                    n.SetFrequency(config.getFloat(TConfig.BIOME_TEMPERATURE_FREQUENCY)); //Default 0.03f
         	        return n;
         		});
     }
@@ -84,7 +84,7 @@ public class TerraformWorld {
         		tw -> {
                     FastNoise n = new FastNoise((int) (tw.getSeed()/4));
                     n.SetNoiseType(NoiseType.Simplex);
-                    n.SetFrequency(config.getFloat(TConfig.Option.BIOME_MOISTURE_FREQUENCY)); //Default 0.03f
+                    n.SetFrequency(config.getFloat(TConfig.BIOME_MOISTURE_FREQUENCY)); //Default 0.03f
         	        return n;
         		});
     }
@@ -96,7 +96,7 @@ public class TerraformWorld {
         		tw -> {
                 	FastNoise n = new FastNoise((int) tw.getSeed() * 12);
                 	n.SetNoiseType(NoiseType.Simplex);
-                	n.SetFrequency(config.getFloat(TConfig.Option.BIOME_OCEANIC_FREQUENCY));
+                	n.SetFrequency(config.getFloat(TConfig.BIOME_OCEANIC_FREQUENCY));
         	        return n;
         		});
     }
@@ -108,7 +108,7 @@ public class TerraformWorld {
         		tw -> {
                 	FastNoise n = new FastNoise((int) tw.getSeed() * 73);
                 	n.SetNoiseType(NoiseType.Simplex);
-                	n.SetFrequency(config.getFloat(TConfig.Option.BIOME_MOUNTAINOUS_FREQUENCY));
+                	n.SetFrequency(config.getFloat(TConfig.BIOME_MOUNTAINOUS_FREQUENCY));
         	        return n;
         		});
     }

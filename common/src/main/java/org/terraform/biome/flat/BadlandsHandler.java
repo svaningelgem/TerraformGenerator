@@ -11,7 +11,7 @@ import org.terraform.biome.BiomeHandler;
 import org.terraform.biome.beach.OasisBeach;
 import org.terraform.biome.mountainous.BadlandsCanyonHandler;
 import org.terraform.coregen.ChunkCache;
-import org.terraform.coregen.HeightMap;
+import org.terraform.coregen.heights.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.TerraformWorld;
@@ -30,11 +30,11 @@ public class BadlandsHandler extends BiomeHandler {
     static private BiomeBlender riversBlender;
     static private BiomeBlender plateauBlender;
 
-    static final int sandRadius = config.getInt(TConfig.Option.BIOME_BADLANDS_PLATEAU_SAND_RADIUS);
-    static final int plateauHeight = config.getInt(TConfig.Option.BIOME_BADLANDS_PLATEAU_HEIGHT);
-    static final float plateauFrequency = config.getFloat(TConfig.Option.BIOME_BADLANDS_PLATEAU_FREQUENCY);
-    static final double plateauThreshold = config.getDouble(TConfig.Option.BIOME_BADLANDS_PLATEAU_THRESHOLD);
-    static final double plateauCommonness = config.getDouble(TConfig.Option.BIOME_BADLANDS_PLATEAU_COMMONNESS);
+    static final int sandRadius = config.getInt(TConfig.BIOME_BADLANDS_PLATEAU_SAND_RADIUS);
+    static final int plateauHeight = config.getInt(TConfig.BIOME_BADLANDS_PLATEAU_HEIGHT);
+    static final float plateauFrequency = config.getFloat(TConfig.BIOME_BADLANDS_PLATEAU_FREQUENCY);
+    static final double plateauThreshold = config.getDouble(TConfig.BIOME_BADLANDS_PLATEAU_THRESHOLD);
+    static final double plateauCommonness = config.getDouble(TConfig.BIOME_BADLANDS_PLATEAU_COMMONNESS);
 
     private static @NotNull BiomeBlender getRiversBlender(TerraformWorld tw) {
         // Only one blender needed!

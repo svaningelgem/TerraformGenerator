@@ -47,12 +47,12 @@ public class HelpCommand extends TerraCommand {
 			try{
 				page = Integer.parseInt(args.pop());
 				if(page <= 0){
-					sender.sendMessage(plugin.getLang().fetchLang("command.help.postive-pages"));
+					sender.sendMessage(LanguageManager.translate("command.help.postive-pages"));
 					return;
 				}
 				page--;
 			}catch(NumberFormatException e){
-				sender.sendMessage(plugin.getLang().fetchLang("command.help.postive-pages"));
+				sender.sendMessage(LanguageManager.translate("command.help.postive-pages"));
 				return;
 			}
 		}
@@ -74,7 +74,7 @@ public class HelpCommand extends TerraCommand {
 					}else
 						params.append(ChatColor.AQUA).append("[").append(param.getName()).append("] ");
 				}
-                params.append(ChatColor.DARK_GRAY).append("- ").append(ChatColor.YELLOW).append(plugin.getLang().fetchLang(cmd.getLangPath()));
+                params.append(ChatColor.DARK_GRAY).append("- ").append(ChatColor.YELLOW).append(LanguageManager.translate(cmd.getLangPath()));
 				sender.sendMessage(params.toString());
             }
         }
@@ -83,7 +83,7 @@ public class HelpCommand extends TerraCommand {
         	sender.sendMessage(ChatColor.GRAY + "/" + base + " h " + (page+2) 
     				+ "" + ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + (page+1) + "/" + (maxPages+1));
         } else {
-        	sender.sendMessage(ChatColor.AQUA + "" + (page+1) + "/" + (maxPages+1));
+        	sender.sendMessage(ChatColor.AQUA + (page+1) + "/" + (maxPages+1));
         }
 	}
 

@@ -23,7 +23,7 @@ public class TLogger {
     private static boolean suppressConsoleLogs = false;
 	
 	public TLogger() {
-		suppressConsoleLogs = config.getBoolean(TConfig.Option.DEVSTUFF_SUPPRESS_CONSOLE_LOGS);
+		suppressConsoleLogs = config.getBoolean(TConfig.DEVSTUFF_SUPPRESS_CONSOLE_LOGS);
     	if(suppressConsoleLogs) {
             Handler consoleHandler;
             Handler fileHandler;
@@ -96,7 +96,7 @@ public class TLogger {
     }
     
     public void debug(@NotNull String message) {
-        if (config.getBoolean(TConfig.Option.DEVSTUFF_DEBUG_MODE))
+        if (config.getBoolean(TConfig.DEVSTUFF_DEBUG_MODE))
         	if(suppressConsoleLogs) {
         		LOGGER.log(Level.INFO,"[v] "+message);
         	}else

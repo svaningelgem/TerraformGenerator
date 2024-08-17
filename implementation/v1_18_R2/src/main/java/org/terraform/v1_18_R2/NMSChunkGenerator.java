@@ -118,23 +118,23 @@ public class NMSChunkGenerator extends ChunkGenerator {
                 return new Pair<>
                         (new BlockPosition(coords[0], 20, coords[1]), holder);
             } 
-            else if(!config.getBoolean(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_DISABLE))
+            else if(!config.getBoolean(TConfig.DEVSTUFF_VANILLA_LOCATE_DISABLE))
             {
             	if (structuregenerator == StructureGenerator.l) { //Monument
                     
-            		int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MonumentPopulator(), config.getInt(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
+            		int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MonumentPopulator(), config.getInt(TConfig.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
 
                     return new Pair<>
                             (new BlockPosition(coords[0], 50, coords[1]), holder);
                 } else if (structuregenerator == StructureGenerator.d) { //Mansion
                         
-            		int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MansionPopulator(), config.getInt(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
+            		int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MansionPopulator(), config.getInt(TConfig.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
 
                     return new Pair<>
                             (new BlockPosition(coords[0], 50, coords[1]), holder);
                 } else if (structuregenerator.getClass().getName().equals("net.minecraft.world.level.levelgen.feature.WorldGenBuriedTreasure")) { 
                 	//Buried Treasure
-                	int[] coords = StructureLocator.locateMultiMegaChunkStructure(tw, new MegaChunk(pX, 0, pZ), new BuriedTreasurePopulator(), config.getInt(TConfig.Option.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
+                	int[] coords = StructureLocator.locateMultiMegaChunkStructure(tw, new MegaChunk(pX, 0, pZ), new BuriedTreasurePopulator(), config.getInt(TConfig.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
                     if(coords == null) return null;
                     return new Pair<>
                             (new BlockPosition(coords[0], 50, coords[1]), holder);

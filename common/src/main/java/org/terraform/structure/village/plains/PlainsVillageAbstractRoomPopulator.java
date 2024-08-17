@@ -33,7 +33,7 @@ public abstract class PlainsVillageAbstractRoomPopulator extends RoomPopulatorAb
     	for(int[] corner:room.getAllCorners(2)) {
     		SimpleBlock sb = new SimpleBlock(data,corner[0],roomY,corner[1]);
     		int lowSb = sb.findFloor(worldHeight).getY();
-    		if(Math.abs(lowSb - roomY) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
+    		if(Math.abs(lowSb - roomY) > config.getInt(TConfig.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
     		{
     			//place platform as uneven ground was detected.
     			this.placeFixerPlatform(roomY, data, room);
@@ -79,7 +79,7 @@ public abstract class PlainsVillageAbstractRoomPopulator extends RoomPopulatorAb
 		int centerHeight = GenUtils.getHighestGroundOrSeaLevel(data, room.getX(), room.getZ());
     	int pathHeight = getPathHeight(data, room);
     	
-    	if(Math.abs(centerHeight-pathHeight) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE)) {
+    	if(Math.abs(centerHeight-pathHeight) > config.getInt(TConfig.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE)) {
     		return pathHeight;
     	}else {
     		return centerHeight;
@@ -92,7 +92,7 @@ public abstract class PlainsVillageAbstractRoomPopulator extends RoomPopulatorAb
     	for(int[] corner:room.getAllCorners(2)) {
     		SimpleBlock sb = new SimpleBlock(data,corner[0],roomY,corner[1]);
     		int lowSb = sb.findFloor(worldHeight).getY();
-    		if(Math.abs(lowSb - roomY) > config.getInt(TConfig.Option.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
+    		if(Math.abs(lowSb - roomY) > config.getInt(TConfig.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
     		{
     			return true;
     		}

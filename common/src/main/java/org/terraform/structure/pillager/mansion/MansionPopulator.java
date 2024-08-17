@@ -29,7 +29,7 @@ public class MansionPopulator extends SingleMegaChunkStructurePopulator {
     @Override
     public boolean canSpawn(@NotNull TerraformWorld tw, int chunkX, int chunkZ, BiomeBank biome) {
     	//Enforce minimum distance
-        if(Math.pow(chunkX*16,2) + Math.pow(chunkZ*16,2) < Math.pow(config.getInt(TConfig.Option.STRUCTURES_MANSION_MINDISTANCE),2))
+        if(Math.pow(chunkX*16,2) + Math.pow(chunkZ*16,2) < Math.pow(config.getInt(TConfig.STRUCTURES_MANSION_MINDISTANCE),2))
             return false;
 
         //Mansions must spawn. Dark forests are rare enough. Ignore ground height.
@@ -51,8 +51,8 @@ public class MansionPopulator extends SingleMegaChunkStructurePopulator {
     	
 
         MansionJigsawBuilder builder = new MansionJigsawBuilder(
-        		config.getInt(TConfig.Option.STRUCTURES_MANSION_SIZE),
-        		config.getInt(TConfig.Option.STRUCTURES_MANSION_SIZE),
+        		config.getInt(TConfig.STRUCTURES_MANSION_SIZE),
+        		config.getInt(TConfig.STRUCTURES_MANSION_SIZE),
         		data, coords[0], y, coords[1]
         );
         builder.generate(new Random());
@@ -62,12 +62,12 @@ public class MansionPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public int getChunkBufferDistance() {
-    	return config.getInt(TConfig.Option.STRUCTURES_MANSION_CHUNK_EXCLUSION_ZONE);
+    	return config.getInt(TConfig.STRUCTURES_MANSION_CHUNK_EXCLUSION_ZONE);
     }
 
     @Override
     public boolean isEnabled() {
         return BiomeBank.isBiomeEnabled(BiomeBank.DARK_FOREST)
-			   && config.getBoolean(TConfig.Option.STRUCTURES_MANSION_ENABLED);
+			   && config.getBoolean(TConfig.STRUCTURES_MANSION_ENABLED);
     }
 }
