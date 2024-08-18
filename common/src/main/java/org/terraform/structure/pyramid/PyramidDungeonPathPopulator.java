@@ -31,7 +31,7 @@ public class PyramidDungeonPathPopulator extends PathPopulatorAbstract {
 
         //Gravel tnt trap
         if (GenUtils.chance(this.rand, 1, 300)) {
-            //TerraformGeneratorPlugin.logger.info("Pyramid trap at " + ppd.base.getX()+","+ppd.base.getY()+","+ppd.base.getZ());
+            //logger.info("Pyramid trap at " + ppd.base.getX()+","+ppd.base.getY()+","+ppd.base.getZ());
             //To make the
             ppd.base.setType(Material.GRAVEL);
             ppd.base.getRelative(0, -1, 0).setType(Material.TNT);

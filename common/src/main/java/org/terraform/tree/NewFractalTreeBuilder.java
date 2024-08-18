@@ -106,9 +106,9 @@ public class NewFractalTreeBuilder implements Cloneable {
         if(spawnBees)
             for(SimpleBlock b:prospectiveHives)
             {
-                //TerraformGeneratorPlugin.logger.info("Testing " + b);
+                //logger.info("Testing " + b);
                 if(b.isSolid()) continue; //occupied block
-                //TerraformGeneratorPlugin.logger.info("Success: " + b);
+                //logger.info("Success: " + b);
                 BeeHiveSpawner.spawnFullBeeNest(b);
                 break; //just one.
             }
@@ -201,7 +201,7 @@ public class NewFractalTreeBuilder implements Cloneable {
                 this.branchMaterial = temp;
 
                 currentWidth = getBranchWidth.apply(initialWidth, (i/length));
-                //TerraformGeneratorPlugin.logger.info("CWidth: " + currentWidth);
+                //logger.info("CWidth: " + currentWidth);
 
                 //Tick cooldown down by the loop step
                 randomBranchSpawnCooldownCurrent -= 0.5F;

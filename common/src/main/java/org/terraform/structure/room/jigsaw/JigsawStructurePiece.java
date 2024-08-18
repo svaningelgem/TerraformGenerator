@@ -54,7 +54,7 @@ public abstract class JigsawStructurePiece implements Cloneable {
             for (BlockFace face : validDirections.keySet()) {
                 clone.validDirections.put(face, false);
             }
-            //TerraformGeneratorPlugin.logger.info("CREATOR-validDirsSize: " + validDirections.size());
+            //logger.info("CREATOR-validDirsSize: " + validDirections.size());
             clone.walledFaces = new ArrayList<>();
             clone.setRotation(BlockUtils.getDirectBlockFace(rand));
             clone.elevation = 0;
@@ -74,14 +74,14 @@ public abstract class JigsawStructurePiece implements Cloneable {
                 return entry.getKey();
         }
 
-        TerraformGeneratorPlugin.logger.error("Tried to get unpopulated block face when there aren't any left!");
+        logger.error("Tried to get unpopulated block face when there aren't any left!");
         return null;
     }
 
     public void setPopulated(BlockFace face) {
         if (this.type == JigsawType.END) return;
         if (!validDirections.containsKey(face))
-            TerraformGeneratorPlugin.logger.error("Tried to set an invalid blockface as populated for a jigsaw piece.");
+            logger.error("Tried to set an invalid blockface as populated for a jigsaw piece.");
 
         validDirections.put(face, true);
     }

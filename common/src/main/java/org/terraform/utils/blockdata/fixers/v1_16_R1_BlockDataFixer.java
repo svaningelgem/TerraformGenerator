@@ -71,7 +71,7 @@ public class v1_16_R1_BlockDataFixer extends BlockDataFixerAbstract {
         }
 
         if (data instanceof Wall && b != null) {
-            //TerraformGeneratorPlugin.logger.info("corrected");
+            //logger.info("corrected");
             correctSurroundingWallData(b);
         }
     }

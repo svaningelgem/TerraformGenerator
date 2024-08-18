@@ -74,7 +74,7 @@ public class BiomeBlender {
         			//	height = TerraformGenerator.seaLevel;
         			//Linearly blend
             		riverFactor = ((height - TerraformGenerator.seaLevel)/((double)smoothBlendTowardsRivers));
-            		//TerraformGeneratorPlugin.logger.info("RF" + riverFactor);
+            		//logger.info("RF" + riverFactor);
         		}
         	}
             if (riverFactor < factor) factor = Math.max(0, riverFactor);

@@ -150,7 +150,7 @@ public class StairwayBuilder {
 	        }
 			
 		}else {
-			TerraformGeneratorPlugin.logger.error("StairwayBuilder was told to spawn stairway with non up/down stair direction!");
+			logger.error("StairwayBuilder was told to spawn stairway with non up/down stair direction!");
 		}
         
     	

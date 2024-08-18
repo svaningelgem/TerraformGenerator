@@ -10,7 +10,6 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfig;
 import org.terraform.tree.FractalTreeBuilder;
 import org.terraform.tree.FractalTypes;
 import org.terraform.tree.TreeDB;
@@ -71,17 +70,17 @@ public class ForestedMountainsHandler extends AbstractMountainHandler {
             if(HeightMap.CORE.getHeight(tw, rawX, rawZ)
                     - HeightMap.getRawRiverDepth(tw, rawX, rawZ)
                     < TerraformGenerator.seaLevel - 4) {
-                new SphereBuilder(random, new SimpleBlock(data,rawX,TerraformGenerator.seaLevel,rawZ), Material.AIR)
+                new SphereBuilder(random, new SimpleBlock(data,rawX, TerraformGenerator.seaLevel,rawZ), Material.AIR)
                 .setRadius(5)
                 .setStaticWaterLevel(TerraformGenerator.seaLevel)
                 .setHardReplace(true)
                 .build();
 
                 if(GenUtils.chance(random, 1, 30)) {
-                    int cylY = TerraformGenerator.seaLevel + (surfaceY-TerraformGenerator.seaLevel)/2 + 4;
+                    int cylY = TerraformGenerator.seaLevel + (surfaceY- TerraformGenerator.seaLevel)/2 + 4;
                     new CylinderBuilder(random, new SimpleBlock(data,rawX,cylY,rawZ), Material.AIR)
                     .setRadius(5)
-                    .setRY((surfaceY-TerraformGenerator.seaLevel)/2f + 2)
+                    .setRY((surfaceY- TerraformGenerator.seaLevel)/2f + 2)
                     .setHardReplace(true)
                     .build();
                 }

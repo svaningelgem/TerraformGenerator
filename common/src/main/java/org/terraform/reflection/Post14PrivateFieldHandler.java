@@ -47,7 +47,7 @@ public class Post14PrivateFieldHandler extends PrivateFieldHandler {
             VAR_HANDLE_SET.invoke(varHandleModifiers, new Object[]{targetField, mds & ~Modifier.FINAL});
         } catch (Throwable throwable) {
 	    	//throwabllogger.stackTrace(e);
-            TerraformGeneratorPlugin.logger.info("Java 14+ detected.");
+            logger.info("Java 14+ detected.");
         }
 
         targetField.set(obj, value);
@@ -64,7 +64,7 @@ public class Post14PrivateFieldHandler extends PrivateFieldHandler {
 	        VAR_HANDLE_SET.invoke(varHandleModifiers, new Object[]{targetField, mds & ~Modifier.FINAL});
 	    } catch (Throwable throwable) {
 	    	//throwabllogger.stackTrace(e);
-	        TerraformGeneratorPlugin.logger.info("Java 14+ detected.");
+	        logger.info("Java 14+ detected.");
 	    }
 	    targetField.set(obj, value);
     }

@@ -1,11 +1,7 @@
 package org.terraform.utils;
 
-import com.google.common.cache.LoadingCache;
 import org.bukkit.Material;
 import org.bukkit.Tag;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.terraform.biome.BiomeBank;
@@ -373,7 +369,7 @@ public class GenUtils {
             break;
         }
         if(y <= TerraformGeneratorPlugin.injector.getMinY()) {
-            TerraformGeneratorPlugin.logger.error("GetHighestGround returned less than " + TerraformGeneratorPlugin.injector.getMinY() + "! (" + y + ")");
+            logger.error("GetHighestGround returned less than " + TerraformGeneratorPlugin.injector.getMinY() + "! (" + y + ")");
             try { throw new Exception("GetHighestGround returned less than " + TerraformGeneratorPlugin.injector.getMinY() + "! (" + y + ")"); }
             catch (Exception e) 
             {logger.stackTrace(e);}

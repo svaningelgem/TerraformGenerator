@@ -15,10 +15,10 @@ public class TerraformGeneratorMetricsHandler {
         	metrics.addCustomChart(new Metrics.SimplePie("onlyUseLogsNoWood", () -> config.MISC_TREES_FORCE_LOGS));
         	metrics.addCustomChart(new Metrics.SimplePie("megaChunkNumBiomeSections", () -> config.STRUCTURES_MEGACHUNK_NUMBIOMESECTIONS));
         	metrics.addCustomChart(new Metrics.SimplePie("biomeSectionBitshifts", () -> config.BIOME_SECTION_BITSHIFTS));
-        	TerraformGeneratorPlugin.logger.stdout("&abStats Metrics enabled.");
+        	logger.stdout("&abStats Metrics enabled.");
         }
         else
-        	TerraformGeneratorPlugin.logger.stdout("&cbStats Metrics disabled.");
+        	logger.stdout("&cbStats Metrics disabled.");
         
         
 	}

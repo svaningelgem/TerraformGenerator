@@ -10,8 +10,6 @@ import org.terraform.coregen.ChunkCache;
 import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.bukkit.TerraformBukkitBlockPopulator;
 import org.terraform.coregen.bukkit.TerraformGenerator;
-import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfig;
 import org.terraform.utils.noise.FastNoise;
 import org.terraform.utils.noise.NoiseCacheHandler;
 import org.terraform.utils.noise.FastNoise.NoiseType;
@@ -31,7 +29,7 @@ public class TerraformWorld {
 
     public final @NotNull NoiseCaveRegistry noiseCaveRegistry;
     public TerraformWorld(String name, long seed) {
-        TerraformGeneratorPlugin.logger.info("Creating TW instance: " + name + " - " + seed);
+        logger.info("Creating TW instance: " + name + " - " + seed);
         this.worldName = name;
         this.seed = seed;
         this.bukkitBlockPopulator = new TerraformBukkitBlockPopulator(this);
@@ -39,7 +37,7 @@ public class TerraformWorld {
     }
 
     private TerraformWorld(@NotNull World world) {
-        TerraformGeneratorPlugin.logger.info("Creating TW instance: " + world.getName() + " - " + world.getSeed());
+        logger.info("Creating TW instance: " + world.getName() + " - " + world.getSeed());
         this.worldName = world.getName();
         this.seed = world.getSeed();
         this.bukkitBlockPopulator = new TerraformBukkitBlockPopulator(this);

@@ -26,7 +26,7 @@ public class OasisRiver {
         BiomeBank biome = BiomeBank.calculateHeightIndependentBiome(tw, x, z);
 
         return lushRiverNoiseValue > OasisBeach.oasisThreshold &&
-                height < TerraformGenerator.seaLevel &&
+			   height < TerraformGenerator.seaLevel &&
                 targetBiome == biome;
     }
 

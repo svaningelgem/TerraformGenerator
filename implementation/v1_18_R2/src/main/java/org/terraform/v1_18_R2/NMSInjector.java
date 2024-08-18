@@ -68,7 +68,7 @@ public class NMSInjector extends NMSInjectorAbstract {
                 //old,
                 //ws.k().g().d(),
                 //world.getSeed());
-        TerraformGeneratorPlugin.logger.info("NMSChunkGenerator Delegate is of type " + ws.k().g().getClass().getSimpleName());
+        logger.info("NMSChunkGenerator Delegate is of type " + ws.k().g().getClass().getSimpleName());
         
         if(ws.k().g() instanceof CustomChunkGenerator) {
             try {
@@ -76,16 +76,16 @@ public class NMSInjector extends NMSInjectorAbstract {
             	Field f = CustomChunkGenerator.class.getDeclaredField("delegate");
             	f.setAccessible(true);
             	delegate = (ChunkGenerator) f.get(ws.k().g());
-            	TerraformGeneratorPlugin.logger.info("CustomChunkGenerator Delegate is of type " + delegate.getClass().getSimpleName());
+            	logger.info("CustomChunkGenerator Delegate is of type " + delegate.getClass().getSimpleName());
             }
             catch(Exception e) {
             	logger.stackTrace(e);
             }
         }
         //For Changing DimensionManager height
-    	TerraformGeneratorPlugin.logger.info("- minY " + ws.q_().k() + "   " + world.getMinHeight());
-		TerraformGeneratorPlugin.logger.info("- Height " + ws.q_().l() + "   " + world.getMaxHeight());
-		TerraformGeneratorPlugin.logger.info("- LogicalHeight " + ws.q_().m() + "   " + world.getLogicalHeight()); 
+    	logger.info("- minY " + ws.q_().k() + "   " + world.getMinHeight());
+		logger.info("- Height " + ws.q_().l() + "   " + world.getMaxHeight());
+		logger.info("- LogicalHeight " + ws.q_().m() + "   " + world.getLogicalHeight()); 
         
 		//Inject TerraformGenerator NMS chunk generator
 		

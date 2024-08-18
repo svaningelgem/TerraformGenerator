@@ -644,7 +644,7 @@ public class FractalTreeBuilder {
 	        for (int i = 0; i < 8; i++) {
 	            if (!beeHive.getType().isSolid()) {
 	                BeeHiveSpawner.spawnFullBeeNest(beeHive);
-	            	//TerraformGeneratorPlugin.logger.debug("Bee nest spawned at " + two.getRelative(0,-i,0).getCoords());
+	            	//logger.debug("Bee nest spawned at " + two.getRelative(0,-i,0).getCoords());
 	                break;
 	            }else
 	            	beeHive = beeHive.getRelative(0,-1,0);
@@ -708,7 +708,7 @@ public class FractalTreeBuilder {
                 if (!two.getRelative(0, -i, 0).getType().isSolid()) {
                     beeHive = two.getRelative(0,-i,0);
                     break;
-                    //TerraformGeneratorPlugin.logger.debug("Bee nest spawned at " + two.getRelative(0,-i,0).getCoords());
+                    //logger.debug("Bee nest spawned at " + two.getRelative(0,-i,0).getCoords());
                 }
             }
 

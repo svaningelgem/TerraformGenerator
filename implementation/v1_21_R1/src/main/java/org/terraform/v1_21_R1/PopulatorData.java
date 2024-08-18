@@ -92,7 +92,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
     		if(radius > 0)
     			NativeGeneratorPatcherPopulator.pushChange(rlwa.getMinecraftWorld().getWorld().getName(), x, y, z, Bukkit.createBlockData(type));
     		else
-    			new Exception("Tried to call adjacent chunk with populator radius 0: (" + x + "," + y + "," + z  + ") for chunk (" + chunkX + "," + chunkZ + ")").printStackTrace();
+    			logger.stackTrace(new Exception("Tried to call adjacent chunk with populator radius 0: (" + x + "," + y + "," + z  + ") for chunk (" + chunkX + "," + chunkZ + ")"));
         } else {
             rlwa.a(new BlockPosition(x, y, z), ((CraftBlockData) Bukkit.createBlockData(type)).getState(), 0);
     	}
@@ -104,7 +104,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
     		if(radius > 0)
     			NativeGeneratorPatcherPopulator.pushChange(rlwa.getMinecraftWorld().getWorld().getName(), x, y, z, data);
     		else
-    			new Exception("Tried to call adjacent chunk with populator radius 0: (" + x + "," + y + "," + z  + ") for chunk (" + chunkX + "," + chunkZ + ")").printStackTrace();
+    			logger.stackTrace(new Exception("Tried to call adjacent chunk with populator radius 0: (" + x + "," + y + "," + z  + ") for chunk (" + chunkX + "," + chunkZ + ")"));
         } else {
         	rlwa.a(new BlockPosition(x, y, z), ((CraftBlockData) data).getState(), 0);
         }
@@ -129,7 +129,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
     @Override
     public void addEntity(int rawX, int rawY, int rawZ, @NotNull EntityType type) {
     	if (Math.abs((rawX >> 4) - chunkX) > 1 || Math.abs((rawZ >> 4) - chunkZ) > 1) {
-    		TerraformGeneratorPlugin.logger.info("Failed to spawn " + type + " as it was out of bounds.");
+    		logger.info("Failed to spawn " + type + " as it was out of bounds.");
     		return;
     	}
     	
@@ -140,7 +140,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
         //EntityInsentient.setPersistenceRequired()
         if(e instanceof EntityInsentient) ((EntityInsentient) e).fF();
     	rlwa.b(e);
-    	//TerraformGeneratorPlugin.logger.info("Spawned " + e.getType() + " at " + rawX + " " + rawY + " " + rawZ);
+    	//logger.info("Spawned " + e.getType() + " at " + rawX + " " + rawY + " " + rawZ);
     }
 
     @Override
@@ -160,13 +160,13 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
                 //Fetch from ENTITY_TYPE (Q)'s map
             	//q is ENTITY_TYPE
             	EntityTypes<?> nmsEntity = entityTypesDict.get(type);
-                if(nmsEntity == null) TerraformGeneratorPlugin.logger.error(type + " was not present in the entityTypesDict.");
+                if(nmsEntity == null) logger.error(type + " was not present in the entityTypesDict.");
                 ((TileEntityMobSpawner) tileentity).a(nmsEntity, new RandomSourceWrapper(new Random()));
             } catch (IllegalArgumentException | SecurityException e) {
                 logger.stackTrace(e);
             }
         } else {
-            TerraformGeneratorPlugin.logger.error("Failed to fetch mob spawner entity at (" + "," + rawX + "," + rawY + "," + rawZ + ")");
+            logger.error("Failed to fetch mob spawner entity at (" + "," + rawX + "," + rawY + "," + rawZ + ")");
         }
     }
 
@@ -202,11 +202,11 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
 	@Override
 	public void setBeehiveWithBee(int rawX, int rawY, int rawZ) {
 		BlockPosition pos = new BlockPosition(rawX, rawY, rawZ);
-        //TerraformGeneratorPlugin.logger.info(IRegistry.X.b(EntityTypes.h).toString());
+        //logger.info(IRegistry.X.b(EntityTypes.h).toString());
         setType(rawX, rawY, rawZ, Material.BEE_NEST);
 
         try {
-            //TerraformGeneratorPlugin.logger.error("Failed to set beehive at (" + rawX + "," + rawY + "," + rawZ + ") " + BuiltInRegistries.h.b(entityTypesDict.get(EntityType.BEE)));
+            //logger.error("Failed to set beehive at (" + rawX + "," + rawY + "," + rawZ + ") " + BuiltInRegistries.h.b(entityTypesDict.get(EntityType.BEE)));
             TileEntityBeehive tileentity = (TileEntityBeehive) rlwa.c_(pos);
             if(tileentity == null)
             { //retry?

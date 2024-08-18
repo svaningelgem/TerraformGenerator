@@ -161,7 +161,7 @@ public class MonumentPopulator extends SingleMegaChunkStructurePopulator {
     }
 
     public void spawnMonument(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data, int x, int y, int z) {
-        TerraformGeneratorPlugin.logger.info("Spawning Monument at: " + x + "," + z);
+        logger.info("Spawning Monument at: " + x + "," + z);
         MonumentDesign design = MonumentDesign.values()[random.nextInt(MonumentDesign.values().length)];
         int numRooms = 1000;
         int range = 50;

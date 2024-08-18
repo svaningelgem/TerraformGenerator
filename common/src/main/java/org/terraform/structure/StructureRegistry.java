@@ -98,7 +98,7 @@ public class StructureRegistry {
      * Only one is meant to be picked.
      */
     public static SingleMegaChunkStructurePopulator[] getLargeStructureForMegaChunk(@NotNull TerraformWorld tw, @NotNull MegaChunk mc) {
-    	//TerraformGeneratorPlugin.logger.info("getLargeStructureForMegaChunkQuery: " + mc.getX() + "," + mc.getZ());
+    	//logger.info("getLargeStructureForMegaChunkQuery: " + mc.getX() + "," + mc.getZ());
         //Clear the cache if it gets big.
         if (queryCache.size() > 50) queryCache.clear();
         MegaChunkKey key = new MegaChunkKey(tw,mc);
@@ -129,7 +129,7 @@ public class StructureRegistry {
         }
         //Mega Dungeon will be in slot 0 (highest priority). The others are backups.
         //if (size == 0) {
-        //TerraformGeneratorPlugin.logger.info(ChatColor.YELLOW + "MC: " + mc.getX() + "," + mc.getZ() + " - No Mega Dungeon");
+        //logger.info(ChatColor.YELLOW + "MC: " + mc.getX() + "," + mc.getZ() + " - No Mega Dungeon");
         StructureType[] types = {StructureType.LARGE_CAVE, StructureType.VILLAGE, StructureType.LARGE_MISC};
         types = (StructureType[]) shuffleArray(structRand, types);
         for (StructureType type : types) {
@@ -186,10 +186,10 @@ public class StructureRegistry {
                 System.arraycopy(existing, 0, pops, 0, existing.length);
                 System.arraycopy(old, 0, pops, existing.length, 1);
             }
-            TerraformGeneratorPlugin.logger.info("[Structure Registry] Registered Large Structure: " + pop.getClass().getSimpleName());
+            logger.info("[Structure Registry] Registered Large Structure: " + pop.getClass().getSimpleName());
             largeStructureRegistry.put(type, pops);
         } else if (pop instanceof MultiMegaChunkStructurePopulator) {
-            TerraformGeneratorPlugin.logger.info("[Structure Registry] Registered Small Structure: " + pop.getClass().getSimpleName());
+            logger.info("[Structure Registry] Registered Small Structure: " + pop.getClass().getSimpleName());
             smallStructureRegistry.add((MultiMegaChunkStructurePopulator) pop);
         }
 

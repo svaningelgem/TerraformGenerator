@@ -99,7 +99,7 @@ public class PopulatorDataSpigotAPI extends PopulatorDataAbstract implements IPo
             spawner.setSpawnedType(type);
             spawner.update(true,false);
         }catch(ClassCastException e){
-            TerraformGeneratorPlugin.logger.info("Failed to set spawner at " + rawX + "," + rawY + "," + rawZ);
+            logger.info("Failed to set spawner at " + rawX + "," + rawY + "," + rawZ);
         }
     }
 
@@ -131,7 +131,7 @@ public class PopulatorDataSpigotAPI extends PopulatorDataAbstract implements IPo
         }
         catch(ClassCastException e)
         {
-            TerraformGeneratorPlugin.logger.info("Failed to set beehive at " + rawX + "," + rawY + "," + rawZ);
+            logger.info("Failed to set beehive at " + rawX + "," + rawY + "," + rawZ);
         }
 
     }

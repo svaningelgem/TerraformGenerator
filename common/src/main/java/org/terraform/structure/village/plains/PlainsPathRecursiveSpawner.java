@@ -9,7 +9,6 @@ import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.Wall;
-import org.terraform.main.TerraformGeneratorPlugin;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.PathPopulatorAbstract;
 import org.terraform.structure.room.PathPopulatorData;
@@ -88,7 +87,7 @@ public class PlainsPathRecursiveSpawner {
                                     loc.getX() + (adjDir.getModX() * (2 + roomWidthX/2)),
                                     loc.getY(),
                                     loc.getZ() + (adjDir.getModZ() * (2 + roomWidthZ/2)));
-                            //TerraformGeneratorPlugin.logger.info("ROOM: [" + (loc.getX() + adjDir.getModX()*11) + "] : [" + room.getX() + "], [" + (loc.getZ() + adjDir.getModZ()*11) + "] : [" + room.getZ() + "]");
+                            //logger.info("ROOM: [" + (loc.getX() + adjDir.getModX()*11) + "] : [" + room.getX() + "], [" + (loc.getZ() + adjDir.getModZ()*11) + "] : [" + room.getZ() + "]");
                             
                             if (!this.registerRoom(room)) { //Roll crossroads
                                 if (GenUtils.chance(random, lastCrossroad, 20)) {
@@ -112,11 +111,11 @@ public class PlainsPathRecursiveSpawner {
                 	edgeTurns++;
                 	if(edgeTurns > 3) {
                 		cull = true;
-                    	//TerraformGeneratorPlugin.logger.info("Death by edgeTurns .+ 3");
+                    	//logger.info("Death by edgeTurns .+ 3");
                 	}
                 }
                 else {
-                	//TerraformGeneratorPlugin.logger.info("Death by ");
+                	//logger.info("Death by ");
                     cull = true;
                 }
             }
@@ -138,15 +137,15 @@ public class PlainsPathRecursiveSpawner {
     private boolean isLocationValid(@NotNull SimpleLocation loc) {
         for (DirectionalCubeRoom room : rooms.values()) {
             if (room.isPointInside(loc)) {
-                //TerraformGeneratorPlugin.logger.info("Point was inside room. Dying.");
+                //logger.info("Point was inside room. Dying.");
                 return false;
             }
         }
         if (loc.distanceSqr(core.getX(), core.getY(), core.getZ()) > Math.pow(range, 2)) {
-            //TerraformGeneratorPlugin.logger.info("Point was beyond range. Dying.");
+            //logger.info("Point was beyond range. Dying.");
             return false;
         }
-        //TerraformGeneratorPlugin.logger.info("Point already exists in the path registry");
+        //logger.info("Point already exists in the path registry");
         return !path.containsKey(loc);
     }
 
@@ -273,7 +272,7 @@ public class PlainsPathRecursiveSpawner {
                 }
             }
             if (room.getPop() != null) {
-                TerraformGeneratorPlugin.logger.info("Registered: " + room.getPop().getClass().getName() + " at " + room.getX() + " " + room.getY() + " " + room.getZ() + " in a room of size "
+                logger.info("Registered: " + room.getPop().getClass().getName() + " at " + room.getX() + " " + room.getY() + " " + room.getZ() + " in a room of size "
                         + room.getWidthX() + "x" + room.getWidthZ());
                 room.populate(core.getPopData());
             }

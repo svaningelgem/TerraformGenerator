@@ -91,7 +91,7 @@ public class MansionCompoundRoomDistributor {
                 MansionRoomPopulator populator = populators.get(0).getInstance(piece.getRoom(), ((MansionStandardRoomPiece) piece).internalWalls);
                 if(canRoomSizeFitWithCenter((MansionStandardRoomPiece) piece, pieces, roomSize, populator, false)) {
                     //Shuffle and distribute populator
-                    TerraformGeneratorPlugin.logger.info(populator.getClass().getSimpleName() + " generating at " + piece.getRoom().getSimpleLocation());
+                    logger.info(populator.getClass().getSimpleName() + " generating at " + piece.getRoom().getSimpleLocation());
                     ((MansionStandardRoomPiece) piece).setRoomPopulator(populator); //set the populator;
 
                     //If successful, remove the populator from the active pool.
@@ -107,7 +107,7 @@ public class MansionCompoundRoomDistributor {
 			if(((MansionStandardRoomPiece) piece).getRoomPopulator() == null) {
 				Collections.shuffle(activeRoomPool.get(roomSize), random);
 				MansionRoomPopulator populator = activeRoomPool.get(roomSize).get(0).getInstance(piece.getRoom(), ((MansionStandardRoomPiece) piece).internalWalls);
-				TerraformGeneratorPlugin.logger.info(populator.getClass().getSimpleName() + " generating at " + piece.getRoom().getSimpleLocation());
+				logger.info(populator.getClass().getSimpleName() + " generating at " + piece.getRoom().getSimpleLocation());
 				((MansionStandardRoomPiece) piece).setRoomPopulator(populator); //set the populator;
 			}
 				

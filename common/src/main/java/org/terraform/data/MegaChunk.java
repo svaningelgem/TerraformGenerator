@@ -71,7 +71,7 @@ public class MegaChunk {
         
         int lowX = megaToBlockCoords(this.x);
         int lowZ = megaToBlockCoords(this.z);
-        //TerraformGeneratorPlugin.logger.info("MC(" + this.x + "," + this.z + "):(" + (lowX + megaChunkBlockWidth/2) + "," + (lowZ + megaChunkBlockWidth/2) + ")");
+        //logger.info("MC(" + this.x + "," + this.z + "):(" + (lowX + megaChunkBlockWidth/2) + "," + (lowZ + megaChunkBlockWidth/2) + ")");
         return new int[]{lowX + megaChunkBlockWidth/2, lowZ + megaChunkBlockWidth/2};
     }
     
@@ -89,7 +89,7 @@ public class MegaChunk {
         int centerOfSectionX = (sectionX << BiomeSection.bitshifts) + BiomeSection.sectionWidth/2;
         int centerOfSectionZ = (sectionZ << BiomeSection.bitshifts) + BiomeSection.sectionWidth/2;
         
-        //TerraformGeneratorPlugin.logger.info("MC(" + this.x + "," + this.z + "):(" + (lowX + megaChunkBlockWidth/2) + "," + (lowZ + megaChunkBlockWidth/2) + ")");
+        //logger.info("MC(" + this.x + "," + this.z + "):(" + (lowX + megaChunkBlockWidth/2) + "," + (lowZ + megaChunkBlockWidth/2) + ")");
         return new int[]{centerOfSectionX, centerOfSectionZ};
     }
     

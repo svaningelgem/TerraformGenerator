@@ -13,7 +13,6 @@ import org.terraform.data.MegaChunk;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
-import org.terraform.main.TerraformGeneratorPlugin;
 import org.terraform.main.config.TConfig;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.structure.room.CubeRoom;
@@ -65,7 +64,7 @@ public class PyramidPopulator extends SingleMegaChunkStructurePopulator {
 
     public void spawnPyramid(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data, int x, int y, int z) {
         y -= 10;
-    	TerraformGeneratorPlugin.logger.info("Spawning Pyramid at: " + x + "," + z);
+    	logger.info("Spawning Pyramid at: " + x + "," + z);
         int numRooms = 1000;
         int range = 70;
         if(y >= TerraformGenerator.seaLevel+3) {

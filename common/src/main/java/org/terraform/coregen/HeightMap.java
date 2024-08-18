@@ -13,7 +13,7 @@ import org.terraform.utils.injection.InjectableObject;
 import org.terraform.utils.noise.FastNoise;
 import org.terraform.utils.noise.NoiseCacheHandler;
 
-public class HeightMap implements InjectableObject {
+public class HeightMap extends InjectableObject {
     @Inject
     private TConfig config;
 

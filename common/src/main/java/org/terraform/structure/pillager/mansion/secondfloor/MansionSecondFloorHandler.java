@@ -128,7 +128,7 @@ public class MansionSecondFloorHandler {
             JigsawStructurePiece host = builder.getAdjacentPiece(pieceLoc, piece.getRotation().getOppositeFace());
             if (host != null)
                 host.getWalledFaces().add(piece.getRotation());
-            //TerraformGeneratorPlugin.logger.info("Populating at " + piece.getClass().getSimpleName() + "::" + piece.getRoom().getX() + "," + piece.getRoom().getZ() + "," + piece.getRotation());
+            //logger.info("Populating at " + piece.getClass().getSimpleName() + "::" + piece.getRoom().getX() + "," + piece.getRoom().getZ() + "," + piece.getRotation());
             piece.build(builder.getCore().getPopData(), random);
         }
 

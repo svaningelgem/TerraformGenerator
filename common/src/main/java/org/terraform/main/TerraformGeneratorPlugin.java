@@ -1,7 +1,5 @@
 package org.terraform.main;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,8 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.terraform.biome.BiomeBank;
-import org.terraform.coregen.ChunkCache;
-import org.terraform.coregen.ChunkCacheLoader;
 import org.terraform.coregen.NMSInjectorAbstract;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.TerraformWorld;
@@ -26,6 +22,7 @@ import org.terraform.tree.SaplingOverrider;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
 import org.terraform.utils.bstats.TerraformGeneratorMetricsHandler;
+import org.terraform.utils.injection.InjectableObject;
 import org.terraform.utils.version.Version;
 import org.terraform.watchdog.TfgWatchdogSuppressant;
 
@@ -33,7 +30,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -68,8 +64,7 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
         new TerraformGeneratorMetricsHandler(this); // bStats
 
         BiomeBank.initSinglesConfig(); //Initiates single biome modes.
-
-        watchdogSuppressant = new TfgWatchdogSuppressant();
+        InjectableObject.registerGlobal(this);
 
         new TerraformCommandManager(this, "terraform", "terra");
         Bukkit.getPluginManager().registerEvents(this, this);

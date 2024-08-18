@@ -12,7 +12,6 @@ import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfig;
 import org.terraform.tree.FractalTypes;
 import org.terraform.tree.TreeDB;
 import org.terraform.utils.BlockUtils;
@@ -95,7 +94,7 @@ public class MangroveHandler extends BiomeHandler {
         if (!BlockUtils.isStoneLike(data.getType(rawX, surfaceY, rawZ))) return;
         if (surfaceY < seaLevel) {
 
-            if (data.getType(rawX,TerraformGenerator.seaLevel,rawZ) == Material.WATER) {
+            if (data.getType(rawX, TerraformGenerator.seaLevel,rawZ) == Material.WATER) {
                 if (GenUtils.chance(random, 1, 30))
                     data.setType(rawX, TerraformGenerator.seaLevel + 1, rawZ, Material.LILY_PAD);
             }

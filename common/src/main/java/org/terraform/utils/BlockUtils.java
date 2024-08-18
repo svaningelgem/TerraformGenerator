@@ -23,9 +23,6 @@ import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Leaves;
 import org.bukkit.block.data.type.PointedDripstone;
 import org.bukkit.block.data.type.Stairs;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.terraform.coregen.bukkit.TerraformGenerator;
@@ -34,7 +31,6 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleChunkLocation;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfig;
 import org.terraform.utils.blockdata.StairBuilder;
 import org.terraform.utils.blockdata.fixers.v1_16_R1_BlockDataFixer;
 import org.terraform.utils.noise.FastNoise;
@@ -804,7 +800,7 @@ public class BlockUtils {
         if (radius <= 0) return;
         if (radius <= 0.5) {
             //block.setReplaceType(ReplaceType.ALL);
-        	if (base.getY() <= TerraformGenerator.seaLevel) 
+        	if (base.getY() <= TerraformGenerator.seaLevel)
         		base.setType(Material.WATER);
 	        else
 	        	base.setType(Material.AIR);
@@ -826,7 +822,7 @@ public class BlockUtils {
                             + Math.pow(z, 2) / Math.pow(radius, 2);
                     if (equationResult <= 1 + 0.7 * noise.GetNoise(rel.getX(), rel.getY(), rel.getZ())) {
                         //if(rel.getLocation().distanceSquared(block.getLocation()) <= radiusSquared){
-                        if (rel.getY() <= TerraformGenerator.seaLevel) 
+                        if (rel.getY() <= TerraformGenerator.seaLevel)
                             rel.setType(Material.WATER);
                         else
                             rel.setType(Material.AIR);

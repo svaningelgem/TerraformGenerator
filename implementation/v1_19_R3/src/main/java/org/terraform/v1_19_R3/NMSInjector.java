@@ -56,7 +56,7 @@ public class NMSInjector extends NMSInjectorAbstract {
         //k is getChunkProvider, g is getChunkGenerator()
         ChunkGenerator delegate = ws.k().g();
 
-        TerraformGeneratorPlugin.logger.info("NMSChunkGenerator Delegate is of type " + delegate.getClass().getSimpleName());
+        logger.info("NMSChunkGenerator Delegate is of type " + delegate.getClass().getSimpleName());
         
         //String worldname,
         //int seed,

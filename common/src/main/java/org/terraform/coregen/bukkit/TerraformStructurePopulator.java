@@ -61,7 +61,7 @@ public class TerraformStructurePopulator extends BlockPopulator {
             if(spop == null) return;
             if(!(spop instanceof JigsawStructurePopulator jsp)) return;
             state = jsp.calculateRoomPopulators(tw, mc);
-            TerraformGeneratorPlugin.logger.info("Calculated structure at " + chunkX + "," + chunkZ);
+            logger.info("Calculated structure at " + chunkX + "," + chunkZ);
             jigsawCache.put(mc, state);
         }
 
@@ -132,24 +132,24 @@ public class TerraformStructurePopulator extends BlockPopulator {
 
         //Special Case
         if(new StrongholdPopulator().canSpawn(tw, data.getChunkX(), data.getChunkZ(), biome)) {
-            TerraformGeneratorPlugin.logger.info("Generating Stronghold at chunk: " + data.getChunkX() + "," + data.getChunkZ());
+            logger.info("Generating Stronghold at chunk: " + data.getChunkX() + "," + data.getChunkZ());
             new StrongholdPopulator().populate(tw, data);
         }
 
         //Only check singlemegachunkstructures if this chunk is a central chunk.
         int[] chunkCoords = mc.getCenterBiomeSectionChunkCoords();
-        //TerraformGeneratorPlugin.logger.info("[v] MC(" + mc.getX() + "," + mc.getZ() + ") - " + data.getChunkX() + "," + data.getChunkZ() + " - Center: " + chunkCoords[0] + "," + chunkCoords[1]);
+        //logger.info("[v] MC(" + mc.getX() + "," + mc.getZ() + ") - " + data.getChunkX() + "," + data.getChunkZ() + " - Center: " + chunkCoords[0] + "," + chunkCoords[1]);
         if(chunkCoords[0] == data.getChunkX()
                 && chunkCoords[1] == data.getChunkZ()) {
             int[] blockCoords = mc.getCenterBiomeSectionBlockCoords();
 
-            //TerraformGeneratorPlugin.logger.info("[!] MC(" + mc.getX() + "," + mc.getZ() + ") - " + data.getChunkX() + "," + data.getChunkZ() + " - Center: " + chunkCoords[0] + "," + chunkCoords[1]);
+            //logger.info("[!] MC(" + mc.getX() + "," + mc.getZ() + ") - " + data.getChunkX() + "," + data.getChunkZ() + " - Center: " + chunkCoords[0] + "," + chunkCoords[1]);
             for(SingleMegaChunkStructurePopulator spop : StructureRegistry.getLargeStructureForMegaChunk(tw, mc)) {
                 if(spop == null) continue;
                 if(!spop.isEnabled()) continue;
                 if(spop instanceof StrongholdPopulator) continue;
                 if(spop.canSpawn(tw, data.getChunkX(), data.getChunkZ(), biome)) {
-                    TerraformGeneratorPlugin.logger.info("Generating " + spop.getClass().getName() + " at chunk: " + data.getChunkX() + "," + data.getChunkZ());
+                    logger.info("Generating " + spop.getClass().getName() + " at chunk: " + data.getChunkX() + "," + data.getChunkZ());
                     Bukkit.getPluginManager().callEvent(new TerraformStructureSpawnEvent(blockCoords[0], blockCoords[1], spop.getClass().getName()));
                     spop.populate(tw, data);
                     break;
@@ -164,7 +164,7 @@ public class TerraformStructurePopulator extends BlockPopulator {
             if(spop == null) continue;
             if(!spop.isEnabled()) continue;
             if(spop instanceof StrongholdPopulator) continue;
-            //TerraformGeneratorPlugin.logger.info("[v]       MC(" + mc.getX() + "," + mc.getZ() + ") - Checking " + spop.getClass().getName());
+            //logger.info("[v]       MC(" + mc.getX() + "," + mc.getZ() + ") - Checking " + spop.getClass().getName());
             if(spop.canSpawn(tw, chunkCoords[0], chunkCoords[1], biome)) {
                 return spop;
             }

@@ -58,7 +58,7 @@ public class PhysicsUpdaterPopulator extends BlockPopulator implements Listener{
     public static void flushChanges() {
     	if(cache.isEmpty())
     		return;
-    	TerraformGeneratorPlugin.logger.info("[PhysicsUpdaterPopulator] Flushing repairs (" + cache.size() + " chunks)");
+    	logger.info("[PhysicsUpdaterPopulator] Flushing repairs (" + cache.size() + " chunks)");
         ArrayList<SimpleChunkLocation> locs = new ArrayList<>(cache.keySet());
     	for(SimpleChunkLocation scl:locs) {
     		World w = Bukkit.getWorld(scl.getWorld());
@@ -71,7 +71,7 @@ public class PhysicsUpdaterPopulator extends BlockPopulator implements Listener{
     	        		//Set block physics by calling setBlockData
     	        		//Note that this should not be used for complex blocks.
     	        		BlockData old = target.getBlockData();
-    	        		TerraformGeneratorPlugin.logger.info("[PhysicsUpdaterPopulator] " + target.getLocation());
+    	        		logger.info("[PhysicsUpdaterPopulator] " + target.getLocation());
     	                target.setType(Material.AIR);
     	        		target.setBlockData(old, true);
     	        	}
@@ -88,7 +88,7 @@ public class PhysicsUpdaterPopulator extends BlockPopulator implements Listener{
         SimpleChunkLocation scl = new SimpleChunkLocation(chunk);
 		Collection<SimpleLocation> changes = cache.remove(scl);
         if (changes != null) {
-        	//TerraformGeneratorPlugin.logger.info("[PhysicsUpdaterPopulator] Detected anomalous generation by NMS on " + scl + ". Running repairs on " + changes.size() + " blocks");
+        	//logger.info("[PhysicsUpdaterPopulator] Detected anomalous generation by NMS on " + scl + ". Running repairs on " + changes.size() + " blocks");
         	for (SimpleLocation entry : changes) {
         		Block target = world.getBlockAt(entry.getX(), entry.getY(), entry.getZ());
         		//Set block physics by calling setBlockData
@@ -102,7 +102,7 @@ public class PhysicsUpdaterPopulator extends BlockPopulator implements Listener{
 
 @EventHandler
     public void onWorldUnload(@NotNull WorldUnloadEvent event) {
-    	TerraformGeneratorPlugin.logger.info("[PhysicsUpdaterPopulator] Flushing repairs for " + event.getWorld().getName() + " (" + cache.size() + " chunks in cache)");
+    	logger.info("[PhysicsUpdaterPopulator] Flushing repairs for " + event.getWorld().getName() + " (" + cache.size() + " chunks in cache)");
         
     	int processed = 0;
     	for(SimpleChunkLocation scl:cache.keySet()) {
@@ -110,7 +110,7 @@ public class PhysicsUpdaterPopulator extends BlockPopulator implements Listener{
         		continue;
         	Collection<SimpleLocation> changes = cache.remove(scl);
             if (changes != null) {
-            	//TerraformGeneratorPlugin.logger.info("[PhysicsUpdaterPopulator] Detected anomalous generation by NMS on " + scl + ". Running repairs on " + changes.size() + " blocks");
+            	//logger.info("[PhysicsUpdaterPopulator] Detected anomalous generation by NMS on " + scl + ". Running repairs on " + changes.size() + " blocks");
             	for (SimpleLocation entry : changes) {
             		Block target = event.getWorld().getBlockAt(entry.getX(), entry.getY(), entry.getZ());
             		//Set block physics by calling setBlockData
@@ -123,7 +123,7 @@ public class PhysicsUpdaterPopulator extends BlockPopulator implements Listener{
 	        
 	        processed++;
 	        if(processed % 20 == 0)
-	        	TerraformGeneratorPlugin.logger.info("[PhysicsUpdaterPopulator] Processed " + processed + " more chunks");
+	        	logger.info("[PhysicsUpdaterPopulator] Processed " + processed + " more chunks");
     	}
     }
 

@@ -12,7 +12,6 @@ import org.terraform.data.MegaChunk;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
-import org.terraform.main.TerraformGeneratorPlugin;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomLayout;
@@ -67,7 +66,7 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
             animalFarm.setFace(dir);
             animalFarm.apply();
 
-            TerraformGeneratorPlugin.logger.info("Spawning animal farm at " + x + "," + y + "," + z + " with rotation of " + animalFarm.getFace());
+            logger.info("Spawning animal farm at " + x + "," + y + "," + z + " with rotation of " + animalFarm.getFace());
 
             data.addEntity(x, y + 1, z, EntityType.VILLAGER); //Two villagers
             data.addEntity(x, y + 1, z, EntityType.VILLAGER);
@@ -92,7 +91,7 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
             createSurroundingFences(tw, biome, random, data, x, y, z);
 
         } catch (Throwable e) {
-            TerraformGeneratorPlugin.logger.error("Something went wrong trying to place farmhouse at " + x + "," + y + "," + z + "!");
+            logger.error("Something went wrong trying to place farmhouse at " + x + "," + y + "," + z + "!");
             logger.stackTrace(e);
         }
     }

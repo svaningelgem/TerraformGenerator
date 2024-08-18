@@ -78,7 +78,7 @@ public class BiomeSection {
         }
 
 	    if (sections.size() != width * width)
-            TerraformGeneratorPlugin.logger.error("Section size was not " + (width * width) + ".");
+            logger.error("Section size was not " + (width * width) + ".");
 
 	    return sections;
     }

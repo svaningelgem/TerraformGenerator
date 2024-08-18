@@ -53,14 +53,14 @@ public class TerraformWorldProviderBiome extends WorldChunkManager {
                 //Preconditions.checkArgument(biome != Biome.CUSTOM, "Cannot use the biome %s", biome);
                 biomeBases.add(CraftBlock.biomeToBiomeBase(registry, biome));
             } catch(IllegalStateException e) {
-                TerraformGeneratorPlugin.logger.info("Ignoring biome " + biome);
+                logger.info("Ignoring biome " + biome);
             }
         }
         
         for(CustomBiomeType cbt:CustomBiomeType.values()) {
         	if(cbt == CustomBiomeType.NONE) continue;
         	ResourceKey<BiomeBase> rkey = CustomBiomeHandler.terraformGenBiomeRegistry.get(cbt);
-        	//TerraformGeneratorPlugin.logger.info(cbt + " --- " + rkey);
+        	//logger.info(cbt + " --- " + rkey);
             //Holder.c is Holder.Reference. It implements Holder. No idk why.
 	        Optional<Holder.c<BiomeBase>> holder = registry.b(rkey);
             holder.ifPresent(biomeBases::add);
@@ -115,7 +115,7 @@ public class TerraformWorldProviderBiome extends WorldChunkManager {
 			ResourceKey<BiomeBase> rkey = CustomBiomeHandler.terraformGenBiomeRegistry.get(bank.getHandler().getCustomBiome()); //ResourceKey.a(IRegistry.aP, new MinecraftKey(bank.getHandler().getCustomBiome().getKey()));
 			Optional<Holder.c<BiomeBase>> holder = registry.b(rkey); //g is getHolderOrThrow
 	        if(holder.isEmpty()) {
-                TerraformGeneratorPlugin.logger.error("Custom biome was not found in the vanilla registry!");
+                logger.error("Custom biome was not found in the vanilla registry!");
 	        }
 			
 			if(holder.isPresent()) {

@@ -29,7 +29,7 @@ public class LanternPillarRoomPopulator extends MonumentRoomPopulator {
         for (int i = 0; i < 5; i++) {
             int[] upperBounds = room.getUpperCorner(1);
             int[] lowerBounds = room.getLowerCorner(1);
-            //TerraformGeneratorPlugin.logger.info(lowerBounds[0]+"->"+upperBounds[0]+","+i);
+            //logger.info(lowerBounds[0]+"->"+upperBounds[0]+","+i);
 
             //Solid fill
             for (int x = lowerBounds[0]; x <= upperBounds[0]; x++) {

@@ -15,7 +15,6 @@ import org.terraform.data.MegaChunk;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
-import org.terraform.main.TerraformGeneratorPlugin;
 import org.terraform.main.config.TConfig;
 import org.terraform.schematic.SchematicParser;
 import org.terraform.schematic.TerraSchematic;
@@ -54,7 +53,7 @@ public class WitchHutPopulator extends MultiMegaChunkStructurePopulator {
 
         //Refers to center of hut, above the water.
         SimpleBlock core = new SimpleBlock(data, x, y, z);
-        TerraformGeneratorPlugin.logger.info("Spawning Swamp Hut at " + core.getCoords());
+        logger.info("Spawning Swamp Hut at " + core.getCoords());
         try {
             BlockFace face = BlockUtils.getDirectBlockFace(random);
             TerraSchematic swamphut = TerraSchematic.load("swamphut", core);

@@ -59,7 +59,7 @@ public class SwampHandler extends BiomeHandler {
             if (data.getBiome(treeX, treeZ) == getBiome()) {
                 treeY = GenUtils.getHighestGround(data, treeX, treeZ);
                 
-                if(treeY > TerraformGenerator.seaLevel-6) {
+                if(treeY > TerraformGenerator.seaLevel - 6) {
                 	 //Don't do gradient checks for swamp trees, the mud is uneven.
                 	//just make sure it's submerged
                     TreeDB.spawnBreathingRoots(tw, new SimpleBlock(data,treeX,treeY,treeZ), Material.OAK_LOG);

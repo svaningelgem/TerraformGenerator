@@ -47,7 +47,7 @@ public class OutpostPopulator extends SingleMegaChunkStructurePopulator {
 
     public void spawnOutpost(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data, int x, int y, int z) {
         try {
-        	TerraformGeneratorPlugin.logger.info("Spawning outpost at " + x + "," + y + "," + z);
+        	logger.info("Spawning outpost at " + x + "," + y + "," + z);
 
         	BiomeBank biome = tw.getBiomeBank(x, z);
         	
@@ -100,7 +100,7 @@ public class OutpostPopulator extends SingleMegaChunkStructurePopulator {
             propGenerator.runRoomPopulators(data,tw);
             setupPillagerSpawns(data, x, y, z);
         } catch (Throwable e) {
-            TerraformGeneratorPlugin.logger.error("Something went wrong trying to place outpost at " + x + "," + y + "," + z + "!");
+            logger.error("Something went wrong trying to place outpost at " + x + "," + y + "," + z + "!");
             logger.stackTrace(e);
         }
     }

@@ -24,7 +24,7 @@ public class BeeHiveSpawner {
         }
         catch(NullPointerException e)
         {
-            TerraformGeneratorPlugin.logger.info("Beehive null silently ignored");
+            logger.info("Beehive null silently ignored");
         }
     }
 

@@ -45,33 +45,33 @@ public class StrongholdPopulator extends SingleMegaChunkStructurePopulator {
             for (int i = 0; i < 3; i++) {
                 int[] coords = randomCircleCoords(rand, radius);
                 if (!debugSpawnMessage) {
-                    TerraformGeneratorPlugin.logger.info("Will spawn stronghold at: " + coords[0] + ", " + coords[1]);
+                    logger.info("Will spawn stronghold at: " + coords[0] + ", " + coords[1]);
                     debugSpawnMessage = true;
                 }
                 POSITIONS[pos++] = coords;
             }
             radius += 3072;
-            //TerraformGeneratorPlugin.logger.debug("sp-1");
+            //logger.debug("sp-1");
             for (int i = 0; i < 6; i++) POSITIONS[pos++] = randomCircleCoords(rand, radius);
             radius += 3072;
-            //TerraformGeneratorPlugin.logger.debug("sp-2");
+            //logger.debug("sp-2");
             for (int i = 0; i < 10; i++) POSITIONS[pos++] = randomCircleCoords(rand, radius);
             radius += 3072;
-            //TerraformGeneratorPlugin.logger.debug("sp-3");
+            //logger.debug("sp-3");
             for (int i = 0; i < 15; i++) POSITIONS[pos++] = randomCircleCoords(rand, radius);
             radius += 3072;
-            //TerraformGeneratorPlugin.logger.debug("s-pop-4");
+            //logger.debug("s-pop-4");
             for (int i = 0; i < 21; i++) POSITIONS[pos++] = randomCircleCoords(rand, radius);
             radius += 3072;
-            //TerraformGeneratorPlugin.logger.debug("s-pop-5");
+            //logger.debug("s-pop-5");
             for (int i = 0; i < 28; i++) POSITIONS[pos++] = randomCircleCoords(rand, radius);
             radius += 3072;
-            //TerraformGeneratorPlugin.logger.debug("s-pop-6");
+            //logger.debug("s-pop-6");
             for (int i = 0; i < 36; i++) POSITIONS[pos++] = randomCircleCoords(rand, radius);
             radius += 3072;
-            //TerraformGeneratorPlugin.logger.debug("s-pop-7");
+            //logger.debug("s-pop-7");
             for (int i = 0; i < 9; i++) POSITIONS[pos++] = randomCircleCoords(rand, radius);
-            //TerraformGeneratorPlugin.logger.debug("s-pop-8");
+            //logger.debug("s-pop-8");
 
         }
         return POSITIONS;
@@ -93,7 +93,7 @@ public class StrongholdPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public void populate(@NotNull TerraformWorld tw, @NotNull PopulatorDataAbstract data) {
-        //TerraformGeneratorPlugin.logger.debug("s-populate");
+        //logger.debug("s-populate");
         if (!config.STRUCTURES_STRONGHOLD_ENABLED) return;
         int[][] positions = strongholdPositions(tw);
         for (int x = data.getChunkX() * 16; x < data.getChunkX() * 16 + 16; x++) {
@@ -122,7 +122,7 @@ public class StrongholdPopulator extends SingleMegaChunkStructurePopulator {
     }
 
     public void spawnStronghold(@NotNull TerraformWorld tw, Random random, @NotNull PopulatorDataAbstract data, int x, int y, int z) {
-        //TerraformGeneratorPlugin.logger.info("Spawning stronghold at: " + x + "," + z);
+        //logger.info("Spawning stronghold at: " + x + "," + z);
 
         int numRooms = 70;
         int range = 100;

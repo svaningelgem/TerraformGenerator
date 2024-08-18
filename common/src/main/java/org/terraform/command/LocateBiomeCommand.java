@@ -85,7 +85,7 @@ public class LocateBiomeCommand extends TerraCommand {
                 break;
             }
         }
-        TerraformGeneratorPlugin.logger.info("[Locate Command] " + message);
+        logger.info("[Locate Command] " + message);
     }
 
     private static class LocateBiomeTypeArgument extends TerraCommandArgument<BiomeBank> {

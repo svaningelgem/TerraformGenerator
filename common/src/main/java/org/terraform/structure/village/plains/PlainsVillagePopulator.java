@@ -65,7 +65,7 @@ public class PlainsVillagePopulator extends VillagePopulator {
     	}
     	
     	if(max == 0) { //Maybe it's a mountain or stuck in the middle of eroded plains
-    		TerraformGeneratorPlugin.logger.info("Village at " + w.get().toVector() + " may have a weird spawn.");
+    		logger.info("Village at " + w.get().toVector() + " may have a weird spawn.");
     	}
     	
     	room.setX(w.getX());
@@ -100,7 +100,7 @@ public class PlainsVillagePopulator extends VillagePopulator {
         
     	
     	BlockFace pathStart = BlockUtils.getDirectBlockFace(random);
-        TerraformGeneratorPlugin.logger.info("Spawning plains village at " + x + "," + y + "," + z);
+        logger.info("Spawning plains village at " + x + "," + y + "," + z);
         DirectionalCubeRoom townHall = new DirectionalCubeRoom(pathStart, 24, 24, 24, x, y, z);
         PlainsVillageTownhallPopulator townHallPop = new PlainsVillageTownhallPopulator(tw, random, false, false);
         townHall.setRoomPopulator(townHallPop);

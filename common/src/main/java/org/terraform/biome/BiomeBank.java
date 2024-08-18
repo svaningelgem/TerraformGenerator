@@ -17,8 +17,6 @@ import org.terraform.coregen.HeightMap;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.TWSimpleLocation;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfig;
 import org.terraform.utils.noise.FastNoise;
 import org.terraform.utils.noise.FastNoise.NoiseType;
 import org.terraform.utils.noise.NoiseCacheHandler;
@@ -237,7 +235,7 @@ public enum BiomeBank {
      */
     public static @NotNull BiomeBank calculateBiome(@NotNull TerraformWorld tw, int rawX, int height, int rawZ) {
     	if(debugPrint) 
-    		TerraformGeneratorPlugin.logger.info("calculateBiome called with args: " + tw.getName() + "," + rawX + "," + height + "," + rawZ);
+    		logger.info("calculateBiome called with args: " + tw.getName() + "," + rawX + "," + height + "," + rawZ);
     	
     	BiomeBank bank = calculateHeightIndependentBiome(tw, rawX, rawZ);
     	
@@ -256,29 +254,29 @@ public enum BiomeBank {
     	//adding back river height, it means that the river height
     	//carved dry land into the sea level.
     	//That's a river.
-        if(height < TerraformGenerator.seaLevel 
+        if(height < TerraformGenerator.seaLevel
         		&& height + HeightMap.getRawRiverDepth(tw, rawX, rawZ) >= TerraformGenerator.seaLevel) {
         	bank = bank.getHandler().getRiverType();
         	if(debugPrint) 
-        		TerraformGeneratorPlugin.logger.info("calculateBiome -> River Detected");
+        		logger.info("calculateBiome -> River Detected");
     	//If the height is at, or slightly higher than, sea level,
     	//it is a beach.
-        }else if(height >= TerraformGenerator.seaLevel 
+        }else if(height >= TerraformGenerator.seaLevel
         		&& height <= TerraformGenerator.seaLevel + 4*2*Math.abs(beachNoise.GetNoise(rawX, rawZ))) {
         	bank = bank.getHandler().getBeachType();
         	if(debugPrint) 
-        		TerraformGeneratorPlugin.logger.info("calculateBiome -> Beach calculated");
+        		logger.info("calculateBiome -> Beach calculated");
         }
         
         //Correct submerged biomes. They'll be rivers.
         //Exclude swamps from this check, as swamps are submerged.
         if(bank != BiomeBank.SWAMP
                 && bank != BiomeBank.MANGROVE
-        		&& height < TerraformGenerator.seaLevel 
+        		&& height < TerraformGenerator.seaLevel
         		&& bank.getType().isDry()){
         	bank = bank.getHandler().getRiverType();
         	if(debugPrint) 
-        		TerraformGeneratorPlugin.logger.info("calculateBiome -> Biome is submerged, defaulting to river");
+        		logger.info("calculateBiome -> Biome is submerged, defaulting to river");
         }
         
         //Oceanic biomes that are above water level 
@@ -286,7 +284,7 @@ public enum BiomeBank {
         
         if(!bank.getType().isDry() && height >= TerraformGenerator.seaLevel) {
         	if(debugPrint) 
-        		TerraformGeneratorPlugin.logger.info("calculateBiome -> Submerged biome above ground detected");
+        		logger.info("calculateBiome -> Submerged biome above ground detected");
         	BiomeBank replacement = null;
         	
         	//If the ocean handler wants to force a beach default, it will be a beach default.
@@ -295,11 +293,11 @@ public enum BiomeBank {
         		int highestDom = Integer.MIN_VALUE;
             	for(BiomeSection sect:BiomeSection.getSurroundingSections(tw, rawX, rawZ)) {
                 	if(debugPrint) 
-                		TerraformGeneratorPlugin.logger.info("calculateBiome -> -> Comparison Section: " + sect.toString());
+                		logger.info("calculateBiome -> -> Comparison Section: " + sect.toString());
             		if(sect.getBiomeBank().getType().isDry()) {
             			int compDist = (int) sect.getDominanceBasedOnRadius(rawX, rawZ);
                     	if(debugPrint) 
-                    		TerraformGeneratorPlugin.logger.info("calculateBiome -> -> -> Dominance: " + compDist);
+                    		logger.info("calculateBiome -> -> -> Dominance: " + compDist);
             			if(compDist > highestDom) {
             				replacement = sect.getBiomeBank();
             				highestDom = compDist;
@@ -316,11 +314,11 @@ public enum BiomeBank {
             	bank = replacement;
         	
         	if(debugPrint) 
-        		TerraformGeneratorPlugin.logger.info("calculateBiome -> -> Submerged biome defaulted to: " + replacement);
+        		logger.info("calculateBiome -> -> Submerged biome defaulted to: " + replacement);
         	
         }
     	if(debugPrint) 
-    		TerraformGeneratorPlugin.logger.info("calculateBiome -> Evaluated: " + bank);
+    		logger.info("calculateBiome -> Evaluated: " + bank);
         
     	return bank;
     }
@@ -470,31 +468,31 @@ public enum BiomeBank {
         if(contenders.isEmpty()) {
             return switch(targetType) {
                 case BEACH -> {
-                    TerraformGeneratorPlugin.logger.info("Defaulted for beach: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
+                    logger.info("Defaulted for beach: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
                     yield BiomeBank.valueOf(TConfigOption.BIOME_DEFAULT_BEACH.getString());
                 }
                 case DEEP_OCEANIC -> {
-                    TerraformGeneratorPlugin.logger.info("Defaulted for deep oceanic: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
+                    logger.info("Defaulted for deep oceanic: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
                     yield BiomeBank.valueOf(TConfigOption.BIOME_DEFAULT_DEEPOCEANIC.getString());
                 }
                 case FLAT -> {
-                    TerraformGeneratorPlugin.logger.info("Defaulted for flat: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
+                    logger.info("Defaulted for flat: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
                     yield BiomeBank.valueOf(TConfigOption.BIOME_DEFAULT_FLAT.getString());
                 }
                 case MOUNTAINOUS -> {
-                    TerraformGeneratorPlugin.logger.info("Defaulted for mountainous: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
+                    logger.info("Defaulted for mountainous: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
                     yield BiomeBank.valueOf(TConfigOption.BIOME_DEFAULT_MOUNTAINOUS.getString());
                 }
                 case OCEANIC -> {
-                    TerraformGeneratorPlugin.logger.info("Defaulted for ocean: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
+                    logger.info("Defaulted for ocean: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
                     yield BiomeBank.valueOf(TConfigOption.BIOME_DEFAULT_OCEANIC.getString());
                 }
                 case RIVER -> {
-                    TerraformGeneratorPlugin.logger.info("Defaulted for river: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
+                    logger.info("Defaulted for river: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
                     yield BiomeBank.valueOf(TConfigOption.BIOME_DEFAULT_RIVER.getString());
                 }
                 case HIGH_MOUNTAINOUS -> {
-                    TerraformGeneratorPlugin.logger.info("Defaulted for high mountainous: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
+                    logger.info("Defaulted for high mountainous: " + temperature + " : " + moisture + "," + climate + ":" + targetType);
                     yield BiomeBank.valueOf(TConfigOption.BIOME_DEFAULT_HIGHMOUNTAINOUS.getString());
                 }
             };

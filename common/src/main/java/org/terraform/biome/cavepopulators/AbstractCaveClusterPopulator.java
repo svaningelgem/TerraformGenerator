@@ -55,7 +55,7 @@ public abstract class AbstractCaveClusterPopulator extends AbstractCavePopulator
         queue.add(center); //Add the root element
         seen.put(center, new Wall[]{new Wall(ceil), new Wall(floor)});
 
-        //TerraformGeneratorPlugin.logger.info("Entering BFS for " + center);
+        //logger.info("Entering BFS for " + center);
         while(!queue.isEmpty())
         {
             SimpleBlock v = queue.remove();
@@ -68,7 +68,7 @@ public abstract class AbstractCaveClusterPopulator extends AbstractCavePopulator
                     vCeil.get(),
                     vFloor.get()
             });
-            //TerraformGeneratorPlugin.logger.info("NLOOP: " + v);
+            //logger.info("NLOOP: " + v);
 
             boolean sawFailCondition = false;
             for(BlockFace face:BlockUtils.directBlockFaces)
@@ -78,7 +78,7 @@ public abstract class AbstractCaveClusterPopulator extends AbstractCavePopulator
                 SimpleBlock neighbour = v.getRelative(face);
 
                 if(seen.containsKey(neighbour)){
-                    //TerraformGeneratorPlugin.logger.info("Seen " + neighbour);
+                    //logger.info("Seen " + neighbour);
                     continue;
                 }
 
@@ -88,7 +88,7 @@ public abstract class AbstractCaveClusterPopulator extends AbstractCavePopulator
                 if(equationResult > 1 + 0.7*circleNoise.GetNoise(neighbour.getX(), neighbour.getZ()))
                 {
                     sawFailCondition = true;
-                    //TerraformGeneratorPlugin.logger.info("OOB " + neighbour + ": " + equationResult);
+                    //logger.info("OOB " + neighbour + ": " + equationResult);
                     continue;
                 }
 
@@ -105,22 +105,22 @@ public abstract class AbstractCaveClusterPopulator extends AbstractCavePopulator
                         || candidateFloorWall.getType() == Material.DRIPSTONE_BLOCK
                         || candidateFloorWall.getUp().isSolid()
                         || candidateCeilWall.getDown().isSolid()) {
-                    //TerraformGeneratorPlugin.logger.info("Misc Skip " + neighbour);
+                    //logger.info("Misc Skip " + neighbour);
                     continue;
                 }
 
                 //Process under BFS
                 seen.put(neighbour, new Wall[]{candidateCeilWall,candidateFloorWall});
                 queue.add(neighbour);
-                //TerraformGeneratorPlugin.logger.info("Enqueued " + neighbour);
+                //logger.info("Enqueued " + neighbour);
             }
 
             //If you saw a node that fails the radius equation,
             // then you're a boundary block.
             boundaries.add(sawFailCondition);
-            //TerraformGeneratorPlugin.logger.info("Processed " + v + ", SZ Q: " + queue.size());
+            //logger.info("Processed " + v + ", SZ Q: " + queue.size());
         }
-        //TerraformGeneratorPlugin.logger.info("Finished for " + center);
+        //logger.info("Finished for " + center);
 
         lowestYCenter = center.getAtY(lowest);
         for(int i = 0; i < ceilFloorPairs.size(); i++) {

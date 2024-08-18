@@ -62,7 +62,7 @@ public class TerraformWorldProviderBiome extends WorldChunkManager {
             ResourceKey<BiomeBase> rkey = CustomBiomeHandler.terraformGenBiomeRegistry.get(bank.getHandler().getCustomBiome()); //ResourceKey.a(IRegistry.aP, new MinecraftKey(bank.getHandler().getCustomBiome().getKey()));
             Optional<Holder.c<BiomeBase>> holder = registry.b(rkey); //g is getHolderOrThrow
             if(holder.isEmpty())
-                TerraformGeneratorPlugin.logger.error("Custom biome was not found in the vanilla registry!");
+                logger.error("Custom biome was not found in the vanilla registry!");
 
 
             if(holder.isPresent()) {

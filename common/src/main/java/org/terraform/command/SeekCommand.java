@@ -142,7 +142,7 @@ public class SeekCommand extends TerraCommand implements Listener {
     }
 
     private void syncSendMessage(String message) {
-        TerraformGeneratorPlugin.logger.info("[Seek Command] " + message);
+        logger.info("[Seek Command] " + message);
     }
 
     public static class StructurePopulatorArgument extends TerraCommandArgument<StructurePopulator> {

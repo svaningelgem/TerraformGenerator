@@ -181,7 +181,7 @@ public class RoomLayoutGenerator {
             if (pyramidish) {
                 double heightRange = 1 - ((Math.pow(nx, 2) + Math.pow(nz, 2)) / Math.pow(range / 2f, 2));
                 if (heightRange * roomMaxHeight < roomMinHeight) heightRange = roomMinHeight / (float) roomMaxHeight;
-                //TerraformGeneratorPlugin.logger.info("Original h: " + heightY + "; heightRange: " + heightRange);
+                //logger.info("Original h: " + heightY + "; heightRange: " + heightRange);
                 heightY = GenUtils.randInt(rand,
                         roomMinHeight,
                         (int) (roomMaxHeight * heightRange));
@@ -271,7 +271,7 @@ public class RoomLayoutGenerator {
             if (pops.isForceSpawn()) {
                 for (CubeRoom room : rooms) {
                     if (room.pop == null && pops.canPopulate(room)) {
-                        //TerraformGeneratorPlugin.logger.info("Set down forced populator of " + pops.getClass().getName());
+                        //logger.info("Set down forced populator of " + pops.getClass().getName());
                         room.setRoomPopulator(pops);
                         if (pops.isUnique()) it.remove();
                         break;
@@ -300,9 +300,9 @@ public class RoomLayoutGenerator {
                 }
             }
             if (room.pop != null) {
-                TerraformGeneratorPlugin.logger.info("Registered: " + room.pop.getClass().getName() + " at " + room.getX() + " " + room.getY() + " " + room.getZ() + " in a room of size " + room.getWidthX() + "x" + room.getWidthZ());
+                logger.info("Registered: " + room.pop.getClass().getName() + " at " + room.getX() + " " + room.getY() + " " + room.getZ() + " in a room of size " + room.getWidthX() + "x" + room.getWidthZ());
             } else {
-                TerraformGeneratorPlugin.logger.info("Registered: plain room at " + room.getX() + " " + room.getY() + " " + room.getZ() + " in a room of size " + room.getWidthX() + "x" + room.getWidthZ());
+                logger.info("Registered: plain room at " + room.getX() + " " + room.getY() + " " + room.getZ() + " in a room of size " + room.getWidthX() + "x" + room.getWidthZ());
             }
         }
     }
@@ -361,9 +361,9 @@ public class RoomLayoutGenerator {
         for (CubeRoom room : rooms) {
             if (carveRooms) {
             	room = new CarvedRoom(room);
-        		//TerraformGeneratorPlugin.logger.info("Vol: " + (room.getWidthX() * room.getWidthZ() * room.getHeight()));
+        		//logger.info("Vol: " + (room.getWidthX() * room.getWidthZ() * room.getHeight()));
             	if(room.largerThanVolume(40000)) {
-            		//TerraformGeneratorPlugin.logger.info("Larger Room Invoked");
+            		//logger.info("Larger Room Invoked");
                 	((CarvedRoom) room).setFrequency(0.03f);
             	}
             	((CarvedRoom) room).setxMultiplier(this.xCarveMul);
@@ -385,7 +385,7 @@ public class RoomLayoutGenerator {
             }
         } else {
             for (LegacyPathGenerator pGen : pathGens) {
-            	//TerraformGeneratorPlugin.logger.info("pathgen");
+            	//logger.info("pathgen");
                 pGen.populate();
             }
         }

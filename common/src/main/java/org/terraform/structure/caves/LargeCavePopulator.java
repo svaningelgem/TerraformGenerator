@@ -83,7 +83,7 @@ public class LargeCavePopulator extends JigsawStructurePopulator {
         gen.setGenPaths(false);
         gen.roomCarver = new LargeCaveRoomCarver(GenUtils.randMaterial(rand, Material.LAVA, Material.WATER));
         SimpleLocation center = new SimpleLocation(x, y, z);
-        TerraformGeneratorPlugin.logger.info("Large Cave at " + center + " has water level > " + minY + " with populator " +cavePopulator.getClass().getSimpleName());
+        logger.info("Large Cave at " + center + " has water level > " + minY + " with populator " +cavePopulator.getClass().getSimpleName());
         HashMap<SimpleChunkLocation, LargeCaveRoomPiece> chunkToRoom = new HashMap<>();
 
         //BFS against center with "edges" as the noise equation

@@ -87,7 +87,7 @@ public class NMSChunkGenerator extends ChunkGenerator {
         for(Holder<Structure> holder:holderset) {
         	Structure feature = holder.a();
         	//StructureGenerator<?> structuregenerator = feature.;
-        	TerraformGeneratorPlugin.logger.info("Vanilla locate for " + feature.getClass().getName() + " invoked.");
+        	logger.info("Vanilla locate for " + feature.getClass().getName() + " invoked.");
 
             if (holder.a().getClass() == StrongholdStructure.class) { //stronghold
                 int[] coords = new StrongholdPopulator().getNearestFeature(tw, pX, pZ);

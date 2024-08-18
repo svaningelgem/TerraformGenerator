@@ -68,7 +68,7 @@ public class ShipwreckPopulator extends MultiMegaChunkStructurePopulator {
             shipwreck.setFace(BlockUtils.getDirectBlockFace(random));
             shipwreck.apply();
 
-            TerraformGeneratorPlugin.logger.info("Spawning shipwreck at " + x + ", " + y + ", " + z + " with rotation of " + shipwreck.getFace());
+            logger.info("Spawning shipwreck at " + x + ", " + y + ", " + z + " with rotation of " + shipwreck.getFace());
 
             //Generate holes and damage
             for (int i = 0; i < GenUtils.randInt(random, 0, 3); i++) {
@@ -91,7 +91,7 @@ public class ShipwreckPopulator extends MultiMegaChunkStructurePopulator {
 
 
         } catch (Throwable e) {
-            TerraformGeneratorPlugin.logger.error("Something went wrong trying to place shipwreck at " + x + ", " + y + ", " + z);
+            logger.error("Something went wrong trying to place shipwreck at " + x + ", " + y + ", " + z);
             logger.stackTrace(e);
         }
     }

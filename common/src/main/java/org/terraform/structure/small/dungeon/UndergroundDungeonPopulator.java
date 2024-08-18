@@ -71,7 +71,7 @@ public class UndergroundDungeonPopulator extends SmallDungeonPopulator {
 
     public void spawnDungeonRoom(int x, int y, int z, TerraformWorld tw, @NotNull Random rand,
                                  @NotNull PopulatorDataAbstract data) {
-        TerraformGeneratorPlugin.logger.info("Spawning Underground Dungeon at " + x + "," + y + "," + z);
+        logger.info("Spawning Underground Dungeon at " + x + "," + y + "," + z);
         CubeRoom room = new CubeRoom(GenUtils.randOddInt(rand, 9, 15),
                 GenUtils.randOddInt(rand, 9, 15),
                 GenUtils.randInt(rand, 5, 7),

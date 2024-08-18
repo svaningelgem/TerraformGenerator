@@ -117,7 +117,7 @@ public class PreviewCommand extends TerraCommand {
             if(y>=maxHeights[x][z])
             {
                 maxHeights[x][z] = y;
-                if((y-TerraformGenerator.seaLevel) % 3 == 0) {
+                if((y - TerraformGenerator.seaLevel) % 3 == 0) {
                     if(y > TerraformGenerator.seaLevel)
                         col = col.brighter();
                      else col = col.darker();

@@ -33,6 +33,6 @@ public class Pre14PrivateFieldHandler extends PrivateFieldHandler {
         targetField.setAccessible(true);
         FIELD_MODIFIERS.invoke(targetField, targetField.getModifiers() & ~Modifier.FINAL);
         targetField.set(obj, value);
-        TerraformGeneratorPlugin.logger.info("Pre Java 14 detected.");
+        logger.info("Pre Java 14 detected.");
     }
 }

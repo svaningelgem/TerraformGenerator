@@ -58,7 +58,7 @@ public class PlainsVillageTownhallPopulator extends RoomPopulatorAbstract {
             farmHouse.setFace(face);
             farmHouse.apply();
 
-            TerraformGeneratorPlugin.logger.info("Spawning farmhouse at " + x + "," + y + "," + z + " with rotation of " + farmHouse.getFace());
+            logger.info("Spawning farmhouse at " + x + "," + y + "," + z + " with rotation of " + farmHouse.getFace());
 
             data.addEntity(x, y + 1, z, EntityType.VILLAGER); //Two villagers
             data.addEntity(x, y + 1, z, EntityType.VILLAGER);
@@ -127,7 +127,7 @@ public class PlainsVillageTownhallPopulator extends RoomPopulatorAbstract {
             }
 
         } catch (Throwable e) {
-            TerraformGeneratorPlugin.logger.error("Something went wrong trying to place farmhouse at " + x + "," + y + "," + z + "!");
+            logger.error("Something went wrong trying to place farmhouse at " + x + "," + y + "," + z + "!");
             logger.stackTrace(e);
         }
 

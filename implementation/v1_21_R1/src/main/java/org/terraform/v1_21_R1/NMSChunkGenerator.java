@@ -40,8 +40,6 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfig;
 import org.terraform.structure.SingleMegaChunkStructurePopulator;
 import org.terraform.structure.StructureLocator;
 import org.terraform.structure.StructurePopulator;
@@ -133,7 +131,7 @@ public class NMSChunkGenerator extends ChunkGenerator {
         for(Holder<Structure> holder:holderset) {
             Structure feature = holder.a();
             //StructureGenerator<?> structuregenerator = feature.;
-            TerraformGeneratorPlugin.logger.info("Vanilla locate for " + feature.getClass().getName() + " invoked.");
+            logger.info("Vanilla locate for " + feature.getClass().getName() + " invoked.");
 
             if (holder.a().getClass() == StrongholdStructure.class) { //stronghold
                 int[] coords = new StrongholdPopulator().getNearestFeature(tw, pX, pZ);
@@ -238,12 +236,12 @@ public class NMSChunkGenerator extends ChunkGenerator {
                         Object retVal = tryGenerateStructure.invoke(this, list.getFirst(), structuremanager, iregistrycustom, randomstate,
                                 structuretemplatemanager, chunkgeneratorstructurestate.d(),
                                 ichunkaccess, chunkcoordintpair, sectionposition);
-                        TerraformGeneratorPlugin.logger.info(chunkcoordintpair.e + "," + chunkcoordintpair.f + " will spawn a vanilla structure, with tryGenerateStructure == " + retVal);
+                        logger.info(chunkcoordintpair.e + "," + chunkcoordintpair.f + " will spawn a vanilla structure, with tryGenerateStructure == " + retVal);
                     }
-                    catch(Throwable t)
+                    catch(Throwable e)
                     {
-                        TerraformGeneratorPlugin.logger.info(chunkcoordintpair.e + "," + chunkcoordintpair.f + " Failed to generate a vanilla structure");
-                        t.printStackTrace();
+                        logger.info(chunkcoordintpair.e + "," + chunkcoordintpair.f + " Failed to generate a vanilla structure");
+                        logger.stackTrace(e);
                     }
                 }
             });

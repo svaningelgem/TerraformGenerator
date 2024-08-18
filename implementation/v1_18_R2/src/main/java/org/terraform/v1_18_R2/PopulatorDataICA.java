@@ -88,7 +88,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 			ResourceKey<BiomeBase> rkey = CustomBiomeHandler.terraformGenBiomeRegistry.get(cbt);//ResourceKey.a(IRegistry.aP, new MinecraftKey(cbt.getKey()));
 			targetBiome = biomeRegistry.g(rkey); //getHolderOrThrow
 	        if(targetBiome == null) {
-	        	TerraformGeneratorPlugin.logger.error("Custom biome was not found in the vanilla registry!");
+	        	logger.error("Custom biome was not found in the vanilla registry!");
                 targetBiome =  CraftBlock.biomeToBiomeBase(ica.biomeRegistry, fallback);
 	        }
 		}
@@ -98,7 +98,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
 
 	@Override
 	public void setBiome(int rawX, int rawY, int rawZ, Biome biome) {
-		//TerraformGeneratorPlugin.logger.info("Set " + rawX + "," + rawY + "," + rawZ + " to " + biome);
+		//logger.info("Set " + rawX + "," + rawY + "," + rawZ + " to " + biome);
 		ica.setBiome(rawX >> 2, rawY >> 2, rawZ >> 2, CraftBlock.biomeToBiomeBase(ica.biomeRegistry, biome));
 	}
 

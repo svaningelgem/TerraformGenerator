@@ -137,7 +137,7 @@ public class MineshaftPathPopulator extends PathPopulatorAbstract {
             core.getRelative(0, 1, 0).setBlockData(rail);
             //BlockUtils.correctSurroundingRails(core.getRelative(0, 1, 0).get());
             if (GenUtils.chance(rand, 1, 100)) {
-                TerraformGeneratorPlugin.logger.info("Minecart with chest at: " + core.getX() + ", " + core.getY() + ", " + core.getZ());
+                logger.info("Minecart with chest at: " + core.getX() + ", " + core.getY() + ", " + core.getZ());
                 IPopulatorDataMinecartSpawner ms = (IPopulatorDataMinecartSpawner) core.get().getPopData();
                 ms.spawnMinecartWithChest(
                         core.getX(), core.getY() + 1, core.getZ(),

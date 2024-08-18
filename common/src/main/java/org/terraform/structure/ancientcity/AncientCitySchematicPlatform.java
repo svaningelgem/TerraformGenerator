@@ -56,15 +56,15 @@ public class AncientCitySchematicPlatform extends AncientCityAbstractRoomPopulat
     	
     	String chosenSchema = switch(platformSize) {
             case 0 -> {
-                TerraformGeneratorPlugin.logger.info("Small Schematic");
+                logger.info("Small Schematic");
                 yield smallSchematics[rand.nextInt(smallSchematics.length)];
             }
             case 1 -> {
-                TerraformGeneratorPlugin.logger.info("Medium Schematic");
+                logger.info("Medium Schematic");
                 yield mediumSchematics[rand.nextInt(mediumSchematics.length)];
             }
             case 2 -> {
-                TerraformGeneratorPlugin.logger.info("Large Schematic");
+                logger.info("Large Schematic");
                 yield largeSchematics[rand.nextInt(largeSchematics.length)];
             }
             default -> null;

@@ -72,7 +72,7 @@ public class MountainhousePopulator extends VillageHousePopulator {
             mountainHouse.setFace(face);
             mountainHouse.apply();
 
-            TerraformGeneratorPlugin.logger.info("Spawning mountainhouse at " + x + "," + y + "," + z + " with rotation of " + mountainHouse.getFace());
+            logger.info("Spawning mountainhouse at " + x + "," + y + "," + z + " with rotation of " + mountainHouse.getFace());
 
             data.addEntity(x, y + 1, z, EntityType.VILLAGER); //Two villagers
             data.addEntity(x, y + 1, z, EntityType.VILLAGER);
@@ -113,7 +113,7 @@ public class MountainhousePopulator extends VillageHousePopulator {
             .build(new Wall(core.getRear(2).getRight(9).getDown(), BlockUtils.getRight(core.getDirection())));
             
         } catch (Throwable e) {
-            TerraformGeneratorPlugin.logger.error("Something went wrong trying to place mountain house at " + x + "," + y + "," + z + "!");
+            logger.error("Something went wrong trying to place mountain house at " + x + "," + y + "," + z + "!");
             logger.stackTrace(e);
         }
     }

@@ -76,7 +76,7 @@ public class AncientCityPopulator extends SingleMegaChunkStructurePopulator {
     }
 
     public void spawnAncientCity(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data, int x, int y, int z) {
-    	TerraformGeneratorPlugin.logger.info("Spawning ancient city at: " + x + "," + y + "," + z);
+    	logger.info("Spawning ancient city at: " + x + "," + y + "," + z);
     	
         //Level One
     	HashSet<SimpleLocation> occupied = new HashSet<>();
@@ -122,7 +122,7 @@ public class AncientCityPopulator extends SingleMegaChunkStructurePopulator {
                 });
         
         SimpleBlock center = new SimpleBlock(data, x, y, z);
-        TerraformGeneratorPlugin.logger.info("Spawning sculk...");
+        logger.info("Spawning sculk...");
         
         PopulatorDataICABiomeWriterAbstract ica = null;
         if(center.getPopData() instanceof PopulatorDataICABiomeWriterAbstract) {

@@ -90,7 +90,7 @@ public class CatacombsPopulator extends SingleMegaChunkStructurePopulator {
     }
     
     private boolean canGoDeeper(@NotNull TerraformWorld tw, int y, @NotNull Random random) {
-    	TerraformGeneratorPlugin.logger.info("TW MinY: " + tw.minY + ", Rolling chance: " + ((int)((double)config.STRUCTURES_CATACOMBS_SIZEROLLCHANCE * 10000d)));
+    	logger.info("TW MinY: " + tw.minY + ", Rolling chance: " + ((int)((double)config.STRUCTURES_CATACOMBS_SIZEROLLCHANCE * 10000d)));
     	return y > tw.minY + 10
     			&& GenUtils.chance(
     					random, 
@@ -99,7 +99,7 @@ public class CatacombsPopulator extends SingleMegaChunkStructurePopulator {
     }
 
     public void spawnCatacombs(@NotNull TerraformWorld tw, Random random, @NotNull PopulatorDataAbstract data, int x, int y, int z, boolean doubleLevel, int numRooms, int range) {
-    	TerraformGeneratorPlugin.logger.info("Spawning catacombs at: " + x + "," + z);
+    	logger.info("Spawning catacombs at: " + x + "," + z);
 
         
         //Level One
@@ -180,7 +180,7 @@ public class CatacombsPopulator extends SingleMegaChunkStructurePopulator {
            }
            if(stairways <= 0) break; //no more stairways. Don't generate.
            
-           TerraformGeneratorPlugin.logger.info("Additional Catacombs Level at: " + x + "," + z);
+           logger.info("Additional Catacombs Level at: " + x + "," + z);
        	
            gen.calculateRoomPlacement();
            gen.fill(data, tw, Material.CAVE_AIR);

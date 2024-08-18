@@ -62,7 +62,7 @@ public class NMSChunkGenerator extends ChunkGenerator {
     public WorldChunkManager e() {
     	//d is runtimeBiomeSource
     	if(!(d instanceof TerraformWorldProviderBiome))
-        	TerraformGeneratorPlugin.logger.error("d was not an instance of TerraformWorldProviderBiome!");
+        	logger.error("d was not an instance of TerraformWorldProviderBiome!");
 
         return this.d;
     }
@@ -111,7 +111,7 @@ public class NMSChunkGenerator extends ChunkGenerator {
         for(Holder<StructureFeature<?, ?>> holder:holderset) {
         	StructureFeature<?,?> feature = holder.a();
         	StructureGenerator<?> structuregenerator = feature.d;
-        	TerraformGeneratorPlugin.logger.info("Vanilla locate for " + structuregenerator.getClass().getName() + " invoked.");
+        	logger.info("Vanilla locate for " + structuregenerator.getClass().getName() + " invoked.");
 
             if (structuregenerator == StructureGenerator.k) { //stronghold
                 int[] coords = new StrongholdPopulator().getNearestFeature(tw, pX, pZ);
@@ -251,7 +251,7 @@ public class NMSChunkGenerator extends ChunkGenerator {
 	public Holder<BiomeBase> getNoiseBiome(int x, int y, int z) {
     	if(!biomeDebug) {
     		biomeDebug = true;
-			TerraformGeneratorPlugin.logger.info("[getNoiseBiome] called for " + x + "," + y + "," + z);
+			logger.info("[getNoiseBiome] called for " + x + "," + y + "," + z);
     	}
       return this.c.getNoiseBiome(x, y, z, null);
     }

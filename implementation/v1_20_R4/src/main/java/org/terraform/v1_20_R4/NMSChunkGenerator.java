@@ -32,8 +32,6 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.data.MegaChunk;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfig;
 import org.terraform.structure.StructureLocator;
 import org.terraform.structure.monument.MonumentPopulator;
 import org.terraform.structure.pillager.mansion.MansionPopulator;
@@ -96,7 +94,7 @@ public class NMSChunkGenerator extends ChunkGenerator {
         for(Holder<Structure> holder:holderset) {
             Structure feature = holder.a();
             //StructureGenerator<?> structuregenerator = feature.;
-            TerraformGeneratorPlugin.logger.info("Vanilla locate for " + feature.getClass().getName() + " invoked.");
+            logger.info("Vanilla locate for " + feature.getClass().getName() + " invoked.");
 
             if (holder.a().getClass() == StrongholdStructure.class) { //stronghold
                 int[] coords = new StrongholdPopulator().getNearestFeature(tw, pX, pZ);

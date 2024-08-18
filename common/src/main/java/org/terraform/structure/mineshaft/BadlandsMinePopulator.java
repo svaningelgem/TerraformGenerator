@@ -105,9 +105,9 @@ public class BadlandsMinePopulator extends JigsawStructurePopulator {
         }
         hallwayLength -= 6; //Don't cover the shaft entrance
         
-        TerraformGeneratorPlugin.logger.info("Badlands Mineshaft Entrance: " + entrance);
-        TerraformGeneratorPlugin.logger.info("Badlands Mineshaft Shaft: " + shaft);
-        TerraformGeneratorPlugin.logger.info("Badlands Mineshaft Hallway Length: " + hallwayLength);
+        logger.info("Badlands Mineshaft Entrance: " + entrance);
+        logger.info("Badlands Mineshaft Shaft: " + shaft);
+        logger.info("Badlands Mineshaft Hallway Length: " + hallwayLength);
         
         Random random = tw.getHashedRand(entrance.getX(), entrance.getY(), entrance.getZ(), 4);
 
@@ -177,7 +177,7 @@ public class BadlandsMinePopulator extends JigsawStructurePopulator {
             entranceSchematic.setFace(direction);
             entranceSchematic.apply();
         } catch(Exception e) {
-            TerraformGeneratorPlugin.logger.error("An error occurred reading Badlands Mine Entrance schematic file.");
+            logger.error("An error occurred reading Badlands Mine Entrance schematic file.");
         	logger.stackTrace(e);
         }
     }

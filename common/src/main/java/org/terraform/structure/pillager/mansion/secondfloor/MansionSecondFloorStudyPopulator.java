@@ -36,7 +36,7 @@ public class MansionSecondFloorStudyPopulator extends MansionRoomPopulator {
 	public void decorateRoom(@NotNull PopulatorDataAbstract data, @NotNull Random random) {
 		int[] lowerBounds = this.getRoom().getLowerCorner(1);
 		BlockFace randomFace = BlockUtils.getDirectBlockFace(random);
-		//TerraformGeneratorPlugin.logger.info("Library picking face: " + randomFace);
+		//logger.info("Library picking face: " + randomFace);
 		try {
 			if(randomFace == BlockFace.NORTH) {
 				SimpleBlock target = new SimpleBlock(data, lowerBounds[0], this.getRoom().getY(), lowerBounds[1]);

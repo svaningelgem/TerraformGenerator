@@ -88,7 +88,7 @@ public class JigsawBuilder {
         	if(map.get(piece.getRoom().getSimpleLocation()) >= 4) {
         		//4 wall thing spotted. That's bad. Try to replace it.
         		problemCells.add(piece.getRoom().getSimpleLocation());
-        		TerraformGeneratorPlugin.logger.info("Found problem piece. Attempting to replace with room.");
+        		logger.info("Found problem piece. Attempting to replace with room.");
         	}
         }
         if(!problemCells.isEmpty()) {
@@ -108,21 +108,21 @@ public class JigsawBuilder {
     			toAdd.setPopulated(BlockFace.EAST);
     			toAdd.setPopulated(BlockFace.WEST);
     			pieces.put(loc, toAdd);
-    			TerraformGeneratorPlugin.logger.info("Patched problem piece with new room.");
+    			logger.info("Patched problem piece with new room.");
             }
         }
     }
 
     public boolean traverseAndPopulatePieces(@NotNull Random random) {
         if (traverseStack.isEmpty()) {
-            TerraformGeneratorPlugin.logger.info("Jigsaw stack size empty!");
+            logger.info("Jigsaw stack size empty!");
             return false;
         } 
         JigsawStructurePiece current = traverseStack.peek();
-        //TerraformGeneratorPlugin.logger.info("Traversal Index " + traversalIndex + ", on: " + current.toString());
+        //logger.info("Traversal Index " + traversalIndex + ", on: " + current.toString());
         traversalIndex++;
         if (traversalIndex > 200) {
-            TerraformGeneratorPlugin.logger.error("Infinite loop detected! Breaking.");
+            logger.error("Infinite loop detected! Breaking.");
             return false;
         }
         if (current.hasUnpopulatedDirections()) {
@@ -172,7 +172,7 @@ public class JigsawBuilder {
                 toAdd.setPopulated(dir.getOppositeFace());
 
 
-                //TerraformGeneratorPlugin.logger.info("New location: " + new SimpleLocation(toAddX, toAddY, toAddZ));
+                //logger.info("New location: " + new SimpleLocation(toAddX, toAddY, toAddZ));
 
 
                 if (toAdd.getType() == JigsawType.END)
@@ -196,7 +196,7 @@ public class JigsawBuilder {
 
     public boolean areAllPiecesCovered() {
         for (JigsawStructurePiece piece : pieces.values()) {
-            //TerraformGeneratorPlugin.logger.info("Checking " + piece.toString());
+            //logger.info("Checking " + piece.toString());
             if (piece.hasUnpopulatedDirections())
                 return false;
         }
@@ -260,7 +260,7 @@ public class JigsawBuilder {
             JigsawStructurePiece host = getAdjacentPiece(pieceLoc, piece.getRotation().getOppositeFace());
             if (host != null)
                 host.getWalledFaces().add(piece.getRotation());
-            //TerraformGeneratorPlugin.logger.info("Populating at " + piece.getClass().getSimpleName() + "::" + piece.getRoom().getX() + "," + piece.getRoom().getZ() + "," + piece.getRotation());
+            //logger.info("Populating at " + piece.getClass().getSimpleName() + "::" + piece.getRoom().getX() + "," + piece.getRoom().getZ() + "," + piece.getRotation());
             piece.build(core.getPopData(), random);
         }
 
@@ -329,7 +329,7 @@ public class JigsawBuilder {
             }
         }
         if (validPieces.isEmpty()) {
-            TerraformGeneratorPlugin.logger.error("Tried to query jigsaw type that doesn't exist: " + type);
+            logger.error("Tried to query jigsaw type that doesn't exist: " + type);
             return null;
         }
 

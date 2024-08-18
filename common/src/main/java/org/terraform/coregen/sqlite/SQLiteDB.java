@@ -74,8 +74,8 @@ public class SQLiteDB {
             if (conn != null) {
                 conn.close();
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            logger.stackTrace(e);
         }
     }
 

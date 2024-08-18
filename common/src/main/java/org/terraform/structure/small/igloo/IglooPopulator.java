@@ -59,7 +59,7 @@ public class IglooPopulator extends MultiMegaChunkStructurePopulator {
     	Wall core = new Wall(data,x,y,z,BlockUtils.getDirectBlockFace(random));
 
     	int size = GenUtils.randInt(random, 4, 7);
-    	TerraformGeneratorPlugin.logger.info("Placing igloo of size " + size);
+    	logger.info("Placing igloo of size " + size);
     	new CylinderBuilder(random, core.getDown(), Material.SPRUCE_PLANKS)
     	.setHardReplace(false)
     	.setRX(size*1.5f).setRY(0.5f).setRZ(size*1.5f)

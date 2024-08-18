@@ -60,7 +60,7 @@ public class NMSInjector extends NMSInjectorAbstract {
             //k is getChunkSource, g is getChunkGenerator()
             ChunkGenerator delegate = ws.l().g();
 
-            TerraformGeneratorPlugin.logger.info("NMSChunkGenerator Delegate is of type " + delegate.getClass().getSimpleName());
+            logger.info("NMSChunkGenerator Delegate is of type " + delegate.getClass().getSimpleName());
 
             //String worldname,
             //int seed,
@@ -88,7 +88,7 @@ public class NMSInjector extends NMSInjectorAbstract {
                     worldGenContext.d(),
                     worldGenContext.e()
             ));
-            TerraformGeneratorPlugin.logger.info("Post injection: getChunkSource().getChunkGenerator() is of type " + ws.l().g().getClass().getSimpleName());
+            logger.info("Post injection: getChunkSource().getChunkGenerator() is of type " + ws.l().g().getClass().getSimpleName());
         } catch (Throwable e) {
             logger.stackTrace(e);
             return false;

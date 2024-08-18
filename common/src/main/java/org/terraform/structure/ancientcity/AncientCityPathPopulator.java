@@ -233,7 +233,7 @@ public class AncientCityPathPopulator extends PathPopulatorAbstract {
 			}
     		break;
 		default:
-			TerraformGeneratorPlugin.logger.info("Ancient City Populator: Irregular path state: " + state);
+			logger.info("Ancient City Populator: Irregular path state: " + state);
 			break;
     	}
     }

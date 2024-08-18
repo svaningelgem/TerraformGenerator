@@ -12,7 +12,6 @@ import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataPostGen;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
-import org.terraform.main.config.TConfig;
 import org.terraform.utils.version.OneTwentyBlockHandler;
 
 import java.util.List;

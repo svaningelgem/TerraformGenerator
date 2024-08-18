@@ -167,7 +167,7 @@ public class LocateCommand extends TerraCommand implements Listener {
                 break;
             }
         }
-        TerraformGeneratorPlugin.logger.info("[Locate Command] " + message);
+        logger.info("[Locate Command] " + message);
     }
 
     public static class StructurePopulatorArgument extends TerraCommandArgument<StructurePopulator> {

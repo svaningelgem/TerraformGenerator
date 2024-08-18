@@ -49,7 +49,7 @@ public class DesertWellPopulator extends MultiMegaChunkStructurePopulator {
                                 @NotNull PopulatorDataAbstract data, int x, int y, int z, boolean badlandsWell) {
 
         SimpleBlock core = new SimpleBlock(data, x, y, z);
-        TerraformGeneratorPlugin.logger.info("Spawning Desert Well at " + core.getCoords());
+        logger.info("Spawning Desert Well at " + core.getCoords());
         try {
             TerraSchematic desertWell = TerraSchematic.load("desert_well", core);
             desertWell.parser = new DesertWellSchematicParser(random, badlandsWell, y);

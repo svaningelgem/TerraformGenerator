@@ -42,7 +42,7 @@ public class TerraformWorldProviderBiome extends WorldChunkManager {
         for(CustomBiomeType cbt:CustomBiomeType.values()) {
         	if(cbt == CustomBiomeType.NONE) continue;
         	ResourceKey<BiomeBase> rkey = CustomBiomeHandler.terraformGenBiomeRegistry.get(cbt);
-        	//TerraformGeneratorPlugin.logger.info(cbt + " --- " + rkey);
+        	//logger.info(cbt + " --- " + rkey);
 	        Holder<BiomeBase> holder = registry.g(rkey);
 	        if(holder != null)
 	        	biomeBases.add(holder);
@@ -90,7 +90,7 @@ public class TerraformWorldProviderBiome extends WorldChunkManager {
 			ResourceKey<BiomeBase> rkey = CustomBiomeHandler.terraformGenBiomeRegistry.get(bank.getHandler().getCustomBiome()); //ResourceKey.a(IRegistry.aP, new MinecraftKey(bank.getHandler().getCustomBiome().getKey()));
 			Holder<BiomeBase> holder = iregistry.g(rkey); //g is getHolderOrThrow
 	        if(holder == null) {
-                TerraformGeneratorPlugin.logger.error("Custom biome was not found in the vanilla registry!");
+                logger.error("Custom biome was not found in the vanilla registry!");
 	        }
 			
 			if(holder != null) {

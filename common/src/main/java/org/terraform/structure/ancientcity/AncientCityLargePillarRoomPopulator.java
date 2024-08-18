@@ -79,7 +79,7 @@ public class AncientCityLargePillarRoomPopulator extends AncientCityAbstractRoom
 	            
 	            //If around 30% of the pillar fails to place, break out of the loop and 
 	            //place ruined versions of the upper pillar
-	            //TerraformGeneratorPlugin.logger.info("FR = " + lastParser.calculateFailRate());
+	            //logger.info("FR = " + lastParser.calculateFailRate());
 	            if(lastParser.calculateFailRate() > 0.3f)
 	            {
 	            	break;
@@ -112,7 +112,7 @@ public class AncientCityLargePillarRoomPopulator extends AncientCityAbstractRoom
 	            
 	            //If around 30% of the pillar fails to place, break out of the loop and 
 	            //place ruined versions of the upper pillar
-	            //TerraformGeneratorPlugin.logger.info("FR = " + lastParser.calculateFailRate());
+	            //logger.info("FR = " + lastParser.calculateFailRate());
 	            if(lastParser.calculateFailRate() > 0.3f || center.getY() <= TerraformGeneratorPlugin.injector.getMinY())
 	            {
 	            	break;

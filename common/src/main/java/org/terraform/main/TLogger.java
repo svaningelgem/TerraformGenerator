@@ -18,7 +18,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class TLogger implements InjectableObject {
+public class TLogger extends InjectableObject {
     @Inject
     private TConfig config;
     @Inject
@@ -112,7 +112,7 @@ public class TLogger implements InjectableObject {
                         + ChatColor.translateAlternateColorCodes('&', message));
     }
 
-    public void stackTrace(@NotNull Exception e) {
+    public void stackTrace(@NotNull Throwable e) {
         for(StackTraceElement stackTraceElement : e.getStackTrace()) {
             final String message = stackTraceElement.toString();
 

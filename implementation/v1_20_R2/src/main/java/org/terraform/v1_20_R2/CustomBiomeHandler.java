@@ -59,9 +59,9 @@ public class CustomBiomeHandler {
 			Field frozen = RegistryMaterials.class.getDeclaredField("l");
 			frozen.setAccessible(true);
 			frozen.set(registrywritable, false);
-			TerraformGeneratorPlugin.logger.info("Unfreezing biome registry...");
+			logger.info("Unfreezing biome registry...");
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
-			e1.printStackTrace();
+			logger.stackTrace(e1);
 		}
 		
 		BiomeBase forestbiome = registrywritable.a(Biomes.i); //forest
@@ -78,10 +78,10 @@ public class CustomBiomeHandler {
 						registrywritable,
 						forestbiome
 						);
-				TerraformGeneratorPlugin.logger.info("Registered custom biome: " + type.toString().toLowerCase(Locale.ENGLISH));
+				logger.info("Registered custom biome: " + type.toString().toLowerCase(Locale.ENGLISH));
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException |
                      NoSuchMethodException | InvocationTargetException e) {
-				TerraformGeneratorPlugin.logger.error("Failed to register custom biome: " + type.getKey());
+				logger.error("Failed to register custom biome: " + type.getKey());
 				logger.stackTrace(e);
 			}
 		}
@@ -90,9 +90,9 @@ public class CustomBiomeHandler {
 			Field frozen = RegistryMaterials.class.getDeclaredField("l");
 			frozen.setAccessible(true);
 			frozen.set(registrywritable, true);
-			TerraformGeneratorPlugin.logger.info("Freezing biome registry");
+			logger.info("Freezing biome registry");
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
-			e1.printStackTrace();
+			logger.stackTrace(e1);
 		}
 
     }
@@ -173,7 +173,7 @@ public class CustomBiomeHandler {
         //c is containsKey
         if(registrywritable.c(newKey))
         {
-            TerraformGeneratorPlugin.logger.info(newKey + " was already registered. Was there a plugin/server reload?");
+            logger.info(newKey + " was already registered. Was there a plugin/server reload?");
             return;
         }
 
@@ -223,14 +223,14 @@ public class CustomBiomeHandler {
                 //Preconditions.checkArgument(biome != Biome.CUSTOM, "Cannot use the biome %s", biome);
                 biomeBases.add(CraftBiome.bukkitToMinecraftHolder(biome));
             } catch(IllegalStateException e) {
-                TerraformGeneratorPlugin.logger.info("Ignoring biome " + biome);
+                logger.info("Ignoring biome " + biome);
             }
         }
 
         for(CustomBiomeType cbt:CustomBiomeType.values()) {
             if(cbt == CustomBiomeType.NONE) continue;
             ResourceKey<BiomeBase> rkey = CustomBiomeHandler.terraformGenBiomeRegistry.get(cbt);
-            //TerraformGeneratorPlugin.logger.info(cbt + " --- " + rkey);
+            //logger.info(cbt + " --- " + rkey);
             //Holder.c is Holder.Reference. It implements Holder. No idk why.
             Optional<Holder.c<BiomeBase>> holder = registry.b(rkey);
             holder.ifPresent(biomeBases::add);

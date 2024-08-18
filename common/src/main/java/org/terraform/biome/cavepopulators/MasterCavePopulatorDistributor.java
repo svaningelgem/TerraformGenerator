@@ -84,7 +84,7 @@ public class MasterCavePopulatorDistributor{
                     //Locating and debug print
                     if(!populatedBefore.contains(pop.getClass())) {
                         populatedBefore.add(pop.getClass());
-                        TerraformGeneratorPlugin.logger.info("Spawning " + pop.getClass().getSimpleName() + " at " + floor);
+                        logger.info("Spawning " + pop.getClass().getSimpleName() + " at " + floor);
                     }
                 }
             }

@@ -51,9 +51,9 @@ public class CustomBiomeHandler {
 			Field frozen = RegistryMaterials.class.getDeclaredField("l");
 			frozen.setAccessible(true);
 			frozen.set(registrywritable, false);
-			TerraformGeneratorPlugin.logger.info("Unfreezing biome registry...");
+			logger.info("Unfreezing biome registry...");
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
-			e1.printStackTrace();
+			logger.stackTrace(e1);
 		}
 		
 		BiomeBase forestbiome = registrywritable.a(Biomes.i); //forest
@@ -70,9 +70,9 @@ public class CustomBiomeHandler {
 						registrywritable,
 						forestbiome
 						);
-				TerraformGeneratorPlugin.logger.info("Registered custom biome: " + type.toString().toLowerCase(Locale.ENGLISH));
+				logger.info("Registered custom biome: " + type.toString().toLowerCase(Locale.ENGLISH));
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-				TerraformGeneratorPlugin.logger.error("Failed to register custom biome: " + type.getKey());
+				logger.error("Failed to register custom biome: " + type.getKey());
 				logger.stackTrace(e);
 			}
 		}
@@ -81,9 +81,9 @@ public class CustomBiomeHandler {
 			Field frozen = RegistryMaterials.class.getDeclaredField("l");
 			frozen.setAccessible(true);
 			frozen.set(registrywritable, true);
-			TerraformGeneratorPlugin.logger.info("Freezing biome registry");
+			logger.info("Freezing biome registry");
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
-			e1.printStackTrace();
+			logger.stackTrace(e1);
 		}
 
     }
@@ -162,7 +162,7 @@ public class CustomBiomeHandler {
         //c is containsKey
         if(registrywritable.c(newKey))
         {
-            TerraformGeneratorPlugin.logger.info(newKey + " was already registered. Was there a plugin/server reload?");
+            logger.info(newKey + " was already registered. Was there a plugin/server reload?");
             return;
         }
 

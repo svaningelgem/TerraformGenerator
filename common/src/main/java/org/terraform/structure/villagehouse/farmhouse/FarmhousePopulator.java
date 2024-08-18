@@ -49,7 +49,7 @@ public class FarmhousePopulator extends VillageHousePopulator {
             farmHouse.setFace(BlockUtils.getDirectBlockFace(random));
             farmHouse.apply();
 
-            TerraformGeneratorPlugin.logger.info("Spawning farmhouse at " + x + "," + y + "," + z + " with rotation of " + farmHouse.getFace());
+            logger.info("Spawning farmhouse at " + x + "," + y + "," + z + " with rotation of " + farmHouse.getFace());
 
             data.addEntity(x, y + 1, z, EntityType.VILLAGER); //Two villagers
             data.addEntity(x, y + 1, z, EntityType.VILLAGER);
@@ -91,7 +91,7 @@ public class FarmhousePopulator extends VillageHousePopulator {
             createFields(tw, biome, random, data, x, y, z);
 
         } catch (Throwable e) {
-            TerraformGeneratorPlugin.logger.error("Something went wrong trying to place farmhouse at " + x + "," + y + "," + z + "!");
+            logger.error("Something went wrong trying to place farmhouse at " + x + "," + y + "," + z + "!");
             logger.stackTrace(e);
         }
     }

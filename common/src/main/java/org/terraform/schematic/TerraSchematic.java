@@ -107,7 +107,7 @@ public class TerraSchematic {
             BlockData value;
             try {
                 value = Bukkit.createBlockData(cont[1]);
-                //TerraformGeneratorPlugin.logger.info("loaded: " + value.getAsString());
+                //logger.info("loaded: " + value.getAsString());
             } catch (IllegalArgumentException e) {
                 BlockDataFixerAbstract fixer = TerraformGeneratorPlugin.injector.getBlockDataFixer();
                 if (fixer != null) {
@@ -176,15 +176,15 @@ public class TerraSchematic {
                     if (BlockUtils.isDirectBlockFace(r.getFacing()))
                         if (face == BlockFace.SOUTH) {
                         	//South means flip it to opposite face
-                        	//TerraformGeneratorPlugin.logger.info(r.getMaterial() + ":" + r.getFacing() + " ->" + r.getFacing().getOppositeFace());
+                        	//logger.info(r.getMaterial() + ":" + r.getFacing() + " ->" + r.getFacing().getOppositeFace());
                             r.setFacing(r.getFacing().getOppositeFace());
                         } else if (face == BlockFace.WEST) {
                         	//Turn left
-                        	//TerraformGeneratorPlugin.logger.info(r.getMaterial() + ":" + r.getFacing() + " ->" + BlockUtils.getAdjacentFaces(r.getFacing())[1]);
+                        	//logger.info(r.getMaterial() + ":" + r.getFacing() + " ->" + BlockUtils.getAdjacentFaces(r.getFacing())[1]);
                             r.setFacing(BlockUtils.getAdjacentFaces(r.getFacing())[1]);
                         } else if (face == BlockFace.EAST) {
                         	//Turn right
-                        	//TerraformGeneratorPlugin.logger.info(r.getMaterial() + ":" + r.getFacing() + " ->" + BlockUtils.getAdjacentFaces(r.getFacing())[0]);
+                        	//logger.info(r.getMaterial() + ":" + r.getFacing() + " ->" + BlockUtils.getAdjacentFaces(r.getFacing())[0]);
                             r.setFacing(BlockUtils.getAdjacentFaces(r.getFacing())[0]);
                         }
                 } 

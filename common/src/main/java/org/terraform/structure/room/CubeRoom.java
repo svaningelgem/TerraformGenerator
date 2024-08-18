@@ -70,7 +70,7 @@ public class CubeRoom {
             }
             default -> {
                 wall = null;
-                TerraformGeneratorPlugin.logger.error("Invalid wall direction requested!");
+                logger.error("Invalid wall direction requested!");
             }
         }
 

@@ -238,7 +238,7 @@ public class EntityTypeMapper {
 		case UNKNOWN:
 			break;
 		}
-		TerraformGeneratorPlugin.logger.error("INVALID ENTITY REQUESTED: " + e);
+		logger.error("INVALID ENTITY REQUESTED: " + e);
 		return "";
 	}
 }

@@ -223,7 +223,7 @@ public class MansionJigsawBuilder extends JigsawBuilder {
         		MansionRoomPopulator secondFloorGrandStairwayPopulator = new MansionSecondFloorGrandStairwayPopulator(null,null).getInstance(secondFloorStairwayCenter.getRoom(), secondFloorStairwayCenter.internalWalls);
         		if(!MansionCompoundRoomDistributor.canRoomSizeFitWithCenter(secondFloorStairwayCenter, secondFloorHandler.secondFloorPieces.values(), new MansionRoomSize(3,3), secondFloorGrandStairwayPopulator, true))
         		{
-        			TerraformGeneratorPlugin.logger.info("[!] Failed to allocate second floor grand stairway space!");
+        			logger.info("[!] Failed to allocate second floor grand stairway space!");
         		}
         		secondFloorStairwayCenter.setRoomPopulator(secondFloorGrandStairwayPopulator);
         	}
@@ -261,7 +261,7 @@ public class MansionJigsawBuilder extends JigsawBuilder {
         for (JigsawStructurePiece piece : secondFloorHandler.secondFloorPieces.values()){
         	((MansionStandardRoomPiece) piece).spawnGuards(random, core.getPopData());
         }
-        TerraformGeneratorPlugin.logger.info("Mansion spawned " + MansionStandardRoomPiece.spawnedGuards + " vindicators and evokers");
+        logger.info("Mansion spawned " + MansionStandardRoomPiece.spawnedGuards + " vindicators and evokers");
     }
     
     /**

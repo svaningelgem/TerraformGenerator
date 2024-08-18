@@ -103,9 +103,9 @@ public abstract class MansionStandardRoomPiece extends JigsawStructurePiece {
     public void decorateInternalRoom(Random random, PopulatorDataAbstract data) {
 		/*
 		 * if(roomPopulator == null)
-		 * TerraformGeneratorPlugin.logger.info("Null room at " +
+		 * logger.info("Null room at " +
 		 * this.getRoom().getCenterSimpleBlock(data)); else
-		 * TerraformGeneratorPlugin.logger.info(roomPopulator.getClass().getSimpleName()
+		 * logger.info(roomPopulator.getClass().getSimpleName()
 		 * + " invoked at " + this.getRoom().getCenterSimpleBlock(data));
 		 */
     	if(roomPopulator != null && this.isPopulating) {
@@ -145,7 +145,7 @@ public abstract class MansionStandardRoomPiece extends JigsawStructurePiece {
 	}
 	
 	public void setRoomPopulator(MansionRoomPopulator roomPopulator, boolean isPopulating) {
-		//TerraformGeneratorPlugin.logger.info("Setting " + roomPopulator.getClass().getSimpleName() + " at " + this.getRoom().getSimpleLocation());
+		//logger.info("Setting " + roomPopulator.getClass().getSimpleName() + " at " + this.getRoom().getSimpleLocation());
 		this.roomPopulator = roomPopulator;
 		this.isPopulating = isPopulating;
 	}

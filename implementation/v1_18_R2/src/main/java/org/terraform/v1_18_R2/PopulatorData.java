@@ -93,7 +93,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
     		if(radius > 0)
     			NativeGeneratorPatcherPopulator.pushChange(rlwa.getMinecraftWorld().getWorld().getName(), x, y, z, Bukkit.createBlockData(type));
     		else
-    			new Exception("Tried to call adjacent chunk with populator radius 0: (" + x + "," + y + "," + z  + ") for chunk (" + chunkX + "," + chunkZ + ")").printStackTrace();
+    			logger.stackTrace(new Exception("Tried to call adjacent chunk with populator radius 0: (" + x + "," + y + "," + z  + ") for chunk (" + chunkX + "," + chunkZ + ")"));
         } else {
             rlwa.a(new BlockPosition(x, y, z), ((CraftBlockData) Bukkit.createBlockData(type)).getState(), 0);
     	}
@@ -105,7 +105,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
     		if(radius > 0)
     			NativeGeneratorPatcherPopulator.pushChange(rlwa.getMinecraftWorld().getWorld().getName(), x, y, z, data);
     		else
-    			new Exception("Tried to call adjacent chunk with populator radius 0: (" + x + "," + y + "," + z  + ") for chunk (" + chunkX + "," + chunkZ + ")").printStackTrace();
+    			logger.stackTrace(new Exception("Tried to call adjacent chunk with populator radius 0: (" + x + "," + y + "," + z  + ") for chunk (" + chunkX + "," + chunkZ + ")"));
         } else {
         	rlwa.a(new BlockPosition(x, y, z), ((CraftBlockData) data).getState(), 0);
         }
@@ -130,7 +130,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
     @Override
     public void addEntity(int rawX, int rawY, int rawZ, EntityType type) {
     	if (Math.abs((rawX >> 4) - chunkX) > 1 || Math.abs((rawZ >> 4) - chunkZ) > 1) {
-    		TerraformGeneratorPlugin.logger.info("Failed to spawn " + type + " as it was out of bounds.");
+    		logger.info("Failed to spawn " + type + " as it was out of bounds.");
     		return;
     	}
 		try {
@@ -145,7 +145,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
 	    	//b is addFreshEntity
 	    	rlwa.b(e);
 		} catch (IllegalArgumentException | SecurityException e1) {
-			e1.printStackTrace();
+			logger.stackTrace(e1);
 		}
          
     	//rlwa.spawnEntity(new Location(gen.getTerraformWorld().getWorld(), rawX, rawY, rawZ), type);
@@ -169,7 +169,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
                 logger.stackTrace(e);
             }
         } else {
-            TerraformGeneratorPlugin.logger.error("Failed to fetch mob spawner entity at (" + "," + rawX + "," + rawY + "," + rawZ + ")");
+            logger.error("Failed to fetch mob spawner entity at (" + "," + rawX + "," + rawY + "," + rawZ + ")");
         }
     }
 
