@@ -26,8 +26,8 @@ public abstract class AbstractMountainHandler extends BiomeHandler {
 		
 		//boolean surroundedByMountains = true;
 		
-		float mt =  config.getFloat(TConfig.BIOME_MOUNTAINOUS_THRESHOLD);
-		//float hmt =  config.getFloat(TConfig.ption.BIOME_HIGH_MOUNTAINOUS_THRESHOLD);
+		float mt =  (float)config.BIOME_MOUNTAINOUS_THRESHOLD;
+		//float hmt =  (float)config.ption.BIOME_HIGH_MOUNTAINOUS_THRESHOLD;
 		
 		//Check direct faces, not diagonals
 		for(int[] rel:new int[][] {{1,0},{-1,0},{0,1},{0,-1}}) {
@@ -77,7 +77,7 @@ public abstract class AbstractMountainHandler extends BiomeHandler {
         double minMultiplier = 1;
         BiomeSubSection subSect = sect.getSubSection(x, z);
 
-		float mt =  config.getFloat(TConfig.BIOME_MOUNTAINOUS_THRESHOLD);
+		float mt =  (float)config.BIOME_MOUNTAINOUS_THRESHOLD;
         switch(subSect) {
 		case NEGATIVE_X:
 			if(sect.getRelative(-1, 0).getOceanLevel() >= mt)

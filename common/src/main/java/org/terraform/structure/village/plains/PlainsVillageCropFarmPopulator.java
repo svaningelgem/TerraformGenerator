@@ -65,7 +65,7 @@ public class PlainsVillageCropFarmPopulator extends PlainsVillageAbstractRoomPop
             
             for (int i = 0; i < entry.getValue(); i++) {
             	//Added height tolerance check. Don't place anything on areas that deviate too far off.
-            	if(Math.abs(w.getY()-roomY) <= config.getInt(TConfig.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
+            	if(Math.abs(w.getY()-roomY) <= config.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE)
 	                if (w.getDirection().getOppositeFace() == dir) { //Entrance
 	
 	                    if (i <= 1 || i >= entry.getValue() - 1) {
@@ -148,7 +148,7 @@ public class PlainsVillageCropFarmPopulator extends PlainsVillageAbstractRoomPop
             	height = GenUtils.getHighestGroundOrSeaLevel(data, x, z);
                 	
             	//Forget populating areas that are too far up/down
-            	if(Math.abs(height-roomY) > config.getInt(TConfig.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE))
+            	if(Math.abs(height-roomY) > config.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE)
             		continue;
 //                } else
 //                	height = roomY;

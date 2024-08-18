@@ -132,7 +132,7 @@ public class JungleHandler extends BiomeHandler {
 
         SimpleLocation[] bigTrees = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 20);
         
-        if(config.getBoolean(TConfig.TREES_JUNGLE_BIG_ENABLED))
+        if(config.TREES_JUNGLE_BIG_ENABLED)
 	        for (SimpleLocation sLoc : bigTrees) {
 	            int treeY = GenUtils.getHighestGround(data, sLoc.getX(),sLoc.getZ());
 	            sLoc.setY(treeY);
@@ -152,7 +152,7 @@ public class JungleHandler extends BiomeHandler {
             
             if (data.getBiome(sLoc.getX(),sLoc.getZ()) == getBiome() &&
                     BlockUtils.isDirtLike(data.getType(sLoc.getX(),sLoc.getY(),sLoc.getZ()))) {
-            	if(GenUtils.chance(random, 1000 - config.getInt(TConfig.BIOME_JUNGLE_STATUE_CHANCE), 1000)) {
+            	if(GenUtils.chance(random, 1000 - config.BIOME_JUNGLE_STATUE_CHANCE, 1000)) {
                     TreeDB.spawnSmallJungleTree(false, tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
             	}else {
             		spawnStatue(random, data, sLoc);

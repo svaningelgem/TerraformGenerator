@@ -114,7 +114,7 @@ public class ForestHandler extends BiomeHandler {
 	@Override
 	public void populateLargeItems(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data) {
         //Most forest chunks have a big tree
-        if (config.getBoolean(TConfig.TREES_FOREST_BIG_ENABLED) && GenUtils.chance(random, 6, 10)) {
+        if (config.TREES_FOREST_BIG_ENABLED && GenUtils.chance(random, 6, 10)) {
             int treeX = GenUtils.randInt(random, 2, 12) + data.getChunkX() * 16;
             int treeZ = GenUtils.randInt(random, 2, 12) + data.getChunkZ() * 16;
             if (data.getBiome(treeX, treeZ) == getBiome()) {

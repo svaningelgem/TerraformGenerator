@@ -23,70 +23,70 @@ public class TerraformAnimalPopulator extends BlockPopulator {
     		null, //Slot for goat
             null, //Slot for armadillo
     		
-            new AnimalPopulator(EntityType.PIG, config.getInt(TConfig.ANIMALS_PIG_MINHERDSIZE), config.getInt(TConfig.ANIMALS_PIG_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_PIG_CHANCE), false, BiomeBank.BLACK_OCEAN, BiomeBank.MUSHROOM_ISLANDS, BiomeBank.MUSHROOM_BEACH,BiomeBank.RIVER, BiomeBank.FROZEN_RIVER, BiomeBank.OCEAN, BiomeBank.COLD_OCEAN, BiomeBank.FROZEN_OCEAN,
+            new AnimalPopulator(EntityType.PIG, config.ANIMALS_PIG_MINHERDSIZE, config.ANIMALS_PIG_MAXHERDSIZE,
+                    config.ANIMALS_PIG_CHANCE, false, BiomeBank.BLACK_OCEAN, BiomeBank.MUSHROOM_ISLANDS, BiomeBank.MUSHROOM_BEACH,BiomeBank.RIVER, BiomeBank.FROZEN_RIVER, BiomeBank.OCEAN, BiomeBank.COLD_OCEAN, BiomeBank.FROZEN_OCEAN,
                     BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.WARM_OCEAN, BiomeBank.DEEP_OCEAN, BiomeBank.DEEP_COLD_OCEAN, BiomeBank.DEEP_FROZEN_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN,
                     BiomeBank.DEEP_WARM_OCEAN, BiomeBank.SWAMP, BiomeBank.DESERT, BiomeBank.DESERT_MOUNTAINS, BiomeBank.BADLANDS, BiomeBank.BADLANDS_CANYON),
             
-            new AnimalPopulator(EntityType.COW, config.getInt(TConfig.ANIMALS_COW_MINHERDSIZE), config.getInt(TConfig.ANIMALS_COW_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_COW_CHANCE), false, BiomeBank.BLACK_OCEAN, BiomeBank.MUSHROOM_ISLANDS, BiomeBank.MUSHROOM_BEACH, BiomeBank.RIVER, BiomeBank.FROZEN_RIVER, BiomeBank.OCEAN, BiomeBank.COLD_OCEAN, BiomeBank.FROZEN_OCEAN,
+            new AnimalPopulator(EntityType.COW, config.ANIMALS_COW_MINHERDSIZE, config.ANIMALS_COW_MAXHERDSIZE,
+                    config.ANIMALS_COW_CHANCE, false, BiomeBank.BLACK_OCEAN, BiomeBank.MUSHROOM_ISLANDS, BiomeBank.MUSHROOM_BEACH, BiomeBank.RIVER, BiomeBank.FROZEN_RIVER, BiomeBank.OCEAN, BiomeBank.COLD_OCEAN, BiomeBank.FROZEN_OCEAN,
                     BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.WARM_OCEAN, BiomeBank.DEEP_OCEAN, BiomeBank.DEEP_COLD_OCEAN, BiomeBank.DEEP_FROZEN_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN,
                     BiomeBank.DEEP_WARM_OCEAN, BiomeBank.SWAMP, BiomeBank.DESERT, BiomeBank.DESERT_MOUNTAINS, BiomeBank.BADLANDS, BiomeBank.BADLANDS_CANYON),
             
-            new AnimalPopulator(EntityType.SHEEP, config.getInt(TConfig.ANIMALS_SHEEP_MINHERDSIZE), config.getInt(TConfig.ANIMALS_SHEEP_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_SHEEP_CHANCE), false, BiomeBank.BLACK_OCEAN, BiomeBank.MUSHROOM_ISLANDS, BiomeBank.MUSHROOM_BEACH, BiomeBank.RIVER, BiomeBank.FROZEN_RIVER, BiomeBank.OCEAN, BiomeBank.COLD_OCEAN, BiomeBank.FROZEN_OCEAN,
+            new AnimalPopulator(EntityType.SHEEP, config.ANIMALS_SHEEP_MINHERDSIZE, config.ANIMALS_SHEEP_MAXHERDSIZE,
+                    config.ANIMALS_SHEEP_CHANCE, false, BiomeBank.BLACK_OCEAN, BiomeBank.MUSHROOM_ISLANDS, BiomeBank.MUSHROOM_BEACH, BiomeBank.RIVER, BiomeBank.FROZEN_RIVER, BiomeBank.OCEAN, BiomeBank.COLD_OCEAN, BiomeBank.FROZEN_OCEAN,
                     BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.WARM_OCEAN, BiomeBank.DEEP_OCEAN, BiomeBank.DEEP_COLD_OCEAN, BiomeBank.DEEP_FROZEN_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN,
                     BiomeBank.DEEP_WARM_OCEAN, BiomeBank.SWAMP, BiomeBank.DESERT, BiomeBank.DESERT_MOUNTAINS, BiomeBank.BADLANDS, BiomeBank.BADLANDS_CANYON),
             
-            new AnimalPopulator(EntityType.CHICKEN, config.getInt(TConfig.ANIMALS_CHICKEN_MINHERDSIZE), config.getInt(TConfig.ANIMALS_CHICKEN_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_CHICKEN_CHANCE), false, BiomeBank.BLACK_OCEAN, BiomeBank.MUSHROOM_ISLANDS, BiomeBank.MUSHROOM_BEACH, BiomeBank.RIVER, BiomeBank.FROZEN_RIVER, BiomeBank.OCEAN, BiomeBank.COLD_OCEAN, BiomeBank.FROZEN_OCEAN,
+            new AnimalPopulator(EntityType.CHICKEN, config.ANIMALS_CHICKEN_MINHERDSIZE, config.ANIMALS_CHICKEN_MAXHERDSIZE,
+                    config.ANIMALS_CHICKEN_CHANCE, false, BiomeBank.BLACK_OCEAN, BiomeBank.MUSHROOM_ISLANDS, BiomeBank.MUSHROOM_BEACH, BiomeBank.RIVER, BiomeBank.FROZEN_RIVER, BiomeBank.OCEAN, BiomeBank.COLD_OCEAN, BiomeBank.FROZEN_OCEAN,
                     BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.WARM_OCEAN, BiomeBank.DEEP_OCEAN, BiomeBank.DEEP_COLD_OCEAN, BiomeBank.DEEP_FROZEN_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN,
                     BiomeBank.DEEP_WARM_OCEAN, BiomeBank.SWAMP, BiomeBank.DESERT, BiomeBank.DESERT_MOUNTAINS, BiomeBank.BADLANDS, BiomeBank.BADLANDS_CANYON),
             
-            new AnimalPopulator(EntityType.HORSE, config.getInt(TConfig.ANIMALS_HORSE_MINHERDSIZE), config.getInt(TConfig.ANIMALS_HORSE_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_HORSE_CHANCE), true, BiomeBank.PLAINS, BiomeBank.SAVANNA),
+            new AnimalPopulator(EntityType.HORSE, config.ANIMALS_HORSE_MINHERDSIZE, config.ANIMALS_HORSE_MAXHERDSIZE,
+                    config.ANIMALS_HORSE_CHANCE, true, BiomeBank.PLAINS, BiomeBank.SAVANNA),
             
-            new AnimalPopulator(EntityType.DONKEY, config.getInt(TConfig.ANIMALS_DONKEY_MINHERDSIZE), config.getInt(TConfig.ANIMALS_DONKEY_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_DONKEY_CHANCE), true, BiomeBank.PLAINS, BiomeBank.SAVANNA),
+            new AnimalPopulator(EntityType.DONKEY, config.ANIMALS_DONKEY_MINHERDSIZE, config.ANIMALS_DONKEY_MAXHERDSIZE,
+                    config.ANIMALS_DONKEY_CHANCE, true, BiomeBank.PLAINS, BiomeBank.SAVANNA),
             
-            new AnimalPopulator(EntityType.RABBIT, config.getInt(TConfig.ANIMALS_RABBIT_MINHERDSIZE), config.getInt(TConfig.ANIMALS_RABBIT_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_RABBIT_CHANCE), true, BiomeBank.DESERT, BiomeBank.FOREST, BiomeBank.TAIGA, BiomeBank.SNOWY_TAIGA, BiomeBank.ROCKY_BEACH,
+            new AnimalPopulator(EntityType.RABBIT, config.ANIMALS_RABBIT_MINHERDSIZE, config.ANIMALS_RABBIT_MAXHERDSIZE,
+                    config.ANIMALS_RABBIT_CHANCE, true, BiomeBank.DESERT, BiomeBank.FOREST, BiomeBank.TAIGA, BiomeBank.SNOWY_TAIGA, BiomeBank.ROCKY_BEACH,
                     BiomeBank.SNOWY_WASTELAND),
             
-            new AnimalPopulator(EntityType.POLAR_BEAR, config.getInt(TConfig.ANIMALS_POLAR_BEAR_MINHERDSIZE), config.getInt(TConfig.ANIMALS_POLAR_BEAR_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_POLAR_BEAR_CHANCE), true, BiomeBank.ICE_SPIKES, BiomeBank.SNOWY_TAIGA, BiomeBank.ICY_BEACH, BiomeBank.SNOWY_WASTELAND),
+            new AnimalPopulator(EntityType.POLAR_BEAR, config.ANIMALS_POLAR_BEAR_MINHERDSIZE, config.ANIMALS_POLAR_BEAR_MAXHERDSIZE,
+                    config.ANIMALS_POLAR_BEAR_CHANCE, true, BiomeBank.ICE_SPIKES, BiomeBank.SNOWY_TAIGA, BiomeBank.ICY_BEACH, BiomeBank.SNOWY_WASTELAND),
             
-            new AnimalPopulator(EntityType.PANDA, config.getInt(TConfig.ANIMALS_PANDA_MINHERDSIZE), config.getInt(TConfig.ANIMALS_PANDA_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_PANDA_CHANCE), true, BiomeBank.BAMBOO_FOREST),
+            new AnimalPopulator(EntityType.PANDA, config.ANIMALS_PANDA_MINHERDSIZE, config.ANIMALS_PANDA_MAXHERDSIZE,
+                    config.ANIMALS_PANDA_CHANCE, true, BiomeBank.BAMBOO_FOREST),
 
-            new AnimalPopulator(EntityType.FOX, config.getInt(TConfig.ANIMALS_FOX_MINHERDSIZE), config.getInt(TConfig.ANIMALS_FOX_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_FOX_CHANCE), true, BiomeBank.TAIGA, BiomeBank.SNOWY_TAIGA),
+            new AnimalPopulator(EntityType.FOX, config.ANIMALS_FOX_MINHERDSIZE, config.ANIMALS_FOX_MAXHERDSIZE,
+                    config.ANIMALS_FOX_CHANCE, true, BiomeBank.TAIGA, BiomeBank.SNOWY_TAIGA),
 
-            new AnimalPopulator(EntityType.LLAMA, config.getInt(TConfig.ANIMALS_LLAMA_MINHERDSIZE), config.getInt(TConfig.ANIMALS_LLAMA_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_LLAMA_CHANCE), true, BiomeBank.SAVANNA, BiomeBank.ROCKY_MOUNTAINS),
+            new AnimalPopulator(EntityType.LLAMA, config.ANIMALS_LLAMA_MINHERDSIZE, config.ANIMALS_LLAMA_MAXHERDSIZE,
+                    config.ANIMALS_LLAMA_CHANCE, true, BiomeBank.SAVANNA, BiomeBank.ROCKY_MOUNTAINS),
 
-            new AnimalPopulator(EntityType.PARROT, config.getInt(TConfig.ANIMALS_PARROT_MINHERDSIZE), config.getInt(TConfig.ANIMALS_PARROT_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_PARROT_CHANCE), true, BiomeBank.JUNGLE),
+            new AnimalPopulator(EntityType.PARROT, config.ANIMALS_PARROT_MINHERDSIZE, config.ANIMALS_PARROT_MAXHERDSIZE,
+                    config.ANIMALS_PARROT_CHANCE, true, BiomeBank.JUNGLE),
 
-            new AnimalPopulator(EntityType.OCELOT, config.getInt(TConfig.ANIMALS_OCELOT_MINHERDSIZE), config.getInt(TConfig.ANIMALS_OCELOT_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_OCELOT_CHANCE), true, BiomeBank.JUNGLE, BiomeBank.BAMBOO_FOREST),
+            new AnimalPopulator(EntityType.OCELOT, config.ANIMALS_OCELOT_MINHERDSIZE, config.ANIMALS_OCELOT_MAXHERDSIZE,
+                    config.ANIMALS_OCELOT_CHANCE, true, BiomeBank.JUNGLE, BiomeBank.BAMBOO_FOREST),
 
-            new AnimalPopulator(EntityType.WOLF, config.getInt(TConfig.ANIMALS_WOLF_MINHERDSIZE), config.getInt(TConfig.ANIMALS_WOLF_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_WOLF_CHANCE), true, BiomeBank.FOREST, BiomeBank.TAIGA, BiomeBank.SNOWY_TAIGA, BiomeBank.DARK_FOREST),
+            new AnimalPopulator(EntityType.WOLF, config.ANIMALS_WOLF_MINHERDSIZE, config.ANIMALS_WOLF_MAXHERDSIZE,
+                    config.ANIMALS_WOLF_CHANCE, true, BiomeBank.FOREST, BiomeBank.TAIGA, BiomeBank.SNOWY_TAIGA, BiomeBank.DARK_FOREST),
 
-            new AnimalPopulator(EntityType.TURTLE, config.getInt(TConfig.ANIMALS_TURTLE_MINHERDSIZE), config.getInt(TConfig.ANIMALS_TURTLE_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_TURTLE_CHANCE), true, BiomeBank.SANDY_BEACH),
+            new AnimalPopulator(EntityType.TURTLE, config.ANIMALS_TURTLE_MINHERDSIZE, config.ANIMALS_TURTLE_MAXHERDSIZE,
+                    config.ANIMALS_TURTLE_CHANCE, true, BiomeBank.SANDY_BEACH),
 
-            new AnimalPopulator(EntityType.DOLPHIN, config.getInt(TConfig.ANIMALS_DOLPHIN_MINHERDSIZE), config.getInt(TConfig.ANIMALS_DOLPHIN_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_DOLPHIN_CHANCE), true, BiomeBank.OCEAN, BiomeBank.DEEP_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.WARM_OCEAN, BiomeBank.DEEP_WARM_OCEAN)
+            new AnimalPopulator(EntityType.DOLPHIN, config.ANIMALS_DOLPHIN_MINHERDSIZE, config.ANIMALS_DOLPHIN_MAXHERDSIZE,
+                    config.ANIMALS_DOLPHIN_CHANCE, true, BiomeBank.OCEAN, BiomeBank.DEEP_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.WARM_OCEAN, BiomeBank.DEEP_WARM_OCEAN)
             .setAquatic(true),
     
-            new AnimalPopulator(EntityType.COD, config.getInt(TConfig.ANIMALS_COD_MINHERDSIZE), config.getInt(TConfig.ANIMALS_COD_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_COD_CHANCE), true, BiomeBank.OCEAN, BiomeBank.DEEP_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.COLD_OCEAN, BiomeBank.DEEP_COLD_OCEAN)
+            new AnimalPopulator(EntityType.COD, config.ANIMALS_COD_MINHERDSIZE, config.ANIMALS_COD_MAXHERDSIZE,
+                    config.ANIMALS_COD_CHANCE, true, BiomeBank.OCEAN, BiomeBank.DEEP_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.COLD_OCEAN, BiomeBank.DEEP_COLD_OCEAN)
             .setAquatic(true),
             
-            new AnimalPopulator(EntityType.SQUID, config.getInt(TConfig.ANIMALS_SQUID_MINHERDSIZE), config.getInt(TConfig.ANIMALS_SQUID_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_SQUID_CHANCE), true,
+            new AnimalPopulator(EntityType.SQUID, config.ANIMALS_SQUID_MINHERDSIZE, config.ANIMALS_SQUID_MAXHERDSIZE,
+                    config.ANIMALS_SQUID_CHANCE, true,
                     BiomeBank.FROZEN_OCEAN, BiomeBank.DEEP_FROZEN_OCEAN,
                     BiomeBank.COLD_OCEAN, BiomeBank.DEEP_COLD_OCEAN,
                     BiomeBank.BLACK_OCEAN,BiomeBank.DEEP_BLACK_OCEAN,
@@ -96,34 +96,34 @@ public class TerraformAnimalPopulator extends BlockPopulator {
                     BiomeBank.RIVER, BiomeBank.FROZEN_RIVER, BiomeBank.JUNGLE_RIVER)
             .setAquatic(true),
             
-            new AnimalPopulator(EntityType.SALMON, config.getInt(TConfig.ANIMALS_SALMON_MINHERDSIZE), config.getInt(TConfig.ANIMALS_SALMON_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_SALMON_CHANCE), true,
+            new AnimalPopulator(EntityType.SALMON, config.ANIMALS_SALMON_MINHERDSIZE, config.ANIMALS_SALMON_MAXHERDSIZE,
+                    config.ANIMALS_SALMON_CHANCE, true,
                     BiomeBank.COLD_OCEAN, BiomeBank.DEEP_COLD_OCEAN, 
                     BiomeBank.FROZEN_OCEAN, BiomeBank.DEEP_COLD_OCEAN, 
                     BiomeBank.RIVER, BiomeBank.FROZEN_RIVER)
             .setAquatic(true),
             
-            new AnimalPopulator(EntityType.PUFFERFISH, config.getInt(TConfig.ANIMALS_PUFFERFISH_MINHERDSIZE), config.getInt(TConfig.ANIMALS_PUFFERFISH_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_PUFFERFISH_CHANCE), true, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.WARM_OCEAN, BiomeBank.DEEP_WARM_OCEAN)
+            new AnimalPopulator(EntityType.PUFFERFISH, config.ANIMALS_PUFFERFISH_MINHERDSIZE, config.ANIMALS_PUFFERFISH_MAXHERDSIZE,
+                    config.ANIMALS_PUFFERFISH_CHANCE, true, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.WARM_OCEAN, BiomeBank.DEEP_WARM_OCEAN)
             .setAquatic(true),
             
-            new AnimalPopulator(EntityType.TROPICAL_FISH, config.getInt(TConfig.ANIMALS_TROPICALFISH_MINHERDSIZE), config.getInt(TConfig.ANIMALS_TROPICALFISH_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_TROPICALFISH_CHANCE), true, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.WARM_OCEAN)
+            new AnimalPopulator(EntityType.TROPICAL_FISH, config.ANIMALS_TROPICALFISH_MINHERDSIZE, config.ANIMALS_TROPICALFISH_MAXHERDSIZE,
+                    config.ANIMALS_TROPICALFISH_CHANCE, true, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.CORAL_REEF_OCEAN, BiomeBank.DEEP_LUKEWARM_OCEAN, BiomeBank.WARM_OCEAN)
             .setAquatic(true),
 
-            new AnimalPopulator(EntityType.MUSHROOM_COW, config.getInt(TConfig.ANIMALS_MOOSHROOM_MINHERDSIZE), config.getInt(TConfig.ANIMALS_MOOSHROOM_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_MOOSHROOM_CHANCE), true, BiomeBank.MUSHROOM_BEACH, BiomeBank.MUSHROOM_ISLANDS),
+            new AnimalPopulator(EntityType.MUSHROOM_COW, config.ANIMALS_MOOSHROOM_MINHERDSIZE, config.ANIMALS_MOOSHROOM_MAXHERDSIZE,
+                    config.ANIMALS_MOOSHROOM_CHANCE, true, BiomeBank.MUSHROOM_BEACH, BiomeBank.MUSHROOM_ISLANDS),
     };
     
     public TerraformAnimalPopulator(TerraformWorld tw) {
         this.tw = tw;
         if(Version.isAtLeast(17)) {
-        	ANIMAL_POPULATORS[0] = new AnimalPopulator(EntityType.valueOf("GOAT"), config.getInt(TConfig.ANIMALS_GOAT_MINHERDSIZE), config.getInt(TConfig.ANIMALS_GOAT_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_GOAT_CHANCE), true, BiomeBank.ROCKY_MOUNTAINS, BiomeBank.SNOWY_MOUNTAINS);
+        	ANIMAL_POPULATORS[0] = new AnimalPopulator(EntityType.valueOf("GOAT"), config.ANIMALS_GOAT_MINHERDSIZE, config.ANIMALS_GOAT_MAXHERDSIZE,
+                    config.ANIMALS_GOAT_CHANCE, true, BiomeBank.ROCKY_MOUNTAINS, BiomeBank.SNOWY_MOUNTAINS);
         }
         if(Version.isAtLeast(20.5)) {
-            ANIMAL_POPULATORS[1] = new AnimalPopulator(OneTwentyFiveBlockHandler.ARMADILLO, config.getInt(TConfig.ANIMALS_ARMADILLO_MINHERDSIZE), config.getInt(TConfig.ANIMALS_ARMADILLO_MAXHERDSIZE),
-                    config.getInt(TConfig.ANIMALS_ARMADILLO_CHANCE), true, BiomeBank.SAVANNA, BiomeBank.SHATTERED_SAVANNA, BiomeBank.BADLANDS, BiomeBank.BADLANDS_CANYON);
+            ANIMAL_POPULATORS[1] = new AnimalPopulator(OneTwentyFiveBlockHandler.ARMADILLO, config.ANIMALS_ARMADILLO_MINHERDSIZE, config.ANIMALS_ARMADILLO_MAXHERDSIZE,
+                    config.ANIMALS_ARMADILLO_CHANCE, true, BiomeBank.SAVANNA, BiomeBank.SHATTERED_SAVANNA, BiomeBank.BADLANDS, BiomeBank.BADLANDS_CANYON);
         }
     }
 

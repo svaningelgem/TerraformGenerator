@@ -71,10 +71,10 @@ public class BirchMountainsHandler extends AbstractMountainHandler {
      */
     private void setRock(@NotNull SimpleBlock target) {
     	if(HeightMap.getTrueHeightGradient(target.getPopData(), target.getX(), target.getZ(), 3)
-		   > config.getDouble(TConfig.MISC_TREES_GRADIENT_LIMIT)) {
+		   > (double)config.MISC_TREES_GRADIENT_LIMIT) {
     		Material rock = Material.ANDESITE;
     		if(HeightMap.getTrueHeightGradient(target.getPopData(), target.getX(), target.getZ(), 3)
-			   > config.getDouble(TConfig.MISC_TREES_GRADIENT_LIMIT) * 2)
+			   > (double)config.MISC_TREES_GRADIENT_LIMIT * 2)
     			rock = Material.DIORITE;
     		while(BlockUtils.isExposedToNonSolid(target)) {
     			target.setType(rock);
@@ -92,7 +92,7 @@ public class BirchMountainsHandler extends AbstractMountainHandler {
                 int treeY = GenUtils.getHighestGround(data, sLoc.getX(),sLoc.getZ());
                 sLoc.setY(treeY);
                 // Rarely spawn huge taiga trees
-                if (config.getBoolean(TConfig.TREES_BIRCH_BIG_ENABLED) && GenUtils.chance(random, 1, 20)) {
+                if (config.TREES_BIRCH_BIG_ENABLED && GenUtils.chance(random, 1, 20)) {
                     new FractalTreeBuilder(FractalTypes.Tree.BIRCH_BIG).build(tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
                     
                 }else { // Normal trees

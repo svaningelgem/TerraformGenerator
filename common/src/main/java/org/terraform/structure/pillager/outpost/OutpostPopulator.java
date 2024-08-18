@@ -234,7 +234,7 @@ public class OutpostPopulator extends SingleMegaChunkStructurePopulator {
 
 	@Override
 	public boolean isEnabled() {
-		return config.getBoolean(TConfig.STRUCTURES_OUTPOST_ENABLED);
+		return config.STRUCTURES_OUTPOST_ENABLED;
 	}
 
 	@Override

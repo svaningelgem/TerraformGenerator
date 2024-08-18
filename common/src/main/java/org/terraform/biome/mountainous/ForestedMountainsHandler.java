@@ -133,7 +133,7 @@ public class ForestedMountainsHandler extends AbstractMountainHandler {
 
         SimpleLocation[] bigTrees = GenUtils.randomObjectPositions(tw, data.getChunkX(), data.getChunkZ(), 20);
         
-        if(config.getBoolean(TConfig.TREES_JUNGLE_BIG_ENABLED))
+        if(config.TREES_JUNGLE_BIG_ENABLED)
 	        for (SimpleLocation sLoc : bigTrees) {
 	            int treeY = GenUtils.getHighestGround(data, sLoc.getX(),sLoc.getZ());
 	            sLoc.setY(treeY);

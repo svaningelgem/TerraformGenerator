@@ -34,7 +34,7 @@ public class AncientCityPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public boolean canSpawn(@NotNull TerraformWorld tw, int chunkX, int chunkZ, @NotNull BiomeBank biome) {
-        if (!config.getBoolean(TConfig.STRUCTURES_ANCIENTCITY_ENABLED))
+        if (!config.STRUCTURES_ANCIENTCITY_ENABLED)
             return false;
         
         //MegaChunk mc = new MegaChunk(chunkX, chunkZ);
@@ -57,7 +57,7 @@ public class AncientCityPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public void populate(@NotNull TerraformWorld tw, @NotNull PopulatorDataAbstract data) {
-        if (!config.getBoolean(TConfig.STRUCTURES_ANCIENTCITY_ENABLED))
+        if (!config.STRUCTURES_ANCIENTCITY_ENABLED)
             return;
 
         MegaChunk mc = new MegaChunk(data.getChunkX(), data.getChunkZ());
@@ -65,9 +65,9 @@ public class AncientCityPopulator extends SingleMegaChunkStructurePopulator {
         int x = coords[0];
         int z = coords[1];
         //int height = HeightMap.getBlockHeight(tw, x, z);
-        int minY = config.getInt(TConfig.STRUCTURES_ANCIENTCITY_MIN_Y);
+        int minY = config.STRUCTURES_ANCIENTCITY_MIN_Y;
         //if(!Version.isAtLeast(18) && minY < 0) minY = 8;
-        int y = GenUtils.randInt(minY, config.getInt(TConfig.STRUCTURES_ANCIENTCITY_MAX_Y));
+        int y = GenUtils.randInt(minY, config.STRUCTURES_ANCIENTCITY_MAX_Y);
 
         
         spawnAncientCity(tw,
@@ -197,7 +197,7 @@ public class AncientCityPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean(TConfig.STRUCTURES_ANCIENTCITY_ENABLED);
+        return config.STRUCTURES_ANCIENTCITY_ENABLED;
     }
     
     //Underground structures don't need a decorative buffer

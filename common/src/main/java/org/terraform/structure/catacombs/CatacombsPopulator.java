@@ -46,7 +46,7 @@ public class CatacombsPopulator extends SingleMegaChunkStructurePopulator {
 		
 		//Do height and space checks
         int height = HeightMap.getBlockHeight(tw, coords[0], coords[1]);
-        if (height < config.getInt(TConfig.STRUCTURES_CATACOMBS_MAX_Y) + 15) {
+        if (height < config.STRUCTURES_CATACOMBS_MAX_Y + 15) {
             //Way too little space. Abort generation.
             return false;
         }
@@ -62,7 +62,7 @@ public class CatacombsPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public void populate(@NotNull TerraformWorld tw, @NotNull PopulatorDataAbstract data) {
-        if (!config.getBoolean(TConfig.STRUCTURES_CATACOMBS_ENABLED))
+        if (!config.STRUCTURES_CATACOMBS_ENABLED)
             return;
 
         MegaChunk mc = new MegaChunk(data.getChunkX(), data.getChunkZ());
@@ -70,9 +70,9 @@ public class CatacombsPopulator extends SingleMegaChunkStructurePopulator {
         int x = coords[0];
         int z = coords[1];
         int height = HeightMap.getBlockHeight(tw, x, z);
-        int minY = config.getInt(TConfig.STRUCTURES_CATACOMBS_MIN_Y);
+        int minY = config.STRUCTURES_CATACOMBS_MIN_Y;
         if(!Version.isAtLeast(18) && minY < 0) minY = 8;
-        int y = GenUtils.randInt(minY, config.getInt(TConfig.STRUCTURES_CATACOMBS_MAX_Y));
+        int y = GenUtils.randInt(minY, config.STRUCTURES_CATACOMBS_MAX_Y);
 
         
         spawnCatacombs(tw,
@@ -90,11 +90,11 @@ public class CatacombsPopulator extends SingleMegaChunkStructurePopulator {
     }
     
     private boolean canGoDeeper(@NotNull TerraformWorld tw, int y, @NotNull Random random) {
-    	TerraformGeneratorPlugin.logger.info("TW MinY: " + tw.minY + ", Rolling chance: " + ((int)(config.getDouble(TConfig.STRUCTURES_CATACOMBS_SIZEROLLCHANCE) * 10000d)));
+    	TerraformGeneratorPlugin.logger.info("TW MinY: " + tw.minY + ", Rolling chance: " + ((int)((double)config.STRUCTURES_CATACOMBS_SIZEROLLCHANCE * 10000d)));
     	return y > tw.minY + 10
     			&& GenUtils.chance(
     					random, 
-    					(int) (config.getDouble(TConfig.STRUCTURES_CATACOMBS_SIZEROLLCHANCE) * 10000d),
+    					(int) ((double)config.STRUCTURES_CATACOMBS_SIZEROLLCHANCE * 10000d),
     					10000);
     }
 
@@ -129,7 +129,7 @@ public class CatacombsPopulator extends SingleMegaChunkStructurePopulator {
         int catacombLevels = 1;
         RoomLayoutGenerator previousGen;
         while (canGoDeeper) {
-        	if(catacombLevels >= config.getInt(TConfig.STRUCTURES_CATACOMBS_MAX_LEVELS))
+        	if(catacombLevels >= config.STRUCTURES_CATACOMBS_MAX_LEVELS)
         		break;
         	y -= 15;
             //Level Two
@@ -194,7 +194,7 @@ public class CatacombsPopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean(TConfig.STRUCTURES_CATACOMBS_ENABLED);
+        return config.STRUCTURES_CATACOMBS_ENABLED;
     }
     
     //Underground structures don't need a decorative buffer

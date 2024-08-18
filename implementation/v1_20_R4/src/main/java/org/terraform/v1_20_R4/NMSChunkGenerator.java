@@ -102,23 +102,23 @@ public class NMSChunkGenerator extends ChunkGenerator {
                 int[] coords = new StrongholdPopulator().getNearestFeature(tw, pX, pZ);
                 return new Pair<>(new BlockPosition(coords[0], 20, coords[1]), holder);
             }
-            else if(!config.getBoolean(TConfig.DEVSTUFF_VANILLA_LOCATE_DISABLE))
+            else if(!config.DEVSTUFF_VANILLA_LOCATE_DISABLE)
             {
                 if (holder.a().getClass() == OceanMonumentStructure.class) { //Monument
 
-                    int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MonumentPopulator(), config.getInt(TConfig.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
+                    int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MonumentPopulator(), config.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS);
 
                     return new Pair<>
                             (new BlockPosition(coords[0], 50, coords[1]), holder);
                 } else if (holder.a().getClass() == WoodlandMansionStructure.class) { //Mansion
 
-                    int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MansionPopulator(), config.getInt(TConfig.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
+                    int[] coords = StructureLocator.locateSingleMegaChunkStructure(tw, pX, pZ, new MansionPopulator(), config.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS);
 
                     return new Pair<>
                             (new BlockPosition(coords[0], 50, coords[1]), holder);
                 } else if (holder.a().getClass() == BuriedTreasureStructure.class) {
                     //Buried Treasure
-                    int[] coords = StructureLocator.locateMultiMegaChunkStructure(tw, new MegaChunk(pX, 0, pZ), new BuriedTreasurePopulator(), config.getInt(TConfig.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS));
+                    int[] coords = StructureLocator.locateMultiMegaChunkStructure(tw, new MegaChunk(pX, 0, pZ), new BuriedTreasurePopulator(), config.DEVSTUFF_VANILLA_LOCATE_TIMEOUTMILLIS);
                     if(coords == null) return null;
                     return new Pair<>
                             (new BlockPosition(coords[0], 50, coords[1]), holder);

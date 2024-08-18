@@ -104,7 +104,7 @@ public class WitchHutPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public int[][] getCoordsFromMegaChunk(@NotNull TerraformWorld tw, @NotNull MegaChunk mc) {
-        int num = config.getInt(TConfig.STRUCTURES_SWAMPHUT_COUNT_PER_MEGACHUNK);
+        int num = config.STRUCTURES_SWAMPHUT_COUNT_PER_MEGACHUNK;
         int[][] coords = new int[num][2];
         for (int i = 0; i < num; i++)
             coords[i] = mc.getRandomCoords(tw.getHashedRand(mc.getX(), mc.getZ(), 819227*(1+i)));
@@ -133,9 +133,9 @@ public class WitchHutPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean(TConfig.STRUCTURES_SWAMPHUT_ENABLED)
-			   && (config.getInt(TConfig.BIOME_SWAMP_WEIGHT) > 0 ||
-				   config.getInt(TConfig.BIOME_MANGROVE_WEIGHT) > 0);
+        return config.STRUCTURES_SWAMPHUT_ENABLED
+			   && (config.BIOME_SWAMP_WEIGHT > 0 ||
+				   config.BIOME_MANGROVE_WEIGHT > 0);
     }
 
     @Override

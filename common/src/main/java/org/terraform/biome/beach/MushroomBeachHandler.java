@@ -71,7 +71,7 @@ public class MushroomBeachHandler extends BiomeHandler {
                 };
 
                 if(HeightMap.getTrueHeightGradient(data, sLoc.getX(), sLoc.getZ(), 3) <=
-				   config.getDouble(TConfig.MISC_TREES_GRADIENT_LIMIT))
+				   (double)config.MISC_TREES_GRADIENT_LIMIT)
             		new MushroomBuilder(type).build(tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
             }
         }

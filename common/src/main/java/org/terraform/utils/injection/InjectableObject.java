@@ -1,6 +1,8 @@
 package org.terraform.utils.injection;
 
+import com.google.common.base.Preconditions;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -10,23 +12,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public interface InjectableObject {
-    Map<Class<?>, Object> registry = new HashMap<>();
+    MapProxy registry = new MapProxy();
 
     default void postInit() {
         // Override if you need to do something special.
     }
 
     default <T extends InjectableObject> T create(Class<? extends InjectableObject> clazz, Object... args) {
-        T instance = createInstance(clazz, args);
-        register(instance);
-        inject(instance);
-        instance.postInit();
-        return instance;
+        T instance = createInstance(clazz, args); // Create it
+        instance.registry.setInner(this.registry); // See that these pointers point to the whole chain! // TODO: verify!
+        register(instance); // Save this instance
+        inject(instance); // Load up the injection points inside the instance
+        instance.postInit(); // Let the user handle extra stuff
+        return instance; // And... we're done!
     }
 
     default <T> T register(T instance) {
-        registry.put(instance.getClass(), instance);
+        registry.put(instance);
         return instance;
     }
 
@@ -111,5 +115,25 @@ public interface InjectableObject {
         if (targetType == float.class) return sourceType == Float.class;
         if (targetType == double.class) return sourceType == Double.class;
         return false;
+    }
+
+    class MapProxy {
+        Map<Class<?>, Object> inner = new HashMap<>();
+
+        <T> void put(@NotNull final T object) {
+            final Class<?> type = object.getClass();
+            Preconditions.checkState(!inner.containsKey(type), "MapProxy already contains key: " + type.getName());
+            inner.put(type, object);
+        }
+
+        @SuppressWarnings("unchecked")
+        @Nullable
+        <T> T get(@NotNull final Class<?> clazz) {
+            return (T) inner.get(clazz);
+        }
+
+        void setInner(@NotNull final MapProxy other) {
+            this.inner = other.inner;
+        }
     }
 }

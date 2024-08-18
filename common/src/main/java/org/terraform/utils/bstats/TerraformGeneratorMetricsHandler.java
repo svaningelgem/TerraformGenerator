@@ -12,9 +12,9 @@ public class TerraformGeneratorMetricsHandler {
         Metrics metrics = new Metrics(plugin, pluginId);
         
         if(metrics.isEnabled()) {
-        	metrics.addCustomChart(new Metrics.SimplePie("onlyUseLogsNoWood", () -> config.getBoolean(TConfig.MISC_TREES_FORCE_LOGS)));
-        	metrics.addCustomChart(new Metrics.SimplePie("megaChunkNumBiomeSections", () -> config.getInt(TConfig.STRUCTURES_MEGACHUNK_NUMBIOMESECTIONS)));
-        	metrics.addCustomChart(new Metrics.SimplePie("biomeSectionBitshifts", () -> config.getInt(TConfig.BIOME_SECTION_BITSHIFTS)));
+        	metrics.addCustomChart(new Metrics.SimplePie("onlyUseLogsNoWood", () -> config.MISC_TREES_FORCE_LOGS));
+        	metrics.addCustomChart(new Metrics.SimplePie("megaChunkNumBiomeSections", () -> config.STRUCTURES_MEGACHUNK_NUMBIOMESECTIONS));
+        	metrics.addCustomChart(new Metrics.SimplePie("biomeSectionBitshifts", () -> config.BIOME_SECTION_BITSHIFTS));
         	TerraformGeneratorPlugin.logger.stdout("&abStats Metrics enabled.");
         }
         else

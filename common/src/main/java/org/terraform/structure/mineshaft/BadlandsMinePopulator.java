@@ -31,7 +31,7 @@ import java.util.EnumSet;
 import java.util.Random;
 
 public class BadlandsMinePopulator extends JigsawStructurePopulator {
-    static final int shaftDepth = config.getInt(TConfig.STRUCTURES_BADLANDS_MINE_DEPTH);
+    static final int shaftDepth = config.STRUCTURES_BADLANDS_MINE_DEPTH;
 
     @Override
     public boolean canSpawn(@NotNull TerraformWorld tw, int chunkX, int chunkZ, BiomeBank biome) {
@@ -65,7 +65,7 @@ public class BadlandsMinePopulator extends JigsawStructurePopulator {
     @Override
     public boolean isEnabled() {
         return BiomeBank.isBiomeEnabled(BiomeBank.BADLANDS_CANYON)
-			   && config.getBoolean(TConfig.STRUCTURES_BADLANDS_MINE_ENABLED);
+			   && config.STRUCTURES_BADLANDS_MINE_ENABLED;
     }
 
     @Override

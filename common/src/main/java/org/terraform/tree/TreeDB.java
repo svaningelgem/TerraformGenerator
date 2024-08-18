@@ -59,7 +59,7 @@ public class TreeDB {
         
         //Spawn the base
         Material log = Material.JUNGLE_WOOD;
-        if (config.getBoolean(TConfig.MISC_TREES_FORCE_LOGS)) log = Material.JUNGLE_LOG;
+        if (config.MISC_TREES_FORCE_LOGS) log = Material.JUNGLE_LOG;
         for (BlockFace face : BlockUtils.directBlockFaces) {
             new Wall(base.getRelative(face), BlockFace.NORTH).downUntilSolid(new Random(), log);
         }

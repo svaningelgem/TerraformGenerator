@@ -42,7 +42,7 @@ public class ElevatedPlainsHandler extends BiomeHandler {
     @Override
     public void populateSmallItems(TerraformWorld world, @NotNull Random random, int rawX, int surfaceY, int rawZ, @NotNull PopulatorDataAbstract data) {
         boolean gradient = HeightMap.getTrueHeightGradient(data, rawX, rawZ, 3)
-						   <= config.getDouble(TConfig.MISC_TREES_GRADIENT_LIMIT);
+						   <= (double)config.MISC_TREES_GRADIENT_LIMIT;
         if(gradient) {
             data.setType(rawX, surfaceY, rawZ, Material.GRASS_BLOCK);
             if(random.nextBoolean())

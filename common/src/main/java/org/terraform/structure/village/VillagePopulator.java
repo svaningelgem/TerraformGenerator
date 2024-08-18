@@ -67,7 +67,7 @@ public class VillagePopulator extends SingleMegaChunkStructurePopulator {
 //       		|| banks.contains(BiomeBank.SCARLET_FOREST)
 //       		|| banks.contains(BiomeBank.CHERRY_GROVE)) {
 
-            if (!config.getBoolean(TConfig.STRUCTURES_PLAINSVILLAGE_ENABLED))
+            if (!config.STRUCTURES_PLAINSVILLAGE_ENABLED)
             	return;
 
             new PlainsVillagePopulator().populate(tw, data);
@@ -78,7 +78,7 @@ public class VillagePopulator extends SingleMegaChunkStructurePopulator {
 
     @Override
     public int getChunkBufferDistance() {
-    	return config.getInt(TConfig.STRUCTURES_VILLAGE_CHUNK_EXCLUSION_ZONE);
+    	return config.STRUCTURES_VILLAGE_CHUNK_EXCLUSION_ZONE;
     }
 
     @Override
@@ -89,6 +89,6 @@ public class VillagePopulator extends SingleMegaChunkStructurePopulator {
         		|| BiomeBank.isBiomeEnabled(BiomeBank.TAIGA) 
            		|| BiomeBank.isBiomeEnabled(BiomeBank.SCARLET_FOREST)
            		|| BiomeBank.isBiomeEnabled(BiomeBank.CHERRY_GROVE))
-			   && config.getBoolean(TConfig.STRUCTURES_PLAINSVILLAGE_ENABLED);
+			   && config.STRUCTURES_PLAINSVILLAGE_ENABLED;
     }
 }

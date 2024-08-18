@@ -40,7 +40,6 @@ import java.util.Set;
 
 public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
 
-    public static TLogger logger;
     public static final Set<String> INJECTED_WORLDS = new HashSet<>();
     public static final @NotNull PrivateFieldHandler privateFieldHandler;
     public static @Nullable NMSInjectorAbstract injector;
@@ -70,7 +69,6 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
 
         BiomeBank.initSinglesConfig(); //Initiates single biome modes.
 
-        logger = new TLogger();
         watchdogSuppressant = new TfgWatchdogSuppressant();
 
         new TerraformCommandManager(this, "terraform", "terra");
@@ -93,7 +91,7 @@ public class TerraformGeneratorPlugin extends JavaPlugin implements Listener {
 
         injector.startupTasks();
 
-        if(config.getBoolean(TConfig.MISC_SAPLING_CUSTOM_TREES_ENABLED)) {
+        if(config.MISC_SAPLING_CUSTOM_TREES_ENABLED) {
             Bukkit.getPluginManager().registerEvents(new SaplingOverrider(), this);
         }
 

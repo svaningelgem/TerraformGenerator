@@ -37,7 +37,7 @@ public class PhysicsUpdaterPopulator extends BlockPopulator implements Listener{
     
     public static void pushChange(String world, @NotNull SimpleLocation loc) {
     	
-    	if(!flushIsQueued && cache.size() > config.getInt(TConfig.DEVSTUFF_FLUSH_PATCHER_CACHE_FREQUENCY)) {
+    	if(!flushIsQueued && cache.size() > config.DEVSTUFF_FLUSH_PATCHER_CACHE_FREQUENCY) {
 			flushIsQueued = true;
     		new BukkitRunnable() {
 	    		@Override

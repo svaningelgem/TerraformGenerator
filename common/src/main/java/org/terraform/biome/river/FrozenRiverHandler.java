@@ -58,7 +58,7 @@ public class FrozenRiverHandler extends BiomeHandler {
 
         RiverHandler.riverVegetation(world, random, data, rawX, surfaceY, rawZ);
 
-        if (GenUtils.chance(random, config.getInt(TConfig.BIOME_CLAY_DEPOSIT_CHANCE_OUT_OF_THOUSAND), 1000)) {
+        if (GenUtils.chance(random, config.BIOME_CLAY_DEPOSIT_CHANCE_OUT_OF_THOUSAND, 1000)) {
             BlockUtils.generateClayDeposit(rawX, surfaceY, rawZ, data, random);
         }
     }

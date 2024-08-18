@@ -103,6 +103,6 @@ public class WarmOceanRuinsPopulator extends SingleMegaChunkStructurePopulator {
                 || BiomeBank.isBiomeEnabled(BiomeBank.DEEP_COLD_OCEAN)
                 || BiomeBank.isBiomeEnabled(BiomeBank.FROZEN_OCEAN)
                 || BiomeBank.isBiomeEnabled(BiomeBank.DEEP_FROZEN_OCEAN))
-			   && config.getBoolean(TConfig.STRUCTURES_WARMOCEANRUINS_ENABLED);
+			   && config.STRUCTURES_WARMOCEANRUINS_ENABLED;
     }
 }

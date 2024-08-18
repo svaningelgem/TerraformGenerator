@@ -21,7 +21,7 @@ public class TfgWatchdogSuppressant {
     Object watchdogThreadInstance = null;
 	
 	public TfgWatchdogSuppressant(){
-		if(config.getBoolean(TConfig.DEVSTUFF_SUPPRESS_WATCHDOG))
+		if(config.DEVSTUFF_SUPPRESS_WATCHDOG)
 			try {
 				TerraformGeneratorPlugin.logger.info("[NOTICE] TerraformGenerator will suppress the server's watchdog "
 						+ "while generating chunks to prevent unnecessary stacktrace warnings. Unless you specifically need the"

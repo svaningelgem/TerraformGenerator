@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class GiantPumpkinPopulator {
     public void populate(@NotNull TerraformWorld tw, @NotNull Random random, @NotNull PopulatorDataAbstract data) {
-        if (!config.getBoolean(TConfig.STRUCTURES_SWAMPHUT_ENABLED)) return;
+        if (!config.STRUCTURES_SWAMPHUT_ENABLED) return;
         int x = data.getChunkX() * 16 + random.nextInt(16);
         int z = data.getChunkZ() * 16 + random.nextInt(16);
         int height = GenUtils.getHighestGround(data, x, z);

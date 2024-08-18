@@ -171,7 +171,7 @@ public class LargeCavePopulator extends JigsawStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean(TConfig.STRUCTURES_LARGECAVE_ENABLED);
+        return config.STRUCTURES_LARGECAVE_ENABLED;
     }
 
     @Override

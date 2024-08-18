@@ -33,7 +33,7 @@ public class TrialChamberPopulator extends VanillaStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean(TConfig.STRUCTURES_TRIALCHAMBER_ENABLED);
+        return config.STRUCTURES_TRIALCHAMBER_ENABLED;
     }
 
     private boolean rollSpawnRatio(@NotNull TerraformWorld tw, int chunkX, int chunkZ) {

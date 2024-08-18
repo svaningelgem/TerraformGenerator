@@ -223,7 +223,7 @@ public abstract class MansionStandardRoomPiece extends JigsawStructurePiece {
 			spawnedGuards++;
 			if(!this.roomPopulator.getSize().equals(new MansionRoomSize(1,1))) 
 			{
-				for(int i = 0; i < config.getInt(TConfig.STRUCTURES_MANSION_SPAWNAGGRESSION); i++) {
+				for(int i = 0; i < config.STRUCTURES_MANSION_SPAWNAGGRESSION; i++) {
 					if(rand.nextBoolean()) {
 						target.addEntity(EntityType.VINDICATOR);
 						spawnedGuards++;

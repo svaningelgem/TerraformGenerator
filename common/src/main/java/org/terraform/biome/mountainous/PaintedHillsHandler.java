@@ -76,7 +76,7 @@ public class PaintedHillsHandler extends AbstractMountainHandler {
 
 
         if(HeightMap.getTrueHeightGradient(data, rawX, rawZ, 3)
-		   < config.getDouble(TConfig.MISC_TREES_GRADIENT_LIMIT)) {
+		   < (double)config.MISC_TREES_GRADIENT_LIMIT) {
             data.setType(rawX, surfaceY, rawZ, Material.GRASS_BLOCK);
 
             if (random.nextBoolean())

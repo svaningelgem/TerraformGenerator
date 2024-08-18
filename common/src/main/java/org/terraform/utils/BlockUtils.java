@@ -701,7 +701,7 @@ public class BlockUtils {
 
     public static void generateClayDeposit(int x, int y, int z, @NotNull PopulatorDataAbstract data, @NotNull Random random) {
         //CLAY DEPOSIT
-    	replaceCircularPatch(random.nextInt(9999), config.getFloat(TConfig.BIOME_CLAY_DEPOSIT_SIZE), new SimpleBlock(data,x,y,z), Material.CLAY);
+    	replaceCircularPatch(random.nextInt(9999), (float)config.BIOME_CLAY_DEPOSIT_SIZE, new SimpleBlock(data,x,y,z), Material.CLAY);
 
     }
 

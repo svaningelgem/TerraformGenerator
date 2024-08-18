@@ -27,7 +27,7 @@ import java.util.Random;
 public class GorgeHandler extends BiomeHandler {
     static BiomeBlender biomeBlender;
     static final BiomeHandler plainsHandler = BiomeBank.PLAINS.getHandler();
-    static final boolean slabs = config.getBoolean(TConfig.MISC_USE_SLABS_TO_SMOOTH);
+    static final boolean slabs = config.MISC_USE_SLABS_TO_SMOOTH;
 
     @Override
     public boolean isOcean() {

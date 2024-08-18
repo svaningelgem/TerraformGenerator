@@ -46,7 +46,7 @@ public class DarkForestHandler extends BiomeHandler {
     @Override
     public void populateSmallItems(TerraformWorld tw, @NotNull Random random, int rawX, int surfaceY, int rawZ, @NotNull PopulatorDataAbstract data) {
       
-        boolean spawnHeads = config.getBoolean(TConfig.BIOME_DARK_FOREST_SPAWN_HEADS)
+        boolean spawnHeads = config.BIOME_DARK_FOREST_SPAWN_HEADS
 							 && GenUtils.chance(random, 1, 100);
 
         if (data.getType(rawX, surfaceY, rawZ) == Material.GRASS_BLOCK) {
@@ -96,7 +96,7 @@ public class DarkForestHandler extends BiomeHandler {
                         default -> FractalTypes.Mushroom.GIANT_BROWN_FUNNEL_MUSHROOM;
                     };
                     new MushroomBuilder(type).build(tw, data, sLoc.getX(),sLoc.getY(),sLoc.getZ());
-                } else if (config.getBoolean(TConfig.TREES_DARK_FOREST_BIG_ENABLED)) {
+                } else if (config.TREES_DARK_FOREST_BIG_ENABLED) {
                     FractalTypes.Tree.DARK_OAK_BIG_TOP.build(tw, new SimpleBlock(data,sLoc));
                 }
             }

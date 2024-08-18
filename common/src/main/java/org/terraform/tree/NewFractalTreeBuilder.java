@@ -121,7 +121,7 @@ public class NewFractalTreeBuilder implements Cloneable {
 
     public boolean checkGradient(PopulatorDataAbstract data, int x, int z) {
         return !checkGradient || (HeightMap.getTrueHeightGradient(data, x, z, 3)
-								  <= config.getDouble(TConfig.MISC_TREES_GRADIENT_LIMIT));
+								  <= (double)config.MISC_TREES_GRADIENT_LIMIT);
     }
 
     public @NotNull NewFractalTreeBuilder setCheckGradient(boolean checkGradient)

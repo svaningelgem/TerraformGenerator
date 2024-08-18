@@ -41,7 +41,7 @@ public class ShipwreckPopulator extends MultiMegaChunkStructurePopulator {
     @Override
     public void populate(@NotNull TerraformWorld tw, @NotNull PopulatorDataAbstract data) {
 
-        if (!config.getBoolean(TConfig.STRUCTURES_SHIPWRECK_ENABLED))
+        if (!config.STRUCTURES_SHIPWRECK_ENABLED)
             return;
         Random random = this.getHashedRandom(tw, data.getChunkX(), data.getChunkZ());
         MegaChunk mc = new MegaChunk(data.getChunkX(), data.getChunkZ());
@@ -98,7 +98,7 @@ public class ShipwreckPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public int[][] getCoordsFromMegaChunk(@NotNull TerraformWorld tw, @NotNull MegaChunk mc) {
-        int num = config.getInt(TConfig.STRUCTURES_SHIPWRECK_COUNT_PER_MEGACHUNK);
+        int num = config.STRUCTURES_SHIPWRECK_COUNT_PER_MEGACHUNK;
         int[][] coords = new int[num][2];
         for (int i = 0; i < num; i++)
             coords[i] = mc.getRandomCoords(tw.getHashedRand(mc.getX(), mc.getZ(), 191921*(1+i)));
@@ -163,7 +163,7 @@ public class ShipwreckPopulator extends MultiMegaChunkStructurePopulator {
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean(TConfig.STRUCTURES_SHIPWRECK_ENABLED);
+        return config.STRUCTURES_SHIPWRECK_ENABLED;
     }
     
     @Override

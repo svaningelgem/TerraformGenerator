@@ -64,7 +64,7 @@ public class ElderGuardianChamber extends RoomPopulatorAbstract {
                     .setType(Material.ORANGE_TERRACOTTA);
 
         //Elder Guardian cage
-        if (config.getBoolean(TConfig.STRUCTURES_PYRAMID_SPAWN_ELDER_GUARDIAN)) {
+        if (config.STRUCTURES_PYRAMID_SPAWN_ELDER_GUARDIAN) {
             SimpleBlock cageCenter = center.getRelative(0, 11, 0);
             placeElderGuardianCage(cageCenter);
         }

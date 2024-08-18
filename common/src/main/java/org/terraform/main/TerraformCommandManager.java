@@ -29,7 +29,7 @@ public class TerraformCommandManager implements TabExecutor {
 		}
 		registerCommand(new HelpCommand(plugin,this,"help","h","?"));
     	
-    	if (config.getBoolean(TConfig.DEVSTUFF_EXTENDED_COMMANDS)) {
+    	if (config.DEVSTUFF_EXTENDED_COMMANDS) {
             this.registerCommand(new PreviewCommand(plugin, "preview"));
             this.registerCommand(new TimingsCommand(plugin, "timings", "lag"));
             this.registerCommand(new CoconutCommand(plugin, "coconut"));

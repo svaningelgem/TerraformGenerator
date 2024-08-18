@@ -56,7 +56,7 @@ public class MapRenderWorldProviderBiome extends WorldChunkManager {
         //This will return river or plains depending on whether
         //the area is submerged.
 
-        return HeightMap.getBlockHeight(tw, x,z) <= config.getInt(TConfig.HEIGHT_MAP_SEA_LEVEL) ?
+        return HeightMap.getBlockHeight(tw, x,z) <= config.HEIGHT_MAP_SEA_LEVEL ?
                 river : plains;
 	}
 

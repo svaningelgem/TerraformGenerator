@@ -30,11 +30,11 @@ public class BadlandsHandler extends BiomeHandler {
     static private BiomeBlender riversBlender;
     static private BiomeBlender plateauBlender;
 
-    static final int sandRadius = config.getInt(TConfig.BIOME_BADLANDS_PLATEAU_SAND_RADIUS);
-    static final int plateauHeight = config.getInt(TConfig.BIOME_BADLANDS_PLATEAU_HEIGHT);
-    static final float plateauFrequency = config.getFloat(TConfig.BIOME_BADLANDS_PLATEAU_FREQUENCY);
-    static final double plateauThreshold = config.getDouble(TConfig.BIOME_BADLANDS_PLATEAU_THRESHOLD);
-    static final double plateauCommonness = config.getDouble(TConfig.BIOME_BADLANDS_PLATEAU_COMMONNESS);
+    static final int sandRadius = config.BIOME_BADLANDS_PLATEAU_SAND_RADIUS;
+    static final int plateauHeight = config.BIOME_BADLANDS_PLATEAU_HEIGHT;
+    static final float plateauFrequency = (float)config.BIOME_BADLANDS_PLATEAU_FREQUENCY;
+    static final double plateauThreshold = (double)config.BIOME_BADLANDS_PLATEAU_THRESHOLD;
+    static final double plateauCommonness = (double)config.BIOME_BADLANDS_PLATEAU_COMMONNESS;
 
     private static @NotNull BiomeBlender getRiversBlender(TerraformWorld tw) {
         // Only one blender needed!

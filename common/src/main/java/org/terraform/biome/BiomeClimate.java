@@ -8,43 +8,43 @@ public enum BiomeClimate {
 
 	//Tree-Dense areas
 	HUMID_VEGETATION(Range.between(
-			config.getDouble(TConfig.CLIMATE_HUMIDVEGETATION_MINTEMP),
-			config.getDouble(TConfig.CLIMATE_HUMIDVEGETATION_MAXTEMP)),
+			(double)config.CLIMATE_HUMIDVEGETATION_MINTEMP,
+			(double)config.CLIMATE_HUMIDVEGETATION_MAXTEMP),
 			Range.between(
-					config.getDouble(TConfig.CLIMATE_HUMIDVEGETATION_MINMOIST),
-					config.getDouble(TConfig.CLIMATE_HUMIDVEGETATION_MAXMOIST)),2),
+					(double)config.CLIMATE_HUMIDVEGETATION_MINMOIST,
+					(double)config.CLIMATE_HUMIDVEGETATION_MAXMOIST),2),
 	
 	//Savannas
 	DRY_VEGETATION(Range.between(
-			config.getDouble(TConfig.CLIMATE_DRYVEGETATION_MINTEMP),
-			config.getDouble(TConfig.CLIMATE_DRYVEGETATION_MAXTEMP)),
+			(double)config.CLIMATE_DRYVEGETATION_MINTEMP,
+			(double)config.CLIMATE_DRYVEGETATION_MAXTEMP),
 			Range.between(
-					config.getDouble(TConfig.CLIMATE_DRYVEGETATION_MINMOIST),
-					config.getDouble(TConfig.CLIMATE_DRYVEGETATION_MAXMOIST)),1),
+					(double)config.CLIMATE_DRYVEGETATION_MINMOIST,
+					(double)config.CLIMATE_DRYVEGETATION_MAXMOIST),1),
 	
 	//Deserts
 	HOT_BARREN(Range.between(
-			config.getDouble(TConfig.CLIMATE_HOTBARREN_MINTEMP),
-			config.getDouble(TConfig.CLIMATE_HOTBARREN_MAXTEMP)),
+			(double)config.CLIMATE_HOTBARREN_MINTEMP,
+			(double)config.CLIMATE_HOTBARREN_MAXTEMP),
 			Range.between(
-					config.getDouble(TConfig.CLIMATE_HOTBARREN_MINMOIST),
-					config.getDouble(TConfig.CLIMATE_HOTBARREN_MAXMOIST)),2),
+					(double)config.CLIMATE_HOTBARREN_MINMOIST,
+					(double)config.CLIMATE_HOTBARREN_MAXMOIST),2),
 	
 	//Cold biomes - taigas, maybe eroded plains
 	COLD(Range.between(
-			config.getDouble(TConfig.CLIMATE_COLD_MINTEMP),
-			config.getDouble(TConfig.CLIMATE_COLD_MAXTEMP)),
+			(double)config.CLIMATE_COLD_MINTEMP,
+			(double)config.CLIMATE_COLD_MAXTEMP),
 			Range.between(
-					config.getDouble(TConfig.CLIMATE_COLD_MINMOIST),
-					config.getDouble(TConfig.CLIMATE_COLD_MAXMOIST)),1),
+					(double)config.CLIMATE_COLD_MINMOIST,
+					(double)config.CLIMATE_COLD_MAXMOIST),1),
 	
 	//Any snowy biomes. 
 	SNOWY(Range.between(
-			config.getDouble(TConfig.CLIMATE_SNOWY_MINTEMP),
-			config.getDouble(TConfig.CLIMATE_SNOWY_MAXTEMP)),
+			(double)config.CLIMATE_SNOWY_MINTEMP,
+			(double)config.CLIMATE_SNOWY_MAXTEMP),
 			Range.between(
-					config.getDouble(TConfig.CLIMATE_SNOWY_MINMOIST),
-					config.getDouble(TConfig.CLIMATE_SNOWY_MAXMOIST)),2),
+					(double)config.CLIMATE_SNOWY_MINMOIST,
+					(double)config.CLIMATE_SNOWY_MAXMOIST),2),
 	
 	//Default climate.
 	TRANSITION(Range.between(-4.0,4.0),Range.between(-4.0,4.0),0), 
