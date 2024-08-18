@@ -88,7 +88,7 @@ public class TerraformGenerator extends ChunkGenerator implements InjectableObje
         try {
             return CHUNK_CACHE.get(cache);
         } catch(ExecutionException e) {
-            e.printStackTrace();
+            logger.stackTrace(e);
             e.getCause().printStackTrace();
             cache.initInternalCache();
             return cache;

@@ -59,7 +59,7 @@ public class AncientCityAltarPopulator extends AncientCityAbstractRoomPopulator 
 	                schema.setFace(center.getDirection());
 	                schema.apply();
 				} catch (FileNotFoundException e) {
-					e.printStackTrace();
+					logger.stackTrace(e);
 				}
 				
 				//Misc pillars leading up to the altar

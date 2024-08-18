@@ -95,7 +95,7 @@ public class TreasureRoomPopulator extends DecoratedSidesElderRoomPopulator {
             schema.setFace(BlockFace.NORTH);
             schema.apply();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.stackTrace(e);
         }
 
         //Spawn elder guardian

@@ -63,7 +63,7 @@ public class SQLiteDB {
             stmt.close();
             PREPARED_WORLDS.add(world);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.stackTrace(e);
         } finally {
             closeConn(conn);
         }
@@ -112,7 +112,7 @@ public class SQLiteDB {
             c.commit();
             c.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.stackTrace(e);
         }
     }
 
@@ -145,7 +145,7 @@ public class SQLiteDB {
             stmt.close();
             c.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.stackTrace(e);
             //Bukkit.getLogger().severe(e.getClass().getName() + "[" + e.getCause() +"]" + ":" + e.getMessage() );
         }
 
@@ -181,7 +181,7 @@ public class SQLiteDB {
             c.commit();
             c.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.stackTrace(e);
         }
     }
 }

@@ -32,7 +32,7 @@ public abstract class MansionRoomPopulator {
 			pop = (MansionRoomPopulator) this.getClass().getConstructors()[0].newInstance(room, internalWalls);
 			return pop;
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
-			e.printStackTrace();
+			logger.stackTrace(e);
 			return null;
 		}
 	}

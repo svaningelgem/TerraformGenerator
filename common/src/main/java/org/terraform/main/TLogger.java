@@ -21,6 +21,8 @@ import java.util.logging.SimpleFormatter;
 public class TLogger implements InjectableObject {
     @Inject
     private TConfig config;
+    @Inject
+    private TerraformGeneratorPlugin plugin;
 
     private final Logger LOGGER = Logger.getLogger("TerraformGenerator-Custom");
     private boolean suppressConsoleLogs = false;
@@ -28,48 +30,50 @@ public class TLogger implements InjectableObject {
     @Override
     public void postInit() {
         suppressConsoleLogs = config.DEVSTUFF_SUPPRESS_CONSOLE_LOGS;
-        if(suppressConsoleLogs) {
-            Handler consoleHandler;
-            Handler fileHandler;
-            try {
-                //Creating consoleHandler and fileHandler
-                consoleHandler = new ConsoleHandler();
-                fileHandler = new FileHandler("plugins" + File.separator + "TerraformGenerator" + File.separator + "terraform.log", true);
+        if(!suppressConsoleLogs) {
+            return;
+        }
 
-                //Follow bukkit format
-                fileHandler.setFormatter(new SimpleFormatter() {
-                    private static final String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
+        Handler consoleHandler;
+        Handler fileHandler;
+        try {
+            //Creating consoleHandler and fileHandler
+            consoleHandler = new ConsoleHandler();
+            fileHandler = new FileHandler(new File(plugin.getDataFolder(), "terraform.log").toString(), true);
 
-                    @Override
-                    public synchronized @NotNull String format(@NotNull LogRecord lr) {
-                        return String.format(format,
-                                new Date(lr.getMillis()),
-                                lr.getLevel().getLocalizedName(),
-                                ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', lr.getMessage())));
-                    }
-                });
+            //Follow bukkit format
+            fileHandler.setFormatter(new SimpleFormatter() {
+                private static final String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
 
-                LOGGER.setUseParentHandlers(false);
+                @Override
+                public synchronized @NotNull String format(@NotNull LogRecord lr) {
+                    return String.format(format,
+                            new Date(lr.getMillis()),
+                            lr.getLevel().getLocalizedName(),
+                            ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', lr.getMessage())));
+                }
+            });
 
-                //Assigning handlers to LOGGER object
-                LOGGER.addHandler(consoleHandler);
-                LOGGER.addHandler(fileHandler);
+            LOGGER.setUseParentHandlers(false);
 
-                //No stdout
-                //LOGGER.setLevel(Level.OFF);
-                consoleHandler.setLevel(Level.OFF);
-                fileHandler.setLevel(Level.ALL);
+            //Assigning handlers to LOGGER object
+            LOGGER.addHandler(consoleHandler);
+            LOGGER.addHandler(fileHandler);
 
-                LOGGER.config("Configuration done.");
+            //No stdout
+            //LOGGER.setLevel(Level.OFF);
+            consoleHandler.setLevel(Level.OFF);
+            fileHandler.setLevel(Level.ALL);
 
-                //Console handler removed
-                //LOGGER.removeHandler(consoleHandler);
+            LOGGER.config("Configuration done.");
 
-                this.stdout("Custom Logger Initialized");
-            } catch(IOException exception) {
-                Bukkit.getLogger().severe("Error occur in FileHandler." + exception);
-                suppressConsoleLogs = false;
-            }
+            //Console handler removed
+            //LOGGER.removeHandler(consoleHandler);
+
+            this.stdout("Custom Logger Initialized");
+        } catch(IOException exception) {
+            Bukkit.getLogger().severe("Error occur in FileHandler." + exception);
+            suppressConsoleLogs = false;
         }
     }
 
@@ -106,5 +110,17 @@ public class TLogger implements InjectableObject {
             } else
                 Bukkit.getConsoleSender().sendMessage("[TerraformGenerator][v] "
                         + ChatColor.translateAlternateColorCodes('&', message));
+    }
+
+    public void stackTrace(@NotNull Exception e) {
+        for(StackTraceElement stackTraceElement : e.getStackTrace()) {
+            final String message = stackTraceElement.toString();
+
+            if(suppressConsoleLogs) {
+                LOGGER.log(Level.SEVERE, "[!] " + message);
+            } else {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[TerraformGenerator][!] " + message);
+            }
+        }
     }
 }

@@ -65,7 +65,7 @@ public class CustomBiomeHandler {
 				TerraformGeneratorPlugin.logger.info("Registered custom biome: " + type.toString().toLowerCase(Locale.ENGLISH));
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 				TerraformGeneratorPlugin.logger.error("Failed to register custom biome: " + type.getKey());
-				e.printStackTrace();
+				logger.stackTrace(e);
 			}
 		}
 		

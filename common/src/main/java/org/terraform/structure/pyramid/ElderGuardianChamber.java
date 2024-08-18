@@ -146,7 +146,7 @@ public class ElderGuardianChamber extends RoomPopulatorAbstract {
             schema.setFace(dir);
             schema.apply();
         } catch (Throwable e) {
-            e.printStackTrace();
+            logger.stackTrace(e);
         }
     }
 

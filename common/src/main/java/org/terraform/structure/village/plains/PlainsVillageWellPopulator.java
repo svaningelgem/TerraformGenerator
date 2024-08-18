@@ -128,7 +128,7 @@ public class PlainsVillageWellPopulator extends PlainsVillageAbstractRoomPopulat
 			}
 			
         } catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.stackTrace(e);
 		}
 
     }

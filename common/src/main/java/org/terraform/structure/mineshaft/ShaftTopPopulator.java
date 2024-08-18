@@ -69,7 +69,7 @@ public class ShaftTopPopulator extends RoomPopulatorAbstract {
                 schema.apply();
                 target.LPillar(w.getY() - target.getY(), rand, Material.OAK_FENCE);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                logger.stackTrace(e);
             }
         }
     }

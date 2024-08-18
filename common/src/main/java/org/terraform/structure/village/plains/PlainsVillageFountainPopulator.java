@@ -83,7 +83,7 @@ public class PlainsVillageFountainPopulator extends RoomPopulatorAbstract {
 			}
 			
         } catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.stackTrace(e);
 		}
 
     }

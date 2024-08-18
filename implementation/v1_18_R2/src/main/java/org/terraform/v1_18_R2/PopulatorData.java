@@ -61,7 +61,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
 	        		entityTypesDict.put(type, et);
 				} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
 						| SecurityException e) {
-					e.printStackTrace();
+					logger.stackTrace(e);
 				}
         	}
         }
@@ -77,7 +77,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
         	return CraftMagicNumbers.getMaterial(rlwa.a_(new BlockPosition(x, y, z)).b());
     	}catch(Exception e) {
         	Bukkit.getLogger().info("Error chunk: " + chunkX + "," + chunkZ + "--- Block Coords: " + 16*chunkX + "," + 16*chunkZ + " for coords " + x + "," + y + "," + z);
-    		e.printStackTrace();
+    		logger.stackTrace(e);
         }
     	return null;
     }
@@ -166,7 +166,7 @@ public class PopulatorData extends PopulatorDataAbstract implements IPopulatorDa
             	EntityTypes<?> nmsEntity = IRegistry.W.a(new MinecraftKey(type.getName()));
                 ((TileEntityMobSpawner) tileentity).d().a(nmsEntity);
             } catch (IllegalArgumentException | SecurityException e) {
-                e.printStackTrace();
+                logger.stackTrace(e);
             }
         } else {
             TerraformGeneratorPlugin.logger.error("Failed to fetch mob spawner entity at (" + "," + rawX + "," + rawY + "," + rawZ + ")");

@@ -212,7 +212,7 @@ public class JungleHandler extends BiomeHandler {
             schema.setFace(BlockUtils.getDirectBlockFace(random));
             schema.apply();
         } catch (Throwable e) {
-            e.printStackTrace();
+            logger.stackTrace(e);
         }
 	
 	}

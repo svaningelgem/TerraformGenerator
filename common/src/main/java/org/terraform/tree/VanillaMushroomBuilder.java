@@ -29,7 +29,7 @@ public class VanillaMushroomBuilder {
 			TerraSchematic capSchem = TerraSchematic.load(capSchematic, new SimpleBlock(data, x, y + height - 2, z));
 			capSchem.apply();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.stackTrace(e);
 		}
 		
 	}

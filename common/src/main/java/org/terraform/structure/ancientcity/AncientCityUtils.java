@@ -50,7 +50,7 @@ public class AncientCityUtils {
     	if(t == null) {
     		try {
     		t = (Tag<Material>) Tag.class.getDeclaredField("SCULK_REPLACEABLE_WORLD_GEN").get(null);
-    		}catch(Exception e) {e.printStackTrace();}
+    		}catch(Exception e) {logger.stackTrace(e);}
     	}
     	boolean placedShrieker = false;
     	boolean placedSensor = false;

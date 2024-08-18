@@ -78,7 +78,7 @@ public class CustomBiomeHandler {
 				TerraformGeneratorPlugin.logger.info("Registered custom biome: " + type.toString().toLowerCase(Locale.ENGLISH));
 			} catch (Throwable e) {
 				TerraformGeneratorPlugin.logger.error("Failed to register custom biome: " + type.getKey());
-				e.printStackTrace();
+				logger.stackTrace(e);
 			}
 		}
 		

@@ -235,7 +235,7 @@ public class AncientCityResearchBasementHandler {
 	        schema.setFace(headFacing);
 	        schema.apply();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.stackTrace(e);
 		}
 		
 		//Decorate the 4 redstone research rooms
@@ -262,7 +262,7 @@ public class AncientCityResearchBasementHandler {
 		        schema.setFace(face);
 		        schema.apply();
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				logger.stackTrace(e);
 			}
 		}
 	}

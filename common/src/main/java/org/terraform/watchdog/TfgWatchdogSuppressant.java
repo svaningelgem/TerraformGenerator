@@ -1,14 +1,16 @@
 package org.terraform.watchdog;
 
+import org.jetbrains.annotations.Nullable;
+import org.terraform.main.TLogger;
+import org.terraform.main.config.TConfig;
+import org.terraform.utils.injection.Inject;
+import org.terraform.utils.injection.InjectableObject;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.jetbrains.annotations.Nullable;
-import org.terraform.main.TerraformGeneratorPlugin;
-import org.terraform.main.config.TConfig;
-
-public class TfgWatchdogSuppressant {
+public class TfgWatchdogSuppressant implements InjectableObject {
 	@Nullable
     Field instanceField = null;
 	@Nullable
@@ -19,14 +21,18 @@ public class TfgWatchdogSuppressant {
     Method tickMethod = null;
 	@Nullable
     Object watchdogThreadInstance = null;
+    @Inject
+    TConfig config;
+    @Inject
+    TLogger logger;
 	
 	public TfgWatchdogSuppressant(){
 		if(config.DEVSTUFF_SUPPRESS_WATCHDOG)
 			try {
-				TerraformGeneratorPlugin.logger.info("[NOTICE] TerraformGenerator will suppress the server's watchdog "
+				logger.info("[NOTICE] TerraformGenerator will suppress the server's watchdog "
 						+ "while generating chunks to prevent unnecessary stacktrace warnings. Unless you specifically need the"
 						+ "watchdog now (to take aikar timings or debug lag), you don't need to take any action.");
-				TerraformGeneratorPlugin.logger.info("It is recommended to pregenerate to reduce lag problems.");
+				logger.info("It is recommended to pregenerate to reduce lag problems.");
 				Class<?> watchdogThreadClass = Class.forName("org.spigotmc.WatchdogThread");
 				
 		        instanceField = watchdogThreadClass.getDeclaredField("instance");
@@ -39,11 +45,11 @@ public class TfgWatchdogSuppressant {
 		        tickMethod.setAccessible(true);
 		        
 		        watchdogThreadInstance = this.instanceField.get(null);
-	        	TerraformGeneratorPlugin.logger.info("Watchdog Thread hooked.");
+	        	logger.info("Watchdog Thread hooked.");
 			}
 	        catch(SecurityException | NoSuchFieldException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException e) {
-	        	TerraformGeneratorPlugin.logger.info("Watchdog instance could not be found.");
-	        	e.printStackTrace();
+	        	logger.info("Watchdog instance could not be found.");
+	        	logger.stackTrace(e);
 	        	instanceField = null;
 	        	lastTickField = null;
 	        	watchdogThreadClass = null;
@@ -53,14 +59,14 @@ public class TfgWatchdogSuppressant {
 	}
 	
 	public void tickWatchdog() {
-		if(watchdogThreadInstance == null) return;
+		if(watchdogThreadInstance == null || lastTickField == null || tickMethod == null) return;
         try {
             if ((long) lastTickField.get(watchdogThreadInstance) != 0) {
             	tickMethod.invoke(watchdogThreadInstance);
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        	e.printStackTrace();
-            TerraformGeneratorPlugin.logger.info("Failed to tick watchdog");
+        	logger.stackTrace(e);
+            logger.info("Failed to tick watchdog");
         }
     }
 	

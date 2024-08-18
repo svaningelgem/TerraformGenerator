@@ -183,7 +183,7 @@ public class PopulatorDataICA extends PopulatorDataICABiomeWriterAbstract {
         }
     	catch(NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) 
     	{
-    		e.printStackTrace();
+    		logger.stackTrace(e);
     	}
 
     	ica.a(structureFeature, start);

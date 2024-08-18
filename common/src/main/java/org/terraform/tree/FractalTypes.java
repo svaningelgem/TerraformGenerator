@@ -367,7 +367,7 @@ public class FractalTypes {
                         treeMutator.apply(b);
                     }catch(CloneNotSupportedException e){
                         //good luck m8
-                        e.printStackTrace();
+                        logger.stackTrace(e);
                         return b.build(tw,base);
                     }
                 }

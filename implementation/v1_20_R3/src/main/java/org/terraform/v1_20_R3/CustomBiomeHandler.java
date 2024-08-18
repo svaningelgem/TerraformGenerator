@@ -80,7 +80,7 @@ public class CustomBiomeHandler {
 			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException |
                      NoSuchMethodException | InvocationTargetException e) {
 				TerraformGeneratorPlugin.logger.error("Failed to register custom biome: " + type.getKey());
-				e.printStackTrace();
+				logger.stackTrace(e);
 			}
 		}
 		

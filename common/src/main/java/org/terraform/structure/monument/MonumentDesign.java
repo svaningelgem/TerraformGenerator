@@ -62,7 +62,7 @@ public enum MonumentDesign {
             schema.setFace(BlockFace.NORTH);
             schema.apply();
         } catch (Throwable e) {
-            e.printStackTrace();
+            logger.stackTrace(e);
         }
     }
 

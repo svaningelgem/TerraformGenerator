@@ -64,7 +64,7 @@ public class MansionSecondFloorStudyPopulator extends MansionRoomPopulator {
 		        schema.apply();
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.stackTrace(e);
 		}
 	}
 
