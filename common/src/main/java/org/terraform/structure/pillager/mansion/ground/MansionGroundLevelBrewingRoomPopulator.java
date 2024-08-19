@@ -17,6 +17,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.structure.pillager.mansion.MansionInternalWallState;
 import org.terraform.structure.pillager.mansion.MansionRoomPopulator;
@@ -82,13 +83,13 @@ public class MansionGroundLevelBrewingRoomPopulator extends MansionRoomPopulator
                                                            .apply(w.getLeft())
                                                            .setShape(Shape.OUTER_LEFT)
                                                            .apply(w.getRight());
-        if (rand.nextBoolean()) {
+        if (TConfig.areDecorationsEnabled() && rand.nextBoolean()) {
             w.getUp().setType(Material.POTTED_RED_MUSHROOM, Material.POTTED_BROWN_MUSHROOM);
         }
-        if (rand.nextBoolean()) {
+        if (TConfig.areDecorationsEnabled() && rand.nextBoolean()) {
             w.getRight().getUp().setType(Material.POTTED_RED_MUSHROOM, Material.POTTED_BROWN_MUSHROOM);
         }
-        if (rand.nextBoolean()) {
+        if (TConfig.areDecorationsEnabled() && rand.nextBoolean()) {
             w.getLeft().getUp().setType(Material.POTTED_RED_MUSHROOM, Material.POTTED_BROWN_MUSHROOM);
         }
     }
