@@ -8,14 +8,15 @@ import org.terraform.biome.BiomeBank;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomPopulatorAbstract;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
 import org.terraform.utils.WoodUtils;
 import org.terraform.utils.WoodUtils.WoodType;
-import org.terraform.utils.version.Version;
 import org.terraform.utils.version.OneOneNineBlockHandler;
+import org.terraform.utils.version.Version;
 
 import java.util.Map.Entry;
 import java.util.Random;
@@ -79,24 +80,25 @@ public class OutpostStakeCage extends RoomPopulatorAbstract {
                     );
                     break;
                 case 1:
-                    // Allay (1 to 3)
-                    for (int i = 0; i < 1 + rand.nextInt(3); i++) {
-                        data.addEntity(
-                                room.getX(),
-                                new SimpleBlock(data, room.getX(), room.getY(), room.getZ()).getGroundOrDry().getY()
-                                + 1,
-                                room.getZ(),
-                                OneOneNineBlockHandler.ALLAY
-                        );
-                    }
+                    if (TConfig.areAnimalsEnabled()) {
+                        // Allay (1 to 3)
+                        for (int i = 0; i < 1 + rand.nextInt(3); i++) {
+                            data.addEntity(room.getX(),
+                                    new SimpleBlock(data, room.getX(), room.getY(), room.getZ()).getGroundOrDry().getY()
+                                    + 1,
+                                    room.getZ(),
+                                    OneOneNineBlockHandler.ALLAY
+                            );
+                        }
 
-                    // If spawning allays, a roof must be added to the cage.
-                    for (int nx = lowerCorner[0]; nx <= upperCorner[0]; nx++) {
-                        for (int nz = lowerCorner[1]; nz <= upperCorner[1]; nz++) {
-                            int baseHeight = 6 + highestHeight;
-                            SimpleBlock target = new SimpleBlock(data, nx, baseHeight, nz);
+                        // If spawning allays, a roof must be added to the cage.
+                        for (int nx = lowerCorner[0]; nx <= upperCorner[0]; nx++) {
+                            for (int nz = lowerCorner[1]; nz <= upperCorner[1]; nz++) {
+                                int baseHeight = 6 + highestHeight;
+                                SimpleBlock target = new SimpleBlock(data, nx, baseHeight, nz);
 
-                            target.setType(plankMat);
+                                target.setType(plankMat);
+                            }
                         }
                     }
                     break;
@@ -107,8 +109,7 @@ public class OutpostStakeCage extends RoomPopulatorAbstract {
         }
         else {
             if (rand.nextBoolean()) {
-                data.addEntity(
-                        room.getX(),
+                data.addEntity(room.getX(),
                         new SimpleBlock(data, room.getX(), room.getY(), room.getZ()).getGroundOrDry().getY() + 1,
                         room.getZ(),
                         EntityType.IRON_GOLEM
@@ -129,8 +130,7 @@ public class OutpostStakeCage extends RoomPopulatorAbstract {
             }
         }
         new Wall(base).Pillar(h, rand, WoodUtils.getWoodForBiome(biome, type));
-        new Wall(base.getRelative(0, h, 0)).Pillar(
-                GenUtils.randInt(2, 3),
+        new Wall(base.getRelative(0, h, 0)).Pillar(GenUtils.randInt(2, 3),
                 rand,
                 WoodUtils.getWoodForBiome(biome, WoodType.FENCE)
         );

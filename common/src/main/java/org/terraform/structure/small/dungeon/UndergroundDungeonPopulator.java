@@ -15,6 +15,7 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
@@ -60,8 +61,7 @@ public class UndergroundDungeonPopulator extends SmallDungeonPopulator {
         int z = spawnCoords[1];// data.getChunkZ()*16 + random.nextInt(16);
         Random rand = this.getHashedRandom(tw, data.getChunkX(), data.getChunkZ());
 
-        int y = HeightMap.getBlockHeight(tw, x, z) - GenUtils.randInt(
-                rand,
+        int y = HeightMap.getBlockHeight(tw, x, z) - GenUtils.randInt(rand,
                 15,
                 50
         );// GenUtils.getHighestGround(data, x, z)
@@ -134,8 +134,7 @@ public class UndergroundDungeonPopulator extends SmallDungeonPopulator {
             int nX = coords[0];
             int nY = coords[1];
             int nZ = coords[2];
-            BlockUtils.replaceSphere(
-                    rand.nextInt(992),
+            BlockUtils.replaceSphere(rand.nextInt(992),
                     GenUtils.randInt(rand, 1, 3),
                     new SimpleBlock(data, nX, nY, nZ),
                     true,
@@ -180,8 +179,7 @@ public class UndergroundDungeonPopulator extends SmallDungeonPopulator {
                 }
                 for (int i = 0; i < GenUtils.randInt(rand, 1, room.getHeight() - 3); i++) {
                     Wall w = new Wall(new SimpleBlock(data, x + nx, y + 1, z + nz), BlockFace.NORTH);
-                    w.LPillar(
-                            room.getHeight() - 2,
+                    w.LPillar(room.getHeight() - 2,
                             rand,
                             Material.COBBLESTONE,
                             Material.MOSSY_COBBLESTONE,
@@ -219,7 +217,7 @@ public class UndergroundDungeonPopulator extends SmallDungeonPopulator {
             Wall w = entry.getKey();
             int length = entry.getValue();
             int chest = GenUtils.randInt(1, length - 1);
-            while (length >= 0) {
+            while (TConfig.areDecorationsEnabled() && length >= 0) {
                 if (length == chest) {
                     Directional dir = (Directional) Bukkit.createBlockData(Material.CHEST);
                     dir.setFacing(w.getDirection());

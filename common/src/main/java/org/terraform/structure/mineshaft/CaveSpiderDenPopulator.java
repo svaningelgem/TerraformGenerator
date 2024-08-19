@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomPopulatorAbstract;
 import org.terraform.utils.BlockUtils;
@@ -67,7 +68,7 @@ public class CaveSpiderDenPopulator extends RoomPopulatorAbstract {
                 if (x == room.getX() && z == room.getZ()) {
                     data.setSpawner(x, b.getY(), z, EntityType.CAVE_SPIDER);
                 }
-                else {
+                else if (TConfig.areDecorationsEnabled()) {
                     Wall w = new Wall(b, BlockFace.NORTH);
                     w.LPillar(GenUtils.randInt(0, 2), rand, Material.COBWEB);
                 }

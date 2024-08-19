@@ -1,8 +1,5 @@
 package org.terraform.structure.catacombs;
 
-import java.util.Random;
-import java.util.Map.Entry;
-
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
@@ -10,10 +7,12 @@ import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
-import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.utils.GenUtils;
 import org.terraform.utils.blockdata.ChestBuilder;
+
+import java.util.Map.Entry;
+import java.util.Random;
 
 public class CatacombsSkeletonDungeonPopulator extends CatacombsStandardPopulator {
 
@@ -38,7 +37,7 @@ public class CatacombsSkeletonDungeonPopulator extends CatacombsStandardPopulato
                 break;
             }
             for (int i = 0; i < entry.getValue(); i++) {
-                if (TConfig.areDecorationsEnabled() && GenUtils.chance(rand, 1, 40)) {
+                if (GenUtils.chance(rand, 1, 40)) {
                     new ChestBuilder(Material.CHEST).setFacing(w.getDirection())
                                                     .setLootTable(TerraLootTable.SIMPLE_DUNGEON)
                                                     .apply(w);

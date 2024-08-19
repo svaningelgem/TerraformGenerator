@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.utils.GenUtils;
 
@@ -25,6 +26,7 @@ public class TreasureAntechamber extends Antechamber {
     @Override
     public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
         super.populate(data, room);
+        if ( !TConfig.areDecorationsEnabled() ) return;
 
         // Place chests against the walls
         for (Entry<Wall, Integer> entry : room.getFourWalls(data, 1).entrySet()) {

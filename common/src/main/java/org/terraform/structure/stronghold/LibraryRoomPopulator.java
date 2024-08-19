@@ -12,6 +12,7 @@ import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomPopulatorAbstract;
 import org.terraform.utils.BlockUtils;
@@ -92,7 +93,7 @@ public class LibraryRoomPopulator extends RoomPopulatorAbstract {
                 else {
 
                     // Spawn loot chest
-                    if (GenUtils.chance(rand, 5, 100)) {
+                    if (TConfig.areDecorationsEnabled() && GenUtils.chance(rand, 5, 100)) {
                         SimpleBlock cBlock = pWall.getUp().get();
                         cBlock.setType(Material.CHEST);
 
@@ -100,8 +101,7 @@ public class LibraryRoomPopulator extends RoomPopulatorAbstract {
                                 Material.CHEST);
                         chest.setFacing(pWall.getDirection());
                         cBlock.setBlockData(chest);
-                        data.lootTableChest(
-                                cBlock.getX(),
+                        data.lootTableChest(cBlock.getX(),
                                 cBlock.getY(),
                                 cBlock.getZ(),
                                 TerraLootTable.STRONGHOLD_LIBRARY
@@ -144,26 +144,22 @@ public class LibraryRoomPopulator extends RoomPopulatorAbstract {
         // Stairway generation
         // Wall object, to the length of the wall
         ArrayList<Wall> stairWalls = new ArrayList<>();
-        Wall stairWallOne = new Wall(new SimpleBlock(
-                data,
+        Wall stairWallOne = new Wall(new SimpleBlock(data,
                 lowerBounds[0] + 5,
                 room.getY() + pHeight,
                 upperBounds[1] - 5
         ), BlockFace.NORTH);
-        Wall stairWallTwo = new Wall(new SimpleBlock(
-                data,
+        Wall stairWallTwo = new Wall(new SimpleBlock(data,
                 upperBounds[0] - 5,
                 room.getY() + pHeight,
                 lowerBounds[1] + 5
         ), BlockFace.SOUTH);
-        Wall stairWallThree = new Wall(new SimpleBlock(
-                data,
+        Wall stairWallThree = new Wall(new SimpleBlock(data,
                 lowerBounds[0] + 5,
                 room.getY() + pHeight,
                 lowerBounds[1] + 5
         ), BlockFace.EAST);
-        Wall stairWallFour = new Wall(new SimpleBlock(
-                data,
+        Wall stairWallFour = new Wall(new SimpleBlock(data,
                 upperBounds[0] - 5,
                 room.getY() + pHeight,
                 upperBounds[1] - 5

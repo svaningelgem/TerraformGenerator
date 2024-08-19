@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.PathPopulatorAbstract;
 import org.terraform.structure.room.PathPopulatorData;
 import org.terraform.utils.BlockUtils;
@@ -66,8 +67,7 @@ public class StrongholdPathPopulator extends PathPopulatorAbstract {
 
             if (isCrossroad) { // This is a crossroad (Has 4 pathways)
                 for (BlockFace face : BlockUtils.xzDiagonalPlaneBlockFaces) {
-                    new Wall(ppd.base.getUp().getRelative(face)).LPillar(
-                            10,
+                    new Wall(ppd.base.getUp().getRelative(face)).LPillar(10,
                             rand,
                             Material.COBBLESTONE_WALL,
                             Material.ANDESITE_WALL,
@@ -85,28 +85,24 @@ public class StrongholdPathPopulator extends PathPopulatorAbstract {
                     wall.getUp().getLeft().setType(Material.STONE, Material.SMOOTH_STONE, Material.ANDESITE);
                     wall.getUp().getRight().setType(Material.STONE, Material.SMOOTH_STONE, Material.ANDESITE);
 
-                    new StairBuilder(
-                            Material.ANDESITE_STAIRS,
+                    new StairBuilder(Material.ANDESITE_STAIRS,
                             Material.POLISHED_ANDESITE_STAIRS,
                             Material.MOSSY_STONE_BRICK_STAIRS
                     ).setFacing(BlockUtils.getLeft(wall.getDirection())).setHalf(Half.TOP).apply(wall.getRight());
 
-                    new StairBuilder(
-                            Material.STONE_BRICK_STAIRS,
+                    new StairBuilder(Material.STONE_BRICK_STAIRS,
                             Material.POLISHED_ANDESITE_STAIRS,
                             Material.MOSSY_STONE_BRICK_STAIRS
                     ).setFacing(BlockUtils.getRight(wall.getDirection())).setHalf(Half.TOP).apply(wall.getLeft());
 
-                    new StairBuilder(
-                            Material.STONE_BRICK_STAIRS,
+                    new StairBuilder(Material.STONE_BRICK_STAIRS,
                             Material.POLISHED_ANDESITE_STAIRS,
                             Material.MOSSY_STONE_BRICK_STAIRS
                     ).setFacing(BlockUtils.getLeft(wall.getDirection()))
                      .setHalf(Half.BOTTOM)
                      .apply(wall.getRight().getUp(2));
 
-                    new StairBuilder(
-                            Material.STONE_BRICK_STAIRS,
+                    new StairBuilder(Material.STONE_BRICK_STAIRS,
                             Material.POLISHED_ANDESITE_STAIRS,
                             Material.MOSSY_STONE_BRICK_STAIRS
                     ).setFacing(BlockUtils.getRight(wall.getDirection()))
@@ -137,15 +133,13 @@ public class StrongholdPathPopulator extends PathPopulatorAbstract {
                 base.getUp(3).getLeft(2).setType(Material.SMOOTH_STONE, Material.POLISHED_ANDESITE);
                 base.getUp(4).getRight(2).setType(Material.SMOOTH_STONE, Material.POLISHED_ANDESITE);
 
-                new StairBuilder(
-                        Material.STONE_BRICK_STAIRS,
+                new StairBuilder(Material.STONE_BRICK_STAIRS,
                         Material.COBBLESTONE_STAIRS,
                         Material.MOSSY_STONE_BRICK_STAIRS,
                         Material.ANDESITE_STAIRS
                 ).setFacing(BlockUtils.getLeft(ppd.dir)).setHalf(Half.TOP).apply(base.getUp(4).getLeft());
 
-                new StairBuilder(
-                        Material.STONE_BRICK_STAIRS,
+                new StairBuilder(Material.STONE_BRICK_STAIRS,
                         Material.COBBLESTONE_STAIRS,
                         Material.MOSSY_STONE_BRICK_STAIRS,
                         Material.ANDESITE_STAIRS
@@ -184,23 +178,25 @@ public class StrongholdPathPopulator extends PathPopulatorAbstract {
                         w = w.getRight();
                     }
 
-                    SimpleBlock cBlock = w.get();
-                    cBlock.setType(Material.CHEST);
-                    org.bukkit.block.data.type.Chest chest = (org.bukkit.block.data.type.Chest) Bukkit.createBlockData(
-                            Material.CHEST);
-                    if (i == 0) {
-                        chest.setFacing(BlockUtils.getAdjacentFaces(ppd.dir)[1]);
+                    if (TConfig.areDecorationsEnabled()) {
+                        SimpleBlock cBlock = w.get();
+                        cBlock.setType(Material.CHEST);
+                        org.bukkit.block.data.type.Chest chest = (org.bukkit.block.data.type.Chest) Bukkit.createBlockData(
+                                Material.CHEST);
+                        if (i == 0) {
+                            chest.setFacing(BlockUtils.getAdjacentFaces(ppd.dir)[1]);
+                        }
+                        if (i == 1) {
+                            chest.setFacing(BlockUtils.getAdjacentFaces(ppd.dir)[0]);
+                        }
+                        cBlock.setBlockData(chest);
+                        cBlock.getPopData()
+                              .lootTableChest(cBlock.getX(),
+                                      cBlock.getY(),
+                                      cBlock.getZ(),
+                                      TerraLootTable.STRONGHOLD_CORRIDOR
+                              );
                     }
-                    if (i == 1) {
-                        chest.setFacing(BlockUtils.getAdjacentFaces(ppd.dir)[0]);
-                    }
-                    cBlock.setBlockData(chest);
-                    cBlock.getPopData()
-                          .lootTableChest(cBlock.getX(),
-                                  cBlock.getY(),
-                                  cBlock.getZ(),
-                                  TerraLootTable.STRONGHOLD_CORRIDOR
-                          );
                 }
                 else if (GenUtils.chance(rand, 4, 25)) { // If a chest spawns, don't overlap it with iron bars
                     setIronBars(ppd);
@@ -219,7 +215,7 @@ public class StrongholdPathPopulator extends PathPopulatorAbstract {
         }
 
         // Cobwebs
-        if (GenUtils.chance(rand, 1, 25)) {
+        if (TConfig.areDecorationsEnabled() && GenUtils.chance(rand, 1, 25)) {
             SimpleBlock webBase = ceil.getDown();
             webBase.setType(Material.COBWEB);
 
@@ -279,12 +275,11 @@ public class StrongholdPathPopulator extends PathPopulatorAbstract {
         core.RSolSetType(Material.CHISELED_STONE_BRICKS);
         for (BlockFace face : BlockUtils.getAdjacentFaces(dir)) {
 
-            core.getRelative(face)
-                .RSolSetBlockData(new StairBuilder(Material.STONE_BRICK_STAIRS,
-                        Material.COBBLESTONE_STAIRS,
-                        Material.MOSSY_STONE_BRICK_STAIRS,
-                        Material.ANDESITE_STAIRS
-                ).setFacing(face).setHalf(Half.BOTTOM).get());
+            core.getRelative(face).RSolSetBlockData(new StairBuilder(Material.STONE_BRICK_STAIRS,
+                    Material.COBBLESTONE_STAIRS,
+                    Material.MOSSY_STONE_BRICK_STAIRS,
+                    Material.ANDESITE_STAIRS
+            ).setFacing(face).setHalf(Half.BOTTOM).get());
         }
     }
 

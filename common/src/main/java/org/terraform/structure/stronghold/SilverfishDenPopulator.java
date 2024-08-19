@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomPopulatorAbstract;
 import org.terraform.utils.BlockUtils;
@@ -24,7 +25,8 @@ public class SilverfishDenPopulator extends RoomPopulatorAbstract {
     public void populate(@NotNull PopulatorDataAbstract data, @NotNull CubeRoom room) {
         // Spawn a random sphere of silverfish eggs
         SimpleBlock base = new SimpleBlock(data, room.getX(), room.getY() + room.getHeight() / 2 - 2, room.getZ());
-        BlockUtils.replaceUpperSphere(rand.nextInt(9999),
+        BlockUtils.replaceUpperSphere(
+                rand.nextInt(9999),
                 (room.getWidthX() - 2) / 2f,
                 (room.getHeight() - 3),
                 (room.getWidthZ() - 2) / 2f,
@@ -54,11 +56,14 @@ public class SilverfishDenPopulator extends RoomPopulatorAbstract {
                 continue;
             }
 
-            data.setType(x, ny, z, Material.CHEST);
-            org.bukkit.block.data.type.Chest chest = (org.bukkit.block.data.type.Chest) Bukkit.createBlockData(Material.CHEST);
-            chest.setFacing(BlockUtils.getDirectBlockFace(rand));
-            data.setBlockData(x, ny, z, chest);
-            data.lootTableChest(x, ny, z, TerraLootTable.STRONGHOLD_CORRIDOR);
+            if (TConfig.areDecorationsEnabled()) {
+                data.setType(x, ny, z, Material.CHEST);
+                org.bukkit.block.data.type.Chest chest = (org.bukkit.block.data.type.Chest) Bukkit.createBlockData(
+                        Material.CHEST);
+                chest.setFacing(BlockUtils.getDirectBlockFace(rand));
+                data.setBlockData(x, ny, z, chest);
+                data.lootTableChest(x, ny, z, TerraLootTable.STRONGHOLD_CORRIDOR);
+            }
         }
     }
 

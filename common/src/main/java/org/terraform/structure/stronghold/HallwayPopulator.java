@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomPopulatorAbstract;
 import org.terraform.utils.BlockUtils;
@@ -89,7 +90,7 @@ public class HallwayPopulator extends RoomPopulatorAbstract {
             }
 
             // Cobwebs
-            if (GenUtils.chance(rand, 1, 5)) {
+            if (TConfig.areDecorationsEnabled() && GenUtils.chance(rand, 1, 5)) {
                 SimpleBlock webBase = ceil.getDown();
                 webBase.setType(Material.COBWEB);
 

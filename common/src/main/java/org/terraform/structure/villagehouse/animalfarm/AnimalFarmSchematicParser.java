@@ -8,6 +8,7 @@ import org.terraform.biome.BiomeBank;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.SchematicParser;
 import org.terraform.utils.GenUtils;
 import org.terraform.utils.WoodUtils;
@@ -67,17 +68,30 @@ public class AnimalFarmSchematicParser extends SchematicParser {
             return;
         }
         else if (data.getMaterial() == Material.CHEST) {
-            if (GenUtils.chance(rand, 1, 5)) {
-                block.setType(Material.AIR);
-                return; // A fifth of chests is not placed.
-            }
-            super.applyData(block, data);
-            int i = rand.nextInt(3);
-            switch (i) {
-                case 0 -> pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.VILLAGE_BUTCHER);
-                case 1 -> pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.VILLAGE_TANNERY);
-                default ->
-                        pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.VILLAGE_SHEPHERD);
+            if (TConfig.areDecorationsEnabled()) {
+                if (GenUtils.chance(rand, 1, 5)) {
+                    block.setType(Material.AIR);
+                    return; // A fifth of chests is not placed.
+                }
+                super.applyData(block, data);
+                int i = rand.nextInt(3);
+                switch (i) {
+                    case 0 -> pop.lootTableChest(block.getX(),
+                            block.getY(),
+                            block.getZ(),
+                            TerraLootTable.VILLAGE_BUTCHER
+                    );
+                    case 1 -> pop.lootTableChest(block.getX(),
+                            block.getY(),
+                            block.getZ(),
+                            TerraLootTable.VILLAGE_TANNERY
+                    );
+                    default -> pop.lootTableChest(block.getX(),
+                            block.getY(),
+                            block.getZ(),
+                            TerraLootTable.VILLAGE_SHEPHERD
+                    );
+                }
             }
         }
         else {

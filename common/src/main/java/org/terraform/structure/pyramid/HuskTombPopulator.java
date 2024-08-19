@@ -9,6 +9,7 @@ import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomPopulatorAbstract;
 import org.terraform.utils.BlockUtils;
@@ -54,7 +55,8 @@ public class HuskTombPopulator extends RoomPopulatorAbstract {
                         );
                     }
                     // Spawn chests
-                    if (GenUtils.chance(this.rand, 1, 50) && i != 0 && i != entry.getValue() - 1) {
+                    if (TConfig.areDecorationsEnabled() &&
+                        GenUtils.chance(this.rand, 1, 50) && i != 0 && i != entry.getValue() - 1) {
                         Directional chest = (Directional) Bukkit.createBlockData(Material.CHEST);
                         chest.setFacing(w.getDirection());
                         w.getFront().setBlockData(chest);

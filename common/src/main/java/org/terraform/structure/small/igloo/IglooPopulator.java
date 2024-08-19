@@ -152,8 +152,10 @@ public class IglooPopulator extends MultiMegaChunkStructurePopulator {
         int offset = size / 2;
         BlockFace offsetDir = BlockUtils.xzDiagonalPlaneBlockFaces[random.nextInt(BlockUtils.xzDiagonalPlaneBlockFaces.length)];
         SimpleBlock chimneyCore = core.getRelative(offsetDir, offset);
-        chimneyCore.getDown().setType(Material.HAY_BLOCK);
-        chimneyCore.setType(Material.CAMPFIRE);
+        if (TConfig.areDecorationsEnabled()) {
+            chimneyCore.getDown().setType(Material.HAY_BLOCK);
+            chimneyCore.setType(Material.CAMPFIRE);
+        }
 
         for (BlockFace face : BlockUtils.xzPlaneBlockFaces) {
             if (face.getModX() == offsetDir.getModX() || face.getModZ() == offsetDir.getModZ()) {
@@ -203,7 +205,7 @@ public class IglooPopulator extends MultiMegaChunkStructurePopulator {
                 threshold--;
             }
             // Only operate on the wall if a wall is found.
-            if (found) {
+            if (TConfig.areDecorationsEnabled() && found) {
                 wall = wall.getFront(2);
                 for (BlockFace side : BlockUtils.getAdjacentFaces(wall.getDirection())) {
                     Wall decoCore = wall.getRelative(side);
@@ -289,7 +291,9 @@ public class IglooPopulator extends MultiMegaChunkStructurePopulator {
         }
 
         // Place carpet on the ground in the middle.
-        core.setType(Material.RED_CARPET);
+        if (TConfig.areDecorationsEnabled()) {
+            core.setType(Material.RED_CARPET);
+        }
 
         // Pick a color and set the larger radius.
         Material carpet = BlockUtils.pickCarpet();
@@ -303,7 +307,9 @@ public class IglooPopulator extends MultiMegaChunkStructurePopulator {
         }
 
         // Spawn a villager.
-        core.getUp().addEntity(EntityType.VILLAGER);
+        if (TConfig.areAnimalsEnabled()) {
+            core.getUp().addEntity(EntityType.VILLAGER);
+        }
     }
 
     private void spawnTrapdoorDecors(@NotNull Wall w, int size) {

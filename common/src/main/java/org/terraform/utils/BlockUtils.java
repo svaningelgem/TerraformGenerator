@@ -1429,6 +1429,8 @@ public class BlockUtils {
     }
 
     public static void placeBed(@NotNull SimpleBlock block, @NotNull Material mat, @NotNull BlockFace dir) {
+        if (!TConfig.areDecorationsEnabled()) return;
+
         if (BlockUtils.isAir(block.getType()) && BlockUtils.isAir(block.getRelative(dir).getType())) {
             Bed bed = (Bed) Bukkit.createBlockData(mat);
             bed.setFacing(dir.getOppositeFace());
@@ -1442,18 +1444,9 @@ public class BlockUtils {
         }
     }
 
-    public static BlockFace @NotNull [] getDirectFacesFromDiagonal(@NotNull BlockFace face) {
-        return switch (face) {
-            case NORTH_EAST -> new BlockFace[] {BlockFace.NORTH, BlockFace.EAST};
-            case NORTH_WEST -> new BlockFace[] {BlockFace.NORTH, BlockFace.WEST};
-            case SOUTH_EAST -> new BlockFace[] {BlockFace.SOUTH, BlockFace.EAST};
-            case SOUTH_WEST -> new BlockFace[] {BlockFace.SOUTH, BlockFace.EAST};
-            default -> throw new UnsupportedOperationException(
-                    "getDirectFacesFromDiagonal can only be used for XZ-Plane diagonals");
-        };
-    }
-
     public static void placeRail(@NotNull SimpleBlock block, @NotNull Material mat) {
+        if (!TConfig.areDecorationsEnabled()) return;
+
         Rail rail = (Rail) Bukkit.createBlockData(mat);
         Set<BlockFace> faces = EnumSet.noneOf(BlockFace.class);
         BlockFace upperFace = null;
@@ -1521,13 +1514,6 @@ public class BlockUtils {
                 placeRail(relative.getDown(), target.getDown().getRelative(face).getType());
             }
         }
-    }
-
-    public static boolean emitsLight(@NotNull Material mat) {
-        return switch (mat) {
-            case TORCH, SEA_PICKLE, SEA_LANTERN, GLOWSTONE, LANTERN, LAVA, CAMPFIRE, REDSTONE_LAMP, FIRE -> true;
-            default -> false;
-        };
     }
 
     public static @NotNull BlockData infestStone(@NotNull BlockData mat) {

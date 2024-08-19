@@ -1,9 +1,5 @@
 package org.terraform.structure.pillager.mansion.secondfloor;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.Random;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -13,12 +9,17 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.pillager.mansion.MansionInternalWallState;
 import org.terraform.structure.pillager.mansion.MansionRoomPopulator;
 import org.terraform.structure.pillager.mansion.MansionRoomSize;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
+
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Random;
 
 public class MansionTowerStairwayPopulator extends MansionRoomPopulator {
 
@@ -70,28 +71,31 @@ public class MansionTowerStairwayPopulator extends MansionRoomPopulator {
         // 7 blocks above, place some chests and decorations at the stairs
         b = b.getUp(8);
 
-        for (Entry<Wall, Integer> entry : this.getRoom().getFourWalls(data, 2).entrySet()) {
-            Wall w = entry.getKey().getAtY(b.getY());
-            for (int i = 0; i < entry.getValue(); i++) {
-                int pileHeight = GenUtils.randInt(random, 1, 2);
-                w.Pillar(pileHeight,
-                        random,
-                        Material.CRAFTING_TABLE,
-                        Material.FLETCHING_TABLE,
-                        Material.CARTOGRAPHY_TABLE,
-                        Material.ANVIL,
-                        Material.NOTE_BLOCK,
-                        Material.SMITHING_TABLE
-                );
-                if (GenUtils.chance(random, 1, 5)) {
-                    w.setBlockData(BlockUtils.getRandomBarrel());
-                    data.lootTableChest(w.getX(), w.getY(), w.getZ(), TerraLootTable.WOODLAND_MANSION);
-                }
-                if (GenUtils.chance(random, 1, 5)) {
-                    w.getRelative(0, pileHeight, 0).setType(Material.LANTERN);
-                }
+        if (TConfig.areDecorationsEnabled()) {
+            for (Entry<Wall, Integer> entry : this.getRoom().getFourWalls(data, 2).entrySet()) {
+                Wall w = entry.getKey().getAtY(b.getY());
+                for (int i = 0; i < entry.getValue(); i++) {
+                    int pileHeight = GenUtils.randInt(random, 1, 2);
+                    w.Pillar(
+                            pileHeight,
+                            random,
+                            Material.CRAFTING_TABLE,
+                            Material.FLETCHING_TABLE,
+                            Material.CARTOGRAPHY_TABLE,
+                            Material.ANVIL,
+                            Material.NOTE_BLOCK,
+                            Material.SMITHING_TABLE
+                    );
+                    if (GenUtils.chance(random, 1, 5)) {
+                        w.setBlockData(BlockUtils.getRandomBarrel());
+                        data.lootTableChest(w.getX(), w.getY(), w.getZ(), TerraLootTable.WOODLAND_MANSION);
+                    }
+                    if (GenUtils.chance(random, 1, 5)) {
+                        w.getRelative(0, pileHeight, 0).setType(Material.LANTERN);
+                    }
 
-                w = w.getLeft();
+                    w = w.getLeft();
+                }
             }
         }
     }

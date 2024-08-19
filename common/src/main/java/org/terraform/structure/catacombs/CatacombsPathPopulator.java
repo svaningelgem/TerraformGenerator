@@ -123,32 +123,29 @@ public class CatacombsPathPopulator extends PathPopulatorAbstract {
                     if (i == 1) {
                         if (GenUtils.chance(rand, 1, 60)) {
                             // Chests
-                            if (TConfig.areDecorationsEnabled()) {
-                                new ChestBuilder(Material.CHEST).setFacing(dir.getOppositeFace())
-                                                                .setLootTable(TerraLootTable.SIMPLE_DUNGEON)
-                                                                .apply(rel.getRelative(dir.getOppositeFace()));
-                            }
+                            new ChestBuilder(Material.CHEST).setFacing(dir.getOppositeFace())
+                                                            .setLootTable(TerraLootTable.SIMPLE_DUNGEON)
+                                                            .apply(rel.getRelative(dir.getOppositeFace()));
                         }
                         else if (GenUtils.chance(rand, 1, 20)) {
                             // Candles
-                            new StairBuilder(
-                                    Material.STONE_BRICK_STAIRS,
+                            new StairBuilder(Material.STONE_BRICK_STAIRS,
                                     Material.MOSSY_STONE_BRICK_STAIRS,
                                     Material.COBBLESTONE_STAIRS
                             ).setHalf(Half.TOP).setFacing(dir).apply(rel.getRelative(dir.getOppositeFace()));
 
-                            BlockUtils.placeCandle(
-                                    rel.getRelative(dir.getOppositeFace()).getUp(),
+                            BlockUtils.placeCandle(rel.getRelative(dir.getOppositeFace()).getUp(),
                                     GenUtils.randInt(1, 4),
                                     true
                             );
                         }
                     }
-                    else if (rel.getRelative(dir.getOppositeFace()).getUp().isSolid() && GenUtils.chance(rand, 1, 10)) {
+                    else if (TConfig.areDecorationsEnabled()
+                             && rel.getRelative(dir.getOppositeFace()).getUp().isSolid()
+                             && GenUtils.chance(rand, 1, 10))
+                    {
                         // Cobwebs
-                        if (TConfig.areDecorationsEnabled()) {
-                            rel.getRelative(dir.getOppositeFace()).setType(Material.COBWEB);
-                        }
+                        rel.getRelative(dir.getOppositeFace()).setType(Material.COBWEB);
                     }
                 }
             }

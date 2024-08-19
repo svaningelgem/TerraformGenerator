@@ -209,7 +209,7 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
             threshold++;
             highest++;
         }
-        if (threshold < 6) {
+        if (TConfig.areAnimalsEnabled() && threshold < 6) {
             if (Math.abs(highest - roomY) <= TConfig.c.STRUCTURES_PLAINSVILLAGE_HEIGHT_TOLERANCE) {
                 for (int i = 0; i < GenUtils.randInt(3, 7); i++) {
                     data.addEntity(coords[0], highest + 1, coords[2], animal);
@@ -217,7 +217,7 @@ public class PlainsVillageAnimalPenPopulator extends PlainsVillageAbstractRoomPo
             }
         }
 
-        if (jobBlock != null) {
+        if (TConfig.areDecorationsEnabled() && jobBlock != null) {
             switch (animal) {
                 case PIG:
                 case CHICKEN:

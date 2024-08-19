@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected.Half;
-import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.Stairs;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +14,7 @@ import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomPopulatorAbstract;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
+import org.terraform.utils.blockdata.DirectionalBuilder;
 
 import java.util.ArrayList;
 import java.util.Map.Entry;
@@ -37,9 +37,8 @@ public class CursedChamber extends RoomPopulatorAbstract {
             for (int i = 0; i < entry.getValue(); i++) {
                 for (int h = 0; h < room.getHeight() - 2; h++) {
                     if (w.getRelative(0, h, 0).getRear().isSolid() && GenUtils.chance(rand, 1, 5)) {
-                        Directional head = (Directional) Bukkit.createBlockData(Material.SKELETON_WALL_SKULL);
-                        head.setFacing(w.getDirection());
-                        w.getRelative(0, h, 0).setBlockData(head);
+                        new DirectionalBuilder(Material.SKELETON_WALL_SKULL).setFacing(w.getDirection())
+                                                                            .apply(w.getUp(h));
                     }
                 }
 
@@ -49,7 +48,7 @@ public class CursedChamber extends RoomPopulatorAbstract {
 
         ArrayList<Integer> availableX = new ArrayList<>();
         ArrayList<Integer> availableZ = new ArrayList<>();
-        // X-width is wide enough, spawn 2 pillars along x axis
+        // X-width is wide enough, spawn 2 pillars along x-axis
         if (room.getWidthX() > 10) {
             availableX.add(lowerCorner[0]);
             availableX.add(upperCorner[0]);
@@ -95,8 +94,7 @@ public class CursedChamber extends RoomPopulatorAbstract {
 
         // Stair base and ceiling
         for (BlockFace face : BlockUtils.directBlockFaces) {
-            Stairs stair = (Stairs) Bukkit.createBlockData(GenUtils.randChoice(
-                    Material.SANDSTONE_STAIRS,
+            Stairs stair = (Stairs) Bukkit.createBlockData(GenUtils.randChoice(Material.SANDSTONE_STAIRS,
                     Material.STONE_STAIRS,
                     Material.COBBLESTONE_STAIRS
             ));
@@ -104,8 +102,7 @@ public class CursedChamber extends RoomPopulatorAbstract {
             w.getRelative(face).setBlockData(stair);
 
 
-            stair = (Stairs) Bukkit.createBlockData(GenUtils.randChoice(
-                    Material.SANDSTONE_STAIRS,
+            stair = (Stairs) Bukkit.createBlockData(GenUtils.randChoice(Material.SANDSTONE_STAIRS,
                     Material.STONE_STAIRS,
                     Material.COBBLESTONE_STAIRS
             ));
@@ -121,9 +118,7 @@ public class CursedChamber extends RoomPopulatorAbstract {
                 if (GenUtils.chance(4, 5)) {
                     continue;
                 }
-                Directional head = (Directional) Bukkit.createBlockData(Material.SKELETON_WALL_SKULL);
-                head.setFacing(face);
-                target.getRelative(face).setBlockData(head);
+                new DirectionalBuilder(Material.SKELETON_WALL_SKULL).setFacing(face).apply(target.getRelative(face));
             }
         }
 

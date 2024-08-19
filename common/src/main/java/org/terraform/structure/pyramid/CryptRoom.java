@@ -16,6 +16,7 @@ import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomPopulatorAbstract;
 import org.terraform.utils.BlockUtils;
@@ -51,13 +52,13 @@ public class CryptRoom extends RoomPopulatorAbstract {
 
                 if (w.getDirection() == face) {
                     // Thicker entryway
-                    w.getFront()
-                     .Pillar(room.getHeight(),
-                             rand,
-                             Material.SANDSTONE,
-                             Material.CUT_SANDSTONE,
-                             Material.CHISELED_SANDSTONE
-                     );
+                    w.getFront().Pillar(
+                            room.getHeight(),
+                            rand,
+                            Material.SANDSTONE,
+                            Material.CUT_SANDSTONE,
+                            Material.CHISELED_SANDSTONE
+                    );
 
 
                     if (i == 1) { // Redstone wiring
@@ -87,13 +88,13 @@ public class CryptRoom extends RoomPopulatorAbstract {
                         w.getRear().getUp().setBlockData(lever);
 
                         // Cover
-                        w.getFront(3)
-                         .Pillar(room.getHeight(),
-                                 rand,
-                                 Material.SANDSTONE,
-                                 Material.CUT_SANDSTONE,
-                                 Material.CHISELED_SANDSTONE
-                         );
+                        w.getFront(3).Pillar(
+                                room.getHeight(),
+                                rand,
+                                Material.SANDSTONE,
+                                Material.CUT_SANDSTONE,
+                                Material.CHISELED_SANDSTONE
+                        );
 
                     }
                     else if (i == 2) { // Redstone wiring
@@ -113,20 +114,20 @@ public class CryptRoom extends RoomPopulatorAbstract {
                         w.getFront().getUp(3).setBlockData(wire);
 
                         // Cover
-                        w.getFront(3)
-                         .Pillar(room.getHeight(),
-                                 rand,
-                                 Material.SANDSTONE,
-                                 Material.CUT_SANDSTONE,
-                                 Material.CHISELED_SANDSTONE
-                         );
-                        w.getFront(2)
-                         .Pillar(room.getHeight(),
-                                 rand,
-                                 Material.SANDSTONE,
-                                 Material.CUT_SANDSTONE,
-                                 Material.CHISELED_SANDSTONE
-                         );
+                        w.getFront(3).Pillar(
+                                room.getHeight(),
+                                rand,
+                                Material.SANDSTONE,
+                                Material.CUT_SANDSTONE,
+                                Material.CHISELED_SANDSTONE
+                        );
+                        w.getFront(2).Pillar(
+                                room.getHeight(),
+                                rand,
+                                Material.SANDSTONE,
+                                Material.CUT_SANDSTONE,
+                                Material.CHISELED_SANDSTONE
+                        );
 
                     }
                     else if (i == 3) { // Entry holes & pistons
@@ -142,27 +143,26 @@ public class CryptRoom extends RoomPopulatorAbstract {
                         Piston faceUp = (Piston) Bukkit.createBlockData(Material.STICKY_PISTON);
                         faceUp.setFacing(BlockFace.UP);
                         w.getFront().getDown(2).setBlockData(faceUp);
-                        w.getUp(2)
-                         .getFront(2)
-                         .Pillar(room.getHeight() - 2,
-                                 rand,
-                                 Material.SANDSTONE,
-                                 Material.CUT_SANDSTONE,
-                                 Material.CHISELED_SANDSTONE
-                         );
+                        w.getUp(2).getFront(2).Pillar(
+                                room.getHeight() - 2,
+                                rand,
+                                Material.SANDSTONE,
+                                Material.CUT_SANDSTONE,
+                                Material.CHISELED_SANDSTONE
+                        );
 
                     }
                     else { // even thicker layer
-                        w.getFront(2)
-                         .Pillar(room.getHeight(),
-                                 rand,
-                                 Material.SANDSTONE,
-                                 Material.CUT_SANDSTONE,
-                                 Material.CHISELED_SANDSTONE
-                         );
+                        w.getFront(2).Pillar(
+                                room.getHeight(),
+                                rand,
+                                Material.SANDSTONE,
+                                Material.CUT_SANDSTONE,
+                                Material.CHISELED_SANDSTONE
+                        );
                     }
                 }
-                else if (w.getDirection() == face.getOppositeFace()) {
+                else if (TConfig.areDecorationsEnabled() && w.getDirection() == face.getOppositeFace()) {
                     // Create treasure chest inside the crypt
                     if (GenUtils.chance(rand, 1, 10)) {
                         SimpleBlock pos = w.getFront().get();

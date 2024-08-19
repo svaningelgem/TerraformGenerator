@@ -1,7 +1,9 @@
 package org.terraform.structure.pillager.mansion.ground;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Material;
@@ -15,6 +17,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.small_items.DecorationsBuilder;
 import org.terraform.structure.pillager.mansion.MansionInternalWallState;
@@ -172,6 +175,8 @@ public class MansionGroundLevelKitchenPopulator extends MansionRoomPopulator {
     }
 
     private void shelfify(@NotNull Random rand, @NotNull Wall w) {
+        if ( !TConfig.areDecorationsEnabled() ) return;
+
         new SlabBuilder(Material.POLISHED_ANDESITE_SLAB).setType(Type.TOP).apply(w.getUp()).apply(w.getUp(3));
         w.setType(Material.AIR, Material.AIR, Material.CRAFTING_TABLE, Material.MELON, Material.PUMPKIN);
 

@@ -89,7 +89,7 @@ public class SmeltingHallPopulator extends RoomPopulatorAbstract {
                             w.getRelative(0, ny, 0).setBlockData(furnace);
                         }
                     }
-                    else if (GenUtils.chance(rand, 1, 5)) { // Chests
+                    else if (TConfig.areDecorationsEnabled() && GenUtils.chance(rand, 1, 5)) { // Chests
                         Chest chest = (Chest) Bukkit.createBlockData(Material.CHEST);
                         chest.setFacing(w.getDirection());
                         w.setBlockData(chest);

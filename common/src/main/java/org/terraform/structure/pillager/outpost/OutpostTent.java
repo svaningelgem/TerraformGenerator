@@ -11,6 +11,7 @@ import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomPopulatorAbstract;
 import org.terraform.utils.BlockUtils;
@@ -158,7 +159,7 @@ public class OutpostTent extends RoomPopulatorAbstract {
                         corner.setType(cloth);
                         // Empty out tent area
                         SimpleBlock target = corner.getRelative(face.getOppositeFace());
-                        if (!target.isSolid() && GenUtils.chance(rand, 1, 2)) {
+                        if (TConfig.areDecorationsEnabled() && !target.isSolid() && GenUtils.chance(rand, 1, 2)) {
                             switch (rand.nextInt(4)) {
                                 case 0:
                                     target.setType(Material.CRAFTING_TABLE);

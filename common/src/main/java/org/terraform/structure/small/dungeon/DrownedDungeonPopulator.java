@@ -14,6 +14,7 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
+import org.terraform.main.config.TConfig;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.CoralGenerator;
 import org.terraform.utils.GenUtils;
@@ -22,10 +23,7 @@ import java.util.Random;
 
 public class DrownedDungeonPopulator extends SmallDungeonPopulator {
     private static final Material[] cobbleSet = {
-            Material.COBBLESTONE,
-            Material.MOSSY_COBBLESTONE,
-            Material.COBBLESTONE_WALL,
-            Material.MOSSY_COBBLESTONE_WALL
+            Material.COBBLESTONE, Material.MOSSY_COBBLESTONE, Material.COBBLESTONE_WALL, Material.MOSSY_COBBLESTONE_WALL
     };
     private static final Material[] graniteSet = {Material.GRANITE, Material.GRANITE_WALL};
     private static final Material[] dioriteSet = {Material.DIORITE, Material.DIORITE_WALL};
@@ -87,7 +85,7 @@ public class DrownedDungeonPopulator extends SmallDungeonPopulator {
                     Wall w = new Wall(new SimpleBlock(data, nx + x, y + 1, nz + z), BlockFace.NORTH);
                     w.LPillar(GenUtils.randInt(1, 7), rand, set);
                 }
-                else if (GenUtils.chance(rand, 1, 70)) {
+                else if (TConfig.areDecorationsEnabled() && GenUtils.chance(rand, 1, 70)) {
                     Directional dir = (Directional) Bukkit.createBlockData(Material.CHEST);
                     dir.setFacing(BlockUtils.getDirectBlockFace(rand));
                     data.setBlockData(x + nx, y + 1, z + nz, dir);

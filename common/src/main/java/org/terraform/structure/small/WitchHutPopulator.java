@@ -205,8 +205,10 @@ public class WitchHutPopulator extends MultiMegaChunkStructurePopulator {
                 super.applyData(block, data);
             }
             else if (data.getMaterial() == Material.CHEST) {
-                super.applyData(block, data);
-                pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.VILLAGE_TEMPLE);
+                if(TConfig.areDecorationsEnabled() ) {
+                    super.applyData(block, data);
+                    pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.VILLAGE_TEMPLE);
+                }
             }
             else {
                 super.applyData(block, data);

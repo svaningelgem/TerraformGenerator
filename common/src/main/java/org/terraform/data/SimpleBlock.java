@@ -22,10 +22,7 @@ import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class SimpleBlock {
     @NotNull
@@ -335,6 +332,10 @@ public class SimpleBlock {
     }
 
     public void setType(Material... types) {
+        setType(GenUtils.randChoice(types));
+    }
+
+    public void setType(List<Material> types) {
         setType(GenUtils.randChoice(types));
     }
 

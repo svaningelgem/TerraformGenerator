@@ -6,6 +6,7 @@ import org.bukkit.block.data.type.Chest;
 import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
@@ -28,7 +29,8 @@ public class GenericAntechamber extends Antechamber {
         super.populate(data, room);
         for (int i = 0; i < GenUtils.randInt(2, 5); i++) {
             int[] coords = room.randomCoords(rand, 2);
-            data.setType(coords[0], room.getY() + 1, coords[2], GenUtils.randChoice(Material.CHISELED_SANDSTONE,
+            data.setType(coords[0], room.getY() + 1, coords[2], GenUtils.randChoice(
+                    Material.CHISELED_SANDSTONE,
                     Material.CHISELED_SANDSTONE,
                     Material.CHISELED_SANDSTONE,
                     Material.BONE_BLOCK
@@ -79,7 +81,8 @@ public class GenericAntechamber extends Antechamber {
 
         // Rare, monster head
         if (GenUtils.chance(1, 3)) {
-            randomRoomPlacement(data,
+            randomRoomPlacement(
+                    data,
                     room,
                     1,
                     1,
@@ -93,7 +96,7 @@ public class GenericAntechamber extends Antechamber {
         }
 
         // Oceanic Treasure Chest
-        if (GenUtils.chance(1, 10)) {
+        if (TConfig.areDecorationsEnabled() && GenUtils.chance(1, 10)) {
             int[] coords = room.randomCoords(rand, 2);
             if (!data.getType(coords[0], room.getY() + 1, coords[2]).isSolid()) {
                 Chest chest = (Chest) Bukkit.createBlockData(Material.CHEST);

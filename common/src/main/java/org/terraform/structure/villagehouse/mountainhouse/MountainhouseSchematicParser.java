@@ -8,6 +8,7 @@ import org.terraform.biome.BiomeBank;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.SchematicParser;
 import org.terraform.utils.GenUtils;
 
@@ -29,16 +30,14 @@ public class MountainhouseSchematicParser extends SchematicParser {
     @Override
     public void applyData(@NotNull SimpleBlock block, @NotNull BlockData data) {
         if (data.getMaterial().toString().contains("COBBLESTONE")) {
-            data = Bukkit.createBlockData(data.getAsString().replaceAll("cobblestone",
-                    GenUtils.randChoice(rand,
-                            Material.COBBLESTONE,
-                            Material.ANDESITE,
-                            Material.STONE_BRICKS,
-                            Material.CRACKED_STONE_BRICKS,
-                            Material.COBBLESTONE,
-                            Material.ANDESITE
-                    ).toString().toLowerCase(Locale.ENGLISH)
-            ));
+            data = Bukkit.createBlockData(data.getAsString().replaceAll("cobblestone", GenUtils.randChoice(rand,
+                    Material.COBBLESTONE,
+                    Material.ANDESITE,
+                    Material.STONE_BRICKS,
+                    Material.CRACKED_STONE_BRICKS,
+                    Material.COBBLESTONE,
+                    Material.ANDESITE
+            ).toString().toLowerCase(Locale.ENGLISH)));
             super.applyData(block, data);
         }
         if (data.getMaterial() == Material.BRICKS) {
@@ -50,15 +49,13 @@ public class MountainhouseSchematicParser extends SchematicParser {
             super.applyData(block, data);
         }
         else if (data.getMaterial().toString().contains("WHITE_CONCRETE")) {
-            data = Bukkit.createBlockData(data.getAsString().replaceAll("white_concrete",
-                    GenUtils.randChoice(rand,
-                            Material.WHITE_CONCRETE,
-                            Material.WHITE_CONCRETE,
-                            Material.WHITE_WOOL,
-                            Material.DIORITE,
-                            Material.DIORITE
-                    ).toString().toLowerCase(Locale.ENGLISH)
-            ));
+            data = Bukkit.createBlockData(data.getAsString().replaceAll("white_concrete", GenUtils.randChoice(rand,
+                    Material.WHITE_CONCRETE,
+                    Material.WHITE_CONCRETE,
+                    Material.WHITE_WOOL,
+                    Material.DIORITE,
+                    Material.DIORITE
+            ).toString().toLowerCase(Locale.ENGLISH)));
             super.applyData(block, data);
         }
         // Don't do wood replacements. This schematic uses different wood types.
@@ -72,12 +69,14 @@ public class MountainhouseSchematicParser extends SchematicParser {
         //            super.applyData(block, data);
         //        }
         else if (data.getMaterial() == Material.CHEST) {
-            if (GenUtils.chance(rand, 1, 5)) {
-                block.setType(Material.AIR);
-                return; // A fifth of chests are not placed.
+            if (TConfig.areDecorationsEnabled()) {
+                if (GenUtils.chance(rand, 1, 5)) {
+                    block.setType(Material.AIR);
+                    return; // A fifth of chests are not placed.
+                }
+                super.applyData(block, data);
+                pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.VILLAGE_TAIGA_HOUSE);
             }
-            super.applyData(block, data);
-            pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.VILLAGE_TAIGA_HOUSE);
         }
         else {
             super.applyData(block, data);

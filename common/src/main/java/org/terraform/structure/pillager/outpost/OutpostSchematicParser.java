@@ -11,6 +11,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.coregen.populatordata.PopulatorDataPostGen;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.SchematicParser;
 import org.terraform.utils.BannerUtils;
 import org.terraform.utils.GenUtils;
@@ -70,40 +71,46 @@ public class OutpostSchematicParser extends SchematicParser {
                                                               WoodType.parse(data.getMaterial())
                                                       ).toString().toLowerCase(Locale.ENGLISH)
                                               )
-                                              .toString()
                                               .toLowerCase(Locale.ENGLISH));
             super.applyData(block, data);
         }
         else if (data.getMaterial() == Material.CHEST) {
-            if (GenUtils.chance(rand, 1, 5)) {
-                block.setType(Material.AIR);
-                // A fifth of chests are not placed.
-            }
-            else {
-                super.applyData(block, data);
-                pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.PILLAGER_OUTPOST);
+            if (TConfig.areDecorationsEnabled()) {
+                if (GenUtils.chance(rand, 1, 5)) {
+                    block.setType(Material.AIR);
+                    // A fifth of chests is not placed.
+                }
+                else {
+                    super.applyData(block, data);
+                    pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.PILLAGER_OUTPOST);
+                }
             }
         }
         else if (data.getMaterial() == Material.BARREL) {
-            if (GenUtils.chance(rand, 3, 5)) {
-                block.setType(Material.HAY_BLOCK);
-                // 3 fifths of barrels are not placed.
-            }
-            else {
-                super.applyData(block, data);
-                pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.PILLAGER_OUTPOST);
+            if (!TConfig.areDecorationsEnabled()) {
+                if (GenUtils.chance(rand, 3, 5)) {
+                    block.setType(Material.HAY_BLOCK);
+                    // 3 fifths of barrels are not placed.
+                }
+                else {
+                    super.applyData(block, data);
+                    pop.lootTableChest(block.getX(), block.getY(), block.getZ(), TerraLootTable.PILLAGER_OUTPOST);
+                }
             }
         }
         else if (data.getMaterial() == Material.WHITE_WALL_BANNER || data.getMaterial() == Material.WHITE_BANNER) {
-            // Set it first to make the target block a banner
-            super.applyData(block, data);
-            if (block.getPopData() instanceof PopulatorDataPostGen) {
-                // org.bukkit.block.Banner;
-                Banner banner = (Banner) ((PopulatorDataPostGen) block.getPopData()).getBlockState(block.getX(),
-                        block.getY(),
-                        block.getZ());
-                banner.setPatterns(BannerUtils.getOminousBannerPatterns());
-                banner.update();
+            if (!TConfig.areDecorationsEnabled()) {
+                // Set it first to make the target block a banner
+                super.applyData(block, data);
+                if (block.getPopData() instanceof PopulatorDataPostGen) {
+                    // org.bukkit.block.Banner;
+                    Banner banner = (Banner) ((PopulatorDataPostGen) block.getPopData()).getBlockState(block.getX(),
+                            block.getY(),
+                            block.getZ()
+                    );
+                    banner.setPatterns(BannerUtils.getOminousBannerPatterns());
+                    banner.update();
+                }
             }
         }
         else {

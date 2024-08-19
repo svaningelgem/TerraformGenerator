@@ -12,6 +12,7 @@ import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.jigsaw.JigsawType;
 import org.terraform.structure.village.plains.PlainsVillagePopulator;
 import org.terraform.utils.GenUtils;
@@ -48,8 +49,7 @@ public class PlainsVillageKitchenPiece extends PlainsVillageStandardPiece {
 
         // Pick a random walled face to be the primary wall, where all the stuff goes.
         BlockFace primaryWall = this.getWalledFaces().get(random.nextInt(this.getWalledFaces().size()));
-        SimpleBlock core = new SimpleBlock(
-                data,
+        SimpleBlock core = new SimpleBlock(data,
                 this.getRoom().getX(),
                 this.getRoom().getY() + 1,
                 this.getRoom().getZ()
@@ -66,6 +66,9 @@ public class PlainsVillageKitchenPiece extends PlainsVillageStandardPiece {
         }};
         for (int i = 0; i < numUtilities; i++) {
             utilities.add(GenUtils.randChoice(random, Material.HOPPER, Material.FURNACE, Material.CRAFTING_TABLE));
+        }
+        if (!TConfig.areDecorationsEnabled()) {
+            utilities.clear();
         }
         Collections.shuffle(utilities);
         for (int i = 0; i < entry.getValue(); i++) {
@@ -135,8 +138,7 @@ public class PlainsVillageKitchenPiece extends PlainsVillageStandardPiece {
                     int decor = random.nextInt(5);
                     switch (decor) {
                         case 0: // Counter
-                            new StairBuilder(
-                                    Material.STONE_BRICK_STAIRS,
+                            new StairBuilder(Material.STONE_BRICK_STAIRS,
                                     Material.POLISHED_ANDESITE_STAIRS,
                                     plainsVillagePopulator.woodStairs
                             ).setFacing(w.getDirection().getOppositeFace()).setHalf(Half.TOP).apply(w);
@@ -151,8 +153,7 @@ public class PlainsVillageKitchenPiece extends PlainsVillageStandardPiece {
                             break;
                         case 2: // Random loot
                             new ChestBuilder(Material.CHEST).setFacing(w.getDirection())
-                                                            .setLootTable(
-                                                                    TerraLootTable.VILLAGE_BUTCHER,
+                                                            .setLootTable(TerraLootTable.VILLAGE_BUTCHER,
                                                                     TerraLootTable.VILLAGE_PLAINS_HOUSE
                                                             );
                         default: // Do nothing

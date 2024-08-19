@@ -1,9 +1,5 @@
 package org.terraform.structure.pillager.mansion.secondfloor;
 
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Random;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -13,6 +9,7 @@ import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.main.TerraformGeneratorPlugin;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.SchematicParser;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.structure.pillager.mansion.MansionInternalWallState;
@@ -22,11 +19,16 @@ import org.terraform.structure.room.CubeRoom;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
 
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Random;
+
 public class MansionSecondFloorStoreroomPopulator extends MansionRoomPopulator {
 
     // Refers to the kitchen room width, not the width of one room cell.
     private static final int roomWidthX = 15;
     private static final int roomWidthZ = 6;
+
     public MansionSecondFloorStoreroomPopulator(CubeRoom room,
                                                 HashMap<BlockFace, MansionInternalWallState> internalWalls)
     {
@@ -48,8 +50,7 @@ public class MansionSecondFloorStoreroomPopulator extends MansionRoomPopulator {
                 schema.apply();
             }
             else if (randomFace == BlockFace.SOUTH) {
-                SimpleBlock target = new SimpleBlock(
-                        data,
+                SimpleBlock target = new SimpleBlock(data,
                         lowerBounds[0] + roomWidthX,
                         this.getRoom().getY(),
                         lowerBounds[1] + roomWidthZ
@@ -83,6 +84,10 @@ public class MansionSecondFloorStoreroomPopulator extends MansionRoomPopulator {
 
         @Override
         public void applyData(@NotNull SimpleBlock block, @NotNull BlockData data) {
+            if (!TConfig.areDecorationsEnabled()) {
+                return;
+            }
+
             if (data.getMaterial() == Material.CHEST) {
                 Material replacement = GenUtils.randChoice(rand,
                         Material.CHEST,

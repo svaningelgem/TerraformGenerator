@@ -15,6 +15,7 @@ import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.SimpleLocation;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.jigsaw.JigsawStructurePiece;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.GenUtils;
@@ -389,15 +390,15 @@ public class MansionRoofHandler {
                 ceiling.getDown(chainLength).setBlockData(lantern);
                 if (ceiling.getY() - core.getY() > 5) {
                     // If height is high enough, spawn a couple of cave spiders and spiders
-                    if (GenUtils.chance(rand, 1, 2)) {
+                    if (TConfig.areAnimalsEnabled() && GenUtils.chance(rand, 1, 2)) {
                         data.addEntity(core.getX(), core.getY(), core.getZ(), EntityType.SPIDER);
                     }
-                    if (GenUtils.chance(rand, 1, 2)) {
+                    if (TConfig.areAnimalsEnabled() && GenUtils.chance(rand, 1, 2)) {
                         data.addEntity(core.getX(), core.getY(), core.getZ(), EntityType.CAVE_SPIDER);
                     }
 
                     // If lucky, spawn allays
-                    if (Version.isAtLeast(19) && rand.nextBoolean()) {
+                    if (TConfig.areAnimalsEnabled() && Version.isAtLeast(19) && rand.nextBoolean()) {
                         for (int i = 0; i < 1 + rand.nextInt(3); i++) {
                             data.addEntity(core.getX(), core.getY(), core.getZ(), OneOneNineBlockHandler.ALLAY);
                         }
@@ -416,7 +417,7 @@ public class MansionRoofHandler {
                 ceiling.getDown().downUntilSolid(new Random(), Material.DARK_OAK_LOG);
                 for (BlockFace face : BlockUtils.directBlockFaces) {
                     // Webs
-                    if (GenUtils.chance(rand, 1, 8)) {
+                    if (TConfig.areDecorationsEnabled() && GenUtils.chance(rand, 1, 8)) {
                         ceiling.getDown().getRelative(face).get().lsetType(Material.COBWEB);
                     }
                 }

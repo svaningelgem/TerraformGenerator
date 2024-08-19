@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.jigsaw.JigsawType;
 import org.terraform.structure.village.plains.PlainsVillagePopulator;
 import org.terraform.utils.BlockUtils;
@@ -48,7 +49,9 @@ public class PlainsVillageForgeWeaponSmithPiece extends PlainsVillageForgeStanda
             for (int i = 0; i < entry.getValue(); i++) {
 
                 // Ensure that you don't place anything against the entrance
-                if (w.getRear().getDown().getType() != Material.CHISELED_STONE_BRICKS) {
+                if (TConfig.areDecorationsEnabled()
+                    && w.getRear().getDown().getType() != Material.CHISELED_STONE_BRICKS)
+                {
                     int choice = random.nextInt(4);
                     switch (choice) {
                         case 0:

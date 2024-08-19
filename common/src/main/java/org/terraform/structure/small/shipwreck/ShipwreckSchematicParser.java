@@ -11,6 +11,7 @@ import org.terraform.coregen.TerraLootTable;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.SchematicParser;
 import org.terraform.utils.BlockUtils;
 import org.terraform.utils.CoralGenerator;
@@ -45,15 +46,13 @@ public class ShipwreckSchematicParser extends SchematicParser {
 
         // Mossy cobble
         if (data.getMaterial().toString().contains("COBBLESTONE")) {
-            data = Bukkit.createBlockData(StringUtils.replace(data.getAsString(),
-                    "cobblestone",
-                    GenUtils.randChoice(rand,
-                            Material.COBBLESTONE,
-                            Material.COBBLESTONE,
-                            Material.COBBLESTONE,
-                            Material.MOSSY_COBBLESTONE
-                    ).name().toLowerCase(Locale.ENGLISH)
-            ));
+            data = Bukkit.createBlockData(StringUtils.replace(data.getAsString(), "cobblestone", GenUtils.randChoice(
+                    rand,
+                    Material.COBBLESTONE,
+                    Material.COBBLESTONE,
+                    Material.COBBLESTONE,
+                    Material.MOSSY_COBBLESTONE
+            ).name().toLowerCase(Locale.ENGLISH)));
         }
 
         // Holes
@@ -77,7 +76,7 @@ public class ShipwreckSchematicParser extends SchematicParser {
         }
 
 
-        if (data.getMaterial() == Material.CHEST) {
+        if (TConfig.areDecorationsEnabled() && data.getMaterial() == Material.CHEST) {
             if (GenUtils.chance(rand, 4, 5)) {
                 if (block.getY() <= TerraformGenerator.seaLevel) {
                     data = Bukkit.createBlockData(Material.WATER);

@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
+import org.terraform.main.config.TConfig;
 import org.terraform.utils.GenUtils;
 
 public class DirectionalBuilder {
@@ -29,16 +30,22 @@ public class DirectionalBuilder {
     }
 
     public @NotNull DirectionalBuilder apply(@NotNull SimpleBlock block) {
+        if ( !TConfig.areDecorationsEnabled() ) return this;
+
         block.setBlockData(blockData);
         return this;
     }
 
     public @NotNull DirectionalBuilder apply(@NotNull Wall block) {
+        if ( !TConfig.areDecorationsEnabled() ) return this;
+
         block.setBlockData(blockData);
         return this;
     }
 
     public @NotNull DirectionalBuilder apply(@NotNull PopulatorDataAbstract data, int x, int y, int z) {
+        if ( !TConfig.areDecorationsEnabled() ) return this;
+
         data.setBlockData(x, y, z, blockData);
         return this;
     }

@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.jetbrains.annotations.NotNull;
+import org.terraform.main.config.TConfig;
 import org.terraform.structure.room.PathPopulatorAbstract;
 import org.terraform.structure.room.PathPopulatorData;
 import org.terraform.utils.BlockUtils;
@@ -28,6 +29,9 @@ public class PyramidDungeonPathPopulator extends PathPopulatorAbstract {
 
     @Override
     public void populate(@NotNull PathPopulatorData ppd) {
+        if (!TConfig.areDecorationsEnabled()) {
+            return;
+        }
 
         // Gravel tnt trap
         if (GenUtils.chance(this.rand, 1, 300)) {

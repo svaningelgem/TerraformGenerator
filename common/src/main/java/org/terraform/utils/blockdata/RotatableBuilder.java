@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.terraform.coregen.populatordata.PopulatorDataAbstract;
 import org.terraform.data.SimpleBlock;
 import org.terraform.data.Wall;
-import org.terraform.utils.GenUtils;
+import org.terraform.main.config.TConfig;
 
 public class RotatableBuilder {
 
@@ -18,27 +18,28 @@ public class RotatableBuilder {
         this.blockData = (Rotatable) Bukkit.createBlockData(mat);
     }
 
-    public RotatableBuilder(Material... mat) {
-        this.blockData = (Rotatable) Bukkit.createBlockData(GenUtils.randChoice(mat));
-    }
-
-
     public @NotNull RotatableBuilder setRotation(@NotNull BlockFace face) {
         this.blockData.setRotation(face);
         return this;
     }
 
     public @NotNull RotatableBuilder apply(@NotNull SimpleBlock block) {
+        if ( !TConfig.areDecorationsEnabled() ) return this;
+
         block.setBlockData(blockData);
         return this;
     }
 
     public @NotNull RotatableBuilder apply(@NotNull Wall block) {
+        if ( !TConfig.areDecorationsEnabled() ) return this;
+
         block.setBlockData(blockData);
         return this;
     }
 
     public @NotNull RotatableBuilder apply(@NotNull PopulatorDataAbstract data, int x, int y, int z) {
+        if ( !TConfig.areDecorationsEnabled() ) return this;
+
         data.setBlockData(x, y, z, blockData);
         return this;
     }

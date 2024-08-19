@@ -13,6 +13,7 @@ import org.terraform.data.SimpleBlock;
 import org.terraform.data.TerraformWorld;
 import org.terraform.data.Wall;
 import org.terraform.main.TerraformGeneratorPlugin;
+import org.terraform.main.config.TConfig;
 import org.terraform.schematic.TerraSchematic;
 import org.terraform.structure.room.CubeRoom;
 import org.terraform.structure.room.RoomLayout;
@@ -174,8 +175,7 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
                     }
                     else if (noise <= 0.1) {
                         if (GenUtils.chance(random, (int) (100 * Math.pow(multiplier, 3)), 100)) {
-                            data.setType(
-                                    nx + x,
+                            data.setType(nx + x,
                                     height,
                                     nz + z,
                                     GenUtils.randChoice(random,
@@ -213,20 +213,17 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
                 // General lighting
                 if (GenUtils.chance(random, 1, 30)) {
                     data.setType(ePX, highest + 1, ePZ, Material.CHISELED_STONE_BRICKS);
-                    data.setType(
-                            ePX,
+                    data.setType(ePX,
                             highest + 2,
                             ePZ,
                             GenUtils.randChoice(Material.COBBLESTONE_WALL, Material.MOSSY_COBBLESTONE_WALL)
                     );
-                    data.setType(
-                            ePX,
+                    data.setType(ePX,
                             highest + 3,
                             ePZ,
                             GenUtils.randChoice(Material.COBBLESTONE_WALL, Material.MOSSY_COBBLESTONE_WALL)
                     );
-                    data.setType(
-                            ePX,
+                    data.setType(ePX,
                             highest + 4,
                             ePZ,
                             GenUtils.randChoice(Material.COBBLESTONE_WALL, Material.MOSSY_COBBLESTONE_WALL)
@@ -239,20 +236,21 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
             HashMap<Wall, Integer> walls = room.getFourWalls(data, 0);
 
             // Spawn job blocks
-            for (Entry<Wall, Integer> entry : walls.entrySet()) {
-                Wall w = entry.getKey();
-                int length = entry.getValue();
-                for (int i = 0; i < length; i++) {
-                    w = w.getLeft();
-                    if (GenUtils.chance(random, 1, 50)) {
-                        SimpleBlock rear = w.getRear().get();
-                        int highest = GenUtils.getHighestGround(data, rear.getX(), rear.getZ());
-                        data.setType(
-                                rear.getX(),
-                                highest + 1,
-                                rear.getZ(),
-                                GenUtils.randChoice(Material.CAULDRON, Material.SMOKER, Material.LOOM)
-                        );
+            if (TConfig.areDecorationsEnabled()) {
+                for (Entry<Wall, Integer> entry : walls.entrySet()) {
+                    Wall w = entry.getKey();
+                    int length = entry.getValue();
+                    for (int i = 0; i < length; i++) {
+                        w = w.getLeft();
+                        if (GenUtils.chance(random, 1, 50)) {
+                            SimpleBlock rear = w.getRear().get();
+                            int highest = GenUtils.getHighestGround(data, rear.getX(), rear.getZ());
+                            data.setType(rear.getX(),
+                                    highest + 1,
+                                    rear.getZ(),
+                                    GenUtils.randChoice(Material.CAULDRON, Material.SMOKER, Material.LOOM)
+                            );
+                        }
                     }
                 }
             }
@@ -264,10 +262,12 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
                 animalCount = 2;
             }
             // Spawn animals
-            for (int i = 0; i < animalCount; i++) {
-                int[] coords = room.randomCoords(random, 2);
-                int highest = GenUtils.getHighestGround(data, coords[0], coords[2]);
-                data.addEntity(coords[0], highest + 1, coords[2], animal);
+            if (TConfig.areAnimalsEnabled()) {
+                for (int i = 0; i < animalCount; i++) {
+                    int[] coords = room.randomCoords(random, 2);
+                    int highest = GenUtils.getHighestGround(data, coords[0], coords[2]);
+                    data.addEntity(coords[0], highest + 1, coords[2], animal);
+                }
             }
 
             // Decorate it
@@ -278,9 +278,8 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
                         highest--;
                     }
 
-                    if (Math.pow((nx - room.getX()) / (room.getWidthX() / 2f), 2) + Math.pow(
-                            (nz - room.getZ())
-                            / (room.getWidthZ() / 2f),
+                    if (Math.pow((nx - room.getX()) / (room.getWidthX() / 2f), 2) + Math.pow((nz - room.getZ())
+                                                                                             / (room.getWidthZ() / 2f),
                             2
                     ) <= 1)
                     {
@@ -297,7 +296,7 @@ public class AnimalFarmPopulator extends VillageHousePopulator {
                         ));
                     }
 
-                    if (GenUtils.chance(random, 1, 60)) {
+                    if (TConfig.areDecorationsEnabled() && GenUtils.chance(random, 1, 60)) {
                         BlockUtils.replaceUpperSphere(nx + 7 * nz + 17 * 17,
                                 1.1f,
                                 2f,
