@@ -299,7 +299,9 @@ public class TConfig extends YamlFileInterface {
     @YamlKey("misc.custom-small-trees-from-saplings.enabled")
     public boolean MISC_SAPLING_CUSTOM_TREES_ENABLED = true;
     @YamlKey("misc.custom-small-trees-from-saplings.big-jungle-tree")
-    public boolean MISC_SAPLING_CUSTOM_TREES_BIGTREES = true;
+    public boolean MISC_SAPLING_CUSTOM_TREES_BIGTREES_JUNGLE = true;
+    @YamlKey("misc.custom-small-trees-from-saplings.big-spruce-tree")
+    public boolean MISC_SAPLING_CUSTOM_TREES_BIGTREES_SPRUCE = true;
     @YamlKey("misc.trees.only-use-logs-no-wood")
     public boolean MISC_TREES_FORCE_LOGS = false;
     @YamlKey("misc.trees.ground-gradient-limit")
